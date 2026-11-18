@@ -44,18 +44,26 @@ export interface ExecutionResult {
   output: string;
   snapshots: TraceSnapshot[];
   error?: string;
+  errorKind?: ProgramErrorKind;
+  errorLine?: number;
   /** Tiempo total medido en el Worker (incluye el seguimiento). */
   durationMs: number;
 }
 
+export type ProgramErrorKind = "syntax" | "unsupported" | "runtime" | "resource";
+
 export interface StudentPrediction {
   expectedOutput: string;
   expectedVariables: Record<string, number>;
+  /** Valores que se esperan para cada variable al terminar cada iteración. */
+  expectedVariableValues: Record<string, number[]>;
   /** Números de iteración que el estudiante espera ver (p. ej. [1, 2, 3]). */
   expectedIterations: number[];
   /** 0–100. */
   confidence: number;
   explanation: string;
 }
+
+export type Prediction = StudentPrediction;
 
 export type EngineStatus = "idle" | "loading" | "ready" | "running" | "success" | "error";

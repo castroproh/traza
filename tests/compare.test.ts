@@ -15,6 +15,7 @@ const result: ExecutionResult = {
 const correct: StudentPrediction = {
   expectedOutput: "6",
   expectedVariables: { total: 6, numero: 3 },
+  expectedVariableValues: { total: [1, 3, 6], numero: [1, 2, 3] },
   expectedIterations: [1, 2, 3],
   confidence: 80,
   explanation: "",
