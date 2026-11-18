@@ -1,8 +1,49 @@
-# Estado del proyecto — Misión 0.2 (continuación)
+# Estado del proyecto — Misión 0.5
+
+## Resumen vigente
+
+TRAZA 0.5.0 implementa el ciclo educativo PACT para los patrones `range()` y acumulador. El estudiante registra una predicción antes de ver la ejecución real de Pyodide; luego contrasta hipótesis con micropruebas fijas y realiza una prueba de transferencia. La evidencia se describe como provisional, no como diagnóstico definitivo. El motor sigue ejecutando únicamente ejercicios del catálogo: no hay editor ni ejecución de código libre.
+
+### Verificación de la misión 0.5
+
+| Comprobación | Resultado |
+|---|---|
+| Versión de paquete | `0.5.0`; el lockfile conserva las mismas dependencias. |
+| Pruebas unitarias (`npm test`) | 68 pruebas Vitest en 7 archivos. |
+| Tipos (`npm run typecheck`) | `vue-tsc --noEmit`. |
+| Navegador (`npm run test:e2e`) | Flujos PACT de ambos patrones, persistencia/reset, viewport móvil y prueba de producción con Pyodide real. |
+| Dependencias | Sin cambios de dependencias; `npm ci` y `npm audit` terminaron con cero vulnerabilidades. npm mostró un aviso de `allowScripts` para el postinstall de esbuild, sin bloquear la instalación. |
+| Recursos locales | Pyodide/WASM se carga desde el mismo origen en las pruebas; el funcionamiento offline no está probado. |
+
+El build puede mostrar avisos de Vite por módulos `node:*` externalizados desde `pyodide.mjs`; no impiden la compilación. No se afirma que el Worker sea un sandbox ni que las respuestas demuestren comprensión definitiva.
+
+### Implementado en 0.5
+
+- Flujo de cuatro etapas PACT, con puertas que impiden ver/ejecutar la traza antes de registrar predicción.
+- Predicciones de salida, iteraciones, valores por iteración, explicación y confianza; comparación estructurada y primer punto de divergencia.
+- Catálogo de ejercicios fijos de contraste para `range()` y acumuladores, además de tareas de transferencia.
+- Diagnóstico provisional que conserva evidencia insuficiente cuando una respuesta coincide con varias hipótesis.
+- Persistencia versionada y validada en `localStorage`, con opción para desactivarla y reinicio del progreso.
+- Pruebas de lógica y recorridos E2E para ambos patrones sobre el motor Pyodide real.
+
+### Límites vigentes
+
+- No hay código libre, cuentas, identificadores personales ni backend.
+- El validador funcional y el Worker no son un sandbox; no deben usarse para ejecutar código hostil.
+- La persistencia solo aplica al navegador actual y no se ha probado el funcionamiento offline.
+- Trazado de funciones propias, recursión, generadores, `while` y bucles anidados no forman parte del subconjunto admitido.
+
+## Registro histórico — Misión 0.4
+
+La misión 0.4 endureció el tracer y el ciclo de vida del Worker, incorporó `errorKind`/`errorLine`, límites de ejecución y pruebas de Pyodide/Playwright para desarrollo y producción. En esa etapa se verificaron 56 pruebas Vitest, tipos, instalación limpia, auditorías y E2E.
+
+## Registro histórico — Misión 0.2 (continuación)
+
+Lo que sigue conserva el registro de la sesión anterior; describe el estado de aquel momento y no prevalece sobre el resumen vigente de la misión 0.4.
 
 Registro de lo que existe y de **cómo se verificó**. Última actualización: 2026-11-18 (continuación en este entorno).
 
-## Resultado de esta sesión
+### Resultado de aquella sesión
 
 La red para paquetes estuvo disponible (`npm ping` OK) y se pudo instalar y verificar con el toolchain real. Se ejecutó el siguiente paso técnico: **desbloquear la verificación del motor 0.1** (`npm install`, copia del runtime de Pyodide, correcciones mínimas de tipos/configuración para las versiones instaladas, y ejecución de `typecheck`, `test` y `build`).
 
@@ -14,14 +55,14 @@ Cambios realizados (sin alterar la lógica funcional del motor ni la UI, y sin e
 
 Artefactos generados (ignorados por Git según `.gitignore`): `node_modules/`, `public/pyodide/`, `dist/`.
 
-Estado de Git: repositorio inicializado, **sin commits**; archivos del proyecto sin rastrear y cambios de esta sesión sin confirmar.
+Estado de Git en aquella sesión: repositorio inicializado, **sin commits**; archivos del proyecto sin rastrear y cambios de esa sesión sin confirmar.
 
-## Entorno comprobado
+### Entorno comprobado entonces
 
 - macOS (darwin), Node v26.8.1, npm 11.19.0, Python 3.11.9.
 - Dependencias instaladas y resueltas a las versiones fijadas: `vue@3.5.13`, `vite@6.0.7`, `@vitejs/plugin-vue@5.2.1`, `vitest@2.1.8`, `typescript@5.6.3`, `vue-tsc@2.1.10`, `pyodide@0.27.2` (verificado con `npm ls ... --depth=0`).
 
-## Clasificación de funciones
+### Clasificación de funciones en aquella sesión
 
 ### Implementada y verificada en navegador
 Ninguna. No se ejecutó `npm run dev`/`preview` ni pruebas E2E en navegador en esta sesión.
@@ -62,19 +103,19 @@ Nota: la integración se ejecutó en Node cargando el runtime desde `node_module
 - Accesibilidad y diseño adaptable en uso real.
 - Bucles anidados, `while` complejos, funciones propias/recursión/generadores y trazado dentro de funciones: sin diseñar ni probar (según arquitectura).
 
-### Pendiente
+### Pendiente en aquella sesión
 - Pruebas de extremo a extremo en navegador.
 - Ciclo PACT, patrones diagnósticos, editor/código libre de estudiantes.
 - Endurecimiento de seguridad para código de estudiantes (ver `ARQUITECTURA.md`).
 - Interfaz para `StudentPrediction` (solo existe el tipo y `comparePrediction`).
 
-### Observaciones y riesgos
+### Observaciones y riesgos registrados entonces
 
 - `vite build` emite advertencias de compatibilidad de navegador por módulos `node:*` externalizados desde `pyodide.mjs` (dependencia). La compilación finaliza correctamente; la carga real en navegador/Worker no se ha verificado.
 - `npm audit` reporta vulnerabilidades en dependencias (informativo, no abordado en esta sesión).
 - Git sin commits; el estado del repositorio no está consolidado en historial.
 
-## Comandos verificados en esta sesión
+### Comandos verificados en aquella sesión
 
 ```bash
 npm install

@@ -40,7 +40,7 @@ export function useTraceEngine() {
         status.value = "success";
       } else {
         status.value = "error";
-        errorMessage.value = describeProgramError(outcome.error ?? "error desconocido");
+        errorMessage.value = describeProgramError(outcome.error ?? "", outcome.errorKind, outcome.errorLine);
       }
     } catch (cause) {
       status.value = "error";

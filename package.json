@@ -1,27 +1,29 @@
 {
   "name": "traza",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
-  "description": "TRAZA: laboratorio de diagnóstico contrastivo adaptativo del razonamiento algorítmico (motor 0.1).",
+  "description": "TRAZA: laboratorio de diagnóstico contrastivo adaptativo del razonamiento algorítmico (PACT 0.5).",
   "scripts": {
     "prepare:pyodide": "node scripts/copy-pyodide.mjs",
     "dev": "npm run prepare:pyodide && vite",
     "build": "npm run prepare:pyodide && vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "npm run build && playwright test && playwright test --config playwright.preview.config.ts"
   },
   "dependencies": {
     "pyodide": "0.27.2",
-    "vue": "3.5.13"
+    "vue": "3.5.45"
   },
   "devDependencies": {
+    "@playwright/test": "1.65.1",
     "@types/node": "^22.20.5",
     "@vitejs/plugin-vue": "5.2.1",
     "typescript": "5.6.3",
-    "vite": "6.0.7",
-    "vitest": "2.1.8",
-    "vue-tsc": "2.1.10"
+    "vite": "6.4.6",
+    "vitest": "4.1.12",
+    "vue-tsc": "3.3.14"
   }
 }

@@ -1,70 +1,38 @@
 # TRAZA
 
-**Laboratorio de diagnóstico contrastivo adaptativo del razonamiento algorítmico.**
+TRAZA 0.5.0 es una experiencia educativa en español para razonar sobre dos patrones introductorios de programación: los bucles con `range()` y los acumuladores. Usa un ciclo PACT de cuatro etapas —**Predicción, Análisis, Contraste y Transferencia**— para registrar las predicciones antes de ejecutar, compararlas con trazas reales de Pyodide y observar si una hipótesis se transfiere a un ejercicio nuevo.
 
-> «TRAZA no te dice que estás mal. Te dice POR QUÉ estás mal, y te lo demuestra».
+La aplicación ejecuta un catálogo fijo de ejercicios en un Web Worker. No acepta ni ejecuta código escrito por el estudiante. Las hipótesis se tratan como evidencia provisional, no como una evaluación definitiva de comprensión.
 
-Herramienta educativa para estudiantes principiantes de programación de bachillerato tecnológico. El ciclo completo (PACT: Predicción, Análisis, Contraste, Transferencia) **todavía no existe**. Esta versión (motor 0.1) solo demuestra que se puede ejecutar y seguir un programa Python real.
+## Ejecución local
 
-> **Estado honesto:** el código y las pruebas existen. En esta sesión se instalaron dependencias, se ejecutaron `typecheck`, Vitest real (47 pruebas, incluida integración con Pyodide en Node) y `build` con éxito. **Aún no se ha verificado** la ejecución en navegador (`npm run dev`), el Worker con Pyodide en la UI ni pruebas E2E/offline. Detalle en [`docs/ESTADO_DEL_PROYECTO.md`](docs/ESTADO_DEL_PROYECTO.md).
-
-## Tecnologías
-
-Vue 3 · TypeScript estricto · Vite · Pyodide (Python en WebAssembly) · Web Worker de tipo módulo · `sys.settrace()` · CSS propio · Vitest · Git.
-
-Versiones fijadas en `package.json` (elegidas por compatibilidad conocida; **no instaladas**): vue 3.5.13, vite 6.0.7, @vitejs/plugin-vue 5.2.1, vitest 2.1.8, vue-tsc 2.1.10, typescript 5.6.3, pyodide 0.27.2.
-
-## Requisitos
-
-- Node.js 20 o superior (probado el código de lógica con Node 22).
-- npm.
-- Conexión a internet **solo** para `npm install`.
-
-## Comandos
-
-```bash
-npm install          # instala dependencias (necesita red)
-npm run dev          # copia Pyodide a public/pyodide y arranca Vite
-npm run build        # copia Pyodide, comprueba tipos (vue-tsc) y compila a dist/
-npm run typecheck    # solo tipos
-npm test             # Vitest (incluye la prueba real con Pyodide)
+```sh
+npm ci
+npm run dev
 ```
 
-## Arquitectura (resumen)
+## Ciclo PACT
 
+1. **Predicción:** se elige el patrón `range()` o acumulador y se registra la salida, el número de iteraciones, los valores por vuelta, la explicación y la confianza esperados.
+2. **Análisis:** se inspecciona la traza real de Pyodide.
+3. **Contraste:** se ejecutan micropruebas fijas para distinguir hipótesis competidoras; los resultados ambiguos se conservan como evidencia insuficiente.
+4. **Transferencia:** se predice y ejecuta un ejercicio nuevo. El resultado se describe como evidencia consistente, inconsistente o inconclusa; no demuestra dominio por sí solo.
+
+El avance solo se guarda en el `localStorage` del navegador actual. Se puede desactivar el guardado y reiniciar la sesión. No se utilizan cuentas ni identificadores de usuario.
+
+## Comprobaciones
+
+```sh
+npm run typecheck
+npm test
+npm run test:e2e
 ```
-Vue (App.vue, TraceTable.vue)
-  └─ useTraceEngine()            estado: idle/loading/ready/running/success/error
-       └─ TraceEngineClient      mensajes tipados, timeout, reinicio del Worker
-            └─ Worker (módulo)   Pyodide + src/python/tracer.py
-```
 
-Detalle en [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md).
+Las pruebas cubren reglas del dominio, validación del almacenamiento y recorridos de navegador para ambos patrones, persistencia/reinicio, diseño móvil y ejecución con Pyodide. La suite de navegador incluye una comprobación del build de producción.
 
-### Cómo funciona el Worker
+## Límites técnicos
 
-`src/engine/pyodide.worker.ts` es un Worker de tipo módulo (`new Worker(url, { type: "module" })`, sin `importScripts`). Carga Pyodide **una sola vez** (promesa memoizada), define `run_traced()` y atiende mensajes tipados. El mensaje de ejecución lleva un **identificador de ejercicio**, nunca código.
-
-### Cómo funciona el seguimiento
-
-`sys.settrace()` emite el evento `line` **antes** de ejecutar la línea. Por eso cada `line` abre una instrucción pendiente con su estado `before`; el estado observado al llegar el siguiente evento (otra línea, `return` o `exception`) es su `after`. No se calcula ni se inventa nada. El evento `call` marca el inicio y `return` el estado de finalización (sin `after`).
-
-### Carga de recursos de Pyodide
-
-Pensada **local**: `scripts/copy-pyodide.mjs` copia el runtime de `node_modules/pyodide` a `public/pyodide/` y el Worker lo pide con `indexURL`. No hay CDN en el código. **El funcionamiento sin conexión no se ha probado**, así que no se afirma.
-
-## Limitaciones conocidas
-
-- Solo se ejecuta el ejercicio de demostración (suma 1..3). No hay editor ni código libre.
-- Un Web Worker **no es un sandbox de seguridad**. Ver riesgos pendientes en `docs/ARQUITECTURA.md`.
-- Bucles anidados: la numeración de iteraciones es por bucle más interno y no se ha probado.
-- Solo se rastrea el código de nivel superior; el rastreo dentro de funciones definidas por el estudiante no se ha diseñado.
-- Límite de 2000 eventos por ejecución.
-
-## Funciones implementadas
-
-Ver `docs/ESTADO_DEL_PROYECTO.md` (distingue verificado / no verificado).
-
-## Pendiente
-
-Ciclo PACT, patrones diagnósticos, editor, endurecimiento de seguridad para código de estudiantes, pruebas en navegador, funcionamiento offline.
+- Pyodide ejecuta solo los ejercicios fijos de la aplicación; no es un ejecutor general de código.
+- Ni el Worker ni el validador de ejercicios constituyen un sandbox de seguridad.
+- Pyodide genera avisos de build por módulos `node:*` externalizados; los avisos no impiden compilar.
+- La compatibilidad y el rendimiento en navegador dependen del dispositivo y del navegador.
