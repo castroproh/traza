@@ -77,6 +77,21 @@ button.primary:focus-visible, .table-wrap:focus-visible { outline: 3px solid #f0
   background: var(--danger-bg); color: var(--danger);
   border-left: 4px solid var(--danger); border-radius: 2px;
 }
+.alert.ok { background: #eef7f1; color: var(--ok); border-left-color: var(--ok); }
+.alert.warn { background: #fdf3e3; color: #7a4a00; border-left-color: #b26a00; }
+
+/* Botones compartidos por todos los componentes (los estilos con scope no
+   atraviesan la raíz de un componente hijo). */
+.btn {
+  font: inherit; font-weight: 600;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 4px;
+  padding: 0.7rem 1.4rem; cursor: pointer; min-height: 44px;
+}
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn:focus-visible { outline: 3px solid #f0a500; outline-offset: 2px; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-small { padding: 0.3rem 0.7rem; min-height: 34px; font-size: 0.9rem; margin-left: 0.5rem; }
 
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
 table.trace { border-collapse: collapse; width: 100%; font-size: 0.95rem; }

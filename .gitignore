@@ -4,3 +4,6 @@ public/pyodide/
 *.log
 .DS_Store
 __pycache__/
+test-results/
+playwright-report/
+blob-report/

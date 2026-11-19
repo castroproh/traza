@@ -20,6 +20,28 @@ export type VariableState = Record<string, TraceValue>;
 
 export type TraceEventKind = "call" | "line" | "return" | "exception";
 
+/** Rama observada de un `if`/`elif` (nunca se infiere solo por el número de línea). */
+export type ConditionBranch = "then" | "elif" | "else" | "none";
+
+/**
+ * Resultado real de una condición `if`/`elif`, registrado al evaluarla.
+ *
+ * `branch` y `branchLine` se determinan comparando la siguiente línea observada
+ * con los rangos reales del AST. Si no puede determinarse con seguridad, `branch`
+ * vale "none" y no se inventa una rama.
+ */
+export interface TraceCondition {
+  id: string;
+  line: number;
+  expression: string;
+  result: boolean;
+  hasElse: boolean;
+  branch: ConditionBranch;
+  branchLine?: number;
+  /** Rama que con seguridad NO se ejecutó, si puede determinarse. */
+  notExecuted?: "then" | "else";
+}
+
 export interface TraceSnapshot {
   /** Orden del evento: 0, 1, 2… sin huecos. */
   sequence: number;
@@ -28,7 +50,7 @@ export interface TraceSnapshot {
   event: TraceEventKind;
   /** Iteración del bucle a la que pertenece la instrucción (desde 1). */
   iteration?: number;
-  /** Estado observado ANTES de ejecutar la instrucción. */
+  /** Estado observado ANTES de ejecutar la instrucción (locales del marco). */
   before: VariableState;
   /**
    * Estado observado DESPUÉS de la instrucción (al llegar el siguiente evento).
@@ -37,6 +59,23 @@ export interface TraceSnapshot {
    */
   after?: VariableState;
   detail?: string;
+
+  // --- Marco de ejecución (0.8.0; opcionales para trazas antiguas) ---------
+  /** "<module>" en el programa o el nombre de la función propia. */
+  function?: string;
+  /** "program" en el evento inicial; "function" al entrar a una función. */
+  callType?: "program" | "function";
+  /** Profundidad de llamada: 0 = módulo, 1 = primera función, etc. */
+  depth?: number;
+  /** Identificador estable de la llamada (1 = programa). */
+  callId?: number;
+  scope?: "module" | "function";
+  /** Variables globales observadas en marcos de función. */
+  globals?: VariableState;
+  /** Valor devuelto por una función propia (evento "return"). */
+  returnValue?: TraceValue;
+  /** Condición evaluada por la instrucción, si la hay. */
+  condition?: TraceCondition;
 }
 
 export interface ExecutionResult {

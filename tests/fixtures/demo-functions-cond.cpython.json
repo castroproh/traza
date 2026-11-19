@@ -1,0 +1,174 @@
+{
+  "output": "mayor\n",
+  "snapshots": [
+    {
+      "line": 0,
+      "event": "call",
+      "callType": "program",
+      "function": "<module>",
+      "depth": 0,
+      "callId": 1,
+      "scope": "module",
+      "before": {},
+      "sequence": 0
+    },
+    {
+      "line": 1,
+      "event": "line",
+      "before": {},
+      "function": "<module>",
+      "depth": 0,
+      "callId": 1,
+      "scope": "module",
+      "sequence": 1,
+      "after": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      }
+    },
+    {
+      "line": 6,
+      "event": "line",
+      "before": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      },
+      "function": "<module>",
+      "depth": 0,
+      "callId": 1,
+      "scope": "module",
+      "sequence": 2,
+      "after": {
+        "clasificar": {
+          "unsupported": "function"
+        },
+        "resultado": "mayor"
+      }
+    },
+    {
+      "line": 1,
+      "event": "call",
+      "callType": "function",
+      "function": "clasificar",
+      "depth": 1,
+      "callId": 2,
+      "scope": "function",
+      "before": {
+        "edad": 20
+      },
+      "globals": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      },
+      "sequence": 3
+    },
+    {
+      "line": 2,
+      "event": "line",
+      "before": {
+        "edad": 20
+      },
+      "function": "clasificar",
+      "depth": 1,
+      "callId": 2,
+      "scope": "function",
+      "globals": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      },
+      "sequence": 4,
+      "condition": {
+        "id": "cond-1-L2",
+        "line": 2,
+        "expression": "edad >= 18",
+        "result": true,
+        "hasElse": false,
+        "branch": "then",
+        "branchLine": 3
+      },
+      "after": {
+        "edad": 20
+      }
+    },
+    {
+      "line": 3,
+      "event": "line",
+      "before": {
+        "edad": 20
+      },
+      "function": "clasificar",
+      "depth": 1,
+      "callId": 2,
+      "scope": "function",
+      "globals": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      },
+      "sequence": 5,
+      "after": {
+        "edad": 20
+      }
+    },
+    {
+      "line": 3,
+      "event": "return",
+      "before": {
+        "edad": 20
+      },
+      "function": "clasificar",
+      "depth": 1,
+      "callId": 2,
+      "scope": "function",
+      "globals": {
+        "clasificar": {
+          "unsupported": "function"
+        }
+      },
+      "returnValue": "mayor",
+      "sequence": 6
+    },
+    {
+      "line": 7,
+      "event": "line",
+      "before": {
+        "clasificar": {
+          "unsupported": "function"
+        },
+        "resultado": "mayor"
+      },
+      "function": "<module>",
+      "depth": 0,
+      "callId": 1,
+      "scope": "module",
+      "sequence": 7,
+      "after": {
+        "clasificar": {
+          "unsupported": "function"
+        },
+        "resultado": "mayor"
+      }
+    },
+    {
+      "line": 7,
+      "event": "return",
+      "before": {
+        "clasificar": {
+          "unsupported": "function"
+        },
+        "resultado": "mayor"
+      },
+      "function": "<module>",
+      "depth": 0,
+      "callId": 1,
+      "scope": "module",
+      "sequence": 8
+    }
+  ],
+  "error": null,
+  "pythonMs": 0.248
+}

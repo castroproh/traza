@@ -1,4 +1,5 @@
 import type { ExerciseId } from "../domain/exercises";
+import { TRACE_LIMITS } from "../domain/limits";
 import type { EngineStatus, ExecutionResult } from "../domain/types";
 import type { WorkerRequest, WorkerResponse } from "./messages";
 
@@ -70,7 +71,7 @@ export class TraceEngineClient {
     const worker = this.worker;
     if (!worker) throw new EngineError("worker", "El motor no está disponible.");
     const requestId = this.nextId++;
-    const timeoutMs = this.options.runTimeoutMs ?? 15_000;
+    const timeoutMs = this.options.runTimeoutMs ?? TRACE_LIMITS.runTimeoutMs;
     return new Promise<ExecutionResult>((resolve, reject) => {
       const timer = setTimeout(() => {
         this.fail(new EngineError("timeout", "El programa tardó demasiado y se detuvo."));

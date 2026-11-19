@@ -5,18 +5,33 @@ Modelo de captura
 sys.settrace() emite el evento "line" ANTES de ejecutar la linea. Por eso
 cada evento "line" abre una instruccion "pendiente" con su estado previo
 (`before`). Ese mismo estado, observado cuando llega el SIGUIENTE evento
-(otra linea, "return" o "exception"), es el estado posterior (`after`) de la
-instruccion pendiente. Nada se calcula ni se infiere: solo se copian estados
-observados en el frame.
+del MISMO marco (otra linea, "return" o "exception"), es el estado posterior
+(`after`) de la instruccion pendiente. Nada se calcula ni se infiere: solo se
+copian estados observados en el frame.
 
 Eventos emitidos:
-  call       inicio de la ejecucion (estado previo vacio)
+  call       inicio del programa o entrada a una funcion propia
   line       instruccion: before al llegar, after al llegar el siguiente evento
-  return     fin del programa: before = estado final (no hay after)
+  return     fin de una funcion o del programa; before = estado final del marco
   exception  la instruccion pendiente fallo: after = estado al fallar
 
-Alcance: solo ejecuta ejercicios de demostracion de confianza. NO es un
-sandbox de seguridad (ver docs/ARQUITECTURA.md).
+Cada snapshot incluye, cuando aplica:
+  function    "<module>" o el nombre de la funcion
+  depth       profundidad de llamada (0 = modulo)
+  callId      identificador de la llamada (1 = programa)
+  scope       "module" | "function"
+  globals     estado de las variables globales (solo en marcos de funcion)
+  returnValue valor devuelto por una funcion propia
+  condition   resultado observado de una condicion if (ver abajo)
+
+Las condiciones se instrumentan en el AST: cada `if`/`elif` se envuelve en
+`__traza_cond__(id, linea, expresion, prueba)`, que registra el resultado
+booleano real y devuelve el mismo valor. La rama ejecutada se determina
+comparando la siguiente linea observada con los rangos reales del AST; si no
+puede determinarse, se informa "none" y no se inventa una rama.
+
+Alcance: solo ejecuta ejercicios controlados de la lista blanca. NO es un
+sandbox de seguridad (ver docs/SEGURIDAD.md).
 """
 
 import ast
@@ -29,17 +44,19 @@ from contextlib import redirect_stdout
 
 FILENAME = "<traza>"
 MAX_SNAPSHOTS = 2000
+MAX_CALL_DEPTH = 8
+MAX_CALLS = 200
 MAX_STR = 200
 MAX_DEPTH = 3
 MAX_ITEMS = 50
 SAFE_INT = 2**53 - 1
 
-# Solo lo imprescindible para el ejercicio de demostracion.
+# Solo lo imprescindible para los ejercicios controlados.
 SAFE_BUILTINS = {"print": print, "range": range}
 
 
 class TraceLimitError(Exception):
-    """Se supero el limite de eventos registrados."""
+    """Se supero el limite de eventos, llamadas o profundidad."""
 
 
 def normalize(value, depth=0):
@@ -70,6 +87,7 @@ def normalize(value, depth=0):
 
 
 def capture_state(frame):
+    """Copia las variables observables de un marco (sin nombres internos)."""
     state = {}
     for name, value in list(frame.f_locals.items()):
         if name.startswith("__"):
@@ -88,14 +106,92 @@ def find_loops(tree):
     return loops
 
 
+def _end_line(node):
+    return getattr(node, "end_lineno", None) or node.lineno
+
+
+def find_conditionals(tree, source):
+    """Instrumenta condiciones y devuelve {id: metadatos de rama}.
+
+    Se ejecuta ANTES de compilar. La prueba original se conserva como argumento,
+    de modo que `and`, `or`, `not` y los cortocircuitos mantienen su semantica.
+    """
+    conditions = {}
+    counter = [0]
+
+    def visit(node, parent_if=None):
+        if isinstance(node, ast.If):
+            counter[0] += 1
+            cid = "cond-%d-L%d" % (counter[0], node.lineno)
+            expression = ast.get_source_segment(source, node.test) or ""
+            body_first = node.body[0].lineno
+            body_last = max(_end_line(n) for n in node.body)
+            orelse_first = None
+            orelse_last = None
+            starts_elif = False
+            if node.orelse:
+                orelse_first = node.orelse[0].lineno
+                orelse_last = max(_end_line(n) for n in node.orelse)
+                starts_elif = isinstance(node.orelse[0], ast.If)
+            conditions[cid] = {
+                "line": node.lineno,
+                "expression": expression,
+                "body_first": body_first,
+                "body_last": body_last,
+                "orelse_first": orelse_first,
+                "orelse_last": orelse_last,
+                "starts_elif": starts_elif,
+            }
+            call = ast.Call(
+                func=ast.Name(id="__traza_cond__", ctx=ast.Load()),
+                args=[
+                    ast.Constant(value=cid),
+                    ast.Constant(value=node.lineno),
+                    ast.Constant(value=expression),
+                    node.test,
+                ],
+                keywords=[],
+            )
+            ast.copy_location(call, node.test)
+            node.test = call
+            for child in node.body:
+                visit(child)
+            for child in node.orelse:
+                visit(child, node)
+            return
+        for child in ast.iter_child_nodes(node):
+            # Solo un `If` que ocupa el lugar del `else` es un `elif`.
+            visit(child, None)
+
+    visit(tree)
+    ast.fix_missing_locations(tree)
+    return conditions
+
+
+def make_condition_recorder(tracer):
+    """Crea el helper que registra el resultado real de una condicion."""
+
+    def __traza_cond__(condition_id, line, expression, value):
+        tracer.record_condition(sys._getframe(1), condition_id, line, expression, value)
+        return value
+
+    return __traza_cond__
+
+
 class Tracer:
-    def __init__(self, loops):
+    def __init__(self, loops, conditions):
         self.loops = loops
+        self.conditions = conditions
         self.snapshots = []
-        self.pending = None
+        self.pending = {}
         self.header_counts = {}
-        self.raised = False
-        self._pending_header = None
+        self.raised = set()
+        self.depth = {}
+        self.call_ids = {}
+        self.module_frame = None
+        self.started = False
+        self.next_call_id = 2
+        self.call_count = 0
 
     # --- utilidades -------------------------------------------------
     def _add(self, snap):
@@ -103,6 +199,20 @@ class Tracer:
             raise TraceLimitError("Se supero el limite de pasos registrados")
         snap["sequence"] = len(self.snapshots)
         self.snapshots.append(snap)
+        return snap
+
+    def _scope(self, frame):
+        fid = id(frame)
+        depth = self.depth.get(fid, 0)
+        call_id = self.call_ids.get(fid, 1)
+        snap = {
+            "function": "<module>" if depth == 0 else frame.f_code.co_name,
+            "depth": depth,
+            "callId": call_id,
+            "scope": "module" if depth == 0 else "function",
+        }
+        if depth > 0 and self.module_frame is not None:
+            snap["globals"] = capture_state(self.module_frame)
         return snap
 
     def _loop_for_line(self, line):
@@ -116,58 +226,172 @@ class Tracer:
         return best, False
 
     def _close_pending(self, frame, next_line):
-        p = self.pending
-        if p is None:
+        fid = id(frame)
+        pending = self.pending.pop(fid, None)
+        if pending is None:
             return
-        p["after"] = capture_state(frame)
-        header = self._pending_header
-        if header is not None and next_line is not None:
+        snap = pending["snap"]
+        snap["after"] = capture_state(frame)
+        header = pending.get("header")
+        if header is not None:
             first, last = self.loops[header]
             # El encabezado que no entra al cuerpo es la comprobacion de salida:
             # no pertenece a ninguna iteracion.
-            if not (first <= next_line <= last):
-                p.pop("iteration", None)
-        self.pending = None
-        self._pending_header = None
+            if next_line is None or not (first <= next_line <= last):
+                snap.pop("iteration", None)
+
+        condition = snap.get("condition")
+        meta = pending.get("condition_meta")
+        if condition is not None and meta is not None:
+            branch = "none"
+            branch_line = None
+            if next_line is not None:
+                if meta["body_first"] <= next_line <= meta["body_last"]:
+                    branch = "then"
+                    branch_line = next_line
+                elif (
+                    meta["orelse_first"] is not None
+                    and meta["orelse_first"] <= next_line <= meta["orelse_last"]
+                ):
+                    branch = (
+                        "elif"
+                        if meta["starts_elif"] and next_line == meta["orelse_first"]
+                        else "else"
+                    )
+                    branch_line = next_line
+            condition["branch"] = branch
+            condition["hasElse"] = meta["orelse_first"] is not None
+            if branch_line is not None:
+                condition["branchLine"] = branch_line
+            # La rama no ejecutada solo se informa cuando es determinable.
+            if branch == "then" and meta["orelse_first"] is not None:
+                condition["notExecuted"] = "else"
+            elif branch in ("elif", "else"):
+                condition["notExecuted"] = "then"
+
+    # --- condiciones ------------------------------------------------
+    def record_condition(self, frame, condition_id, line, expression, value):
+        pending = self.pending.get(id(frame))
+        if pending is None:
+            return
+        meta = self.conditions.get(condition_id)
+        pending["snap"]["condition"] = {
+            "id": condition_id,
+            "line": line,
+            "expression": expression,
+            "result": bool(value),
+            "hasElse": bool(meta and meta["orelse_first"] is not None),
+        }
+        pending["condition_meta"] = meta
 
     # --- funciones de trazado ---------------------------------------
     def global_trace(self, frame, event, arg):
-        if event == "call" and frame.f_code.co_filename == FILENAME:
-            self._add({"line": 0, "event": "call", "before": {}})
+        if event != "call" or frame.f_code.co_filename != FILENAME:
+            return None
+
+        if not self.started:
+            # Inicio del programa (marco del modulo).
+            self.started = True
+            self.module_frame = frame
+            self.depth[id(frame)] = 0
+            self.call_ids[id(frame)] = 1
+            self._add(
+                {
+                    "line": 0,
+                    "event": "call",
+                    "callType": "program",
+                    "function": "<module>",
+                    "depth": 0,
+                    "callId": 1,
+                    "scope": "module",
+                    "before": {},
+                }
+            )
             return self.local_trace
-        return None
+
+        # Entrada a una funcion propia.
+        depth = 0
+        parent = frame.f_back
+        while parent is not None:
+            if parent.f_code.co_filename != FILENAME:
+                break
+            depth += 1
+            parent = parent.f_back
+        if depth > MAX_CALL_DEPTH:
+            raise TraceLimitError(
+                "Se supero la profundidad maxima de llamadas (%d)" % MAX_CALL_DEPTH
+            )
+        self.call_count += 1
+        if self.call_count > MAX_CALLS:
+            raise TraceLimitError("Se supero el limite de llamadas (%d)" % MAX_CALLS)
+
+        call_id = self.next_call_id
+        self.next_call_id += 1
+        self.depth[id(frame)] = depth
+        self.call_ids[id(frame)] = call_id
+        snap = {
+            "line": frame.f_lineno,
+            "event": "call",
+            "callType": "function",
+            "function": frame.f_code.co_name,
+            "depth": depth,
+            "callId": call_id,
+            "scope": "function",
+            "before": capture_state(frame),
+        }
+        if self.module_frame is not None:
+            snap["globals"] = capture_state(self.module_frame)
+        self._add(snap)
+        return self.local_trace
 
     def local_trace(self, frame, event, arg):
+        fid = id(frame)
         if event == "line":
-            self.raised = False
+            self.raised.discard(fid)
             line = frame.f_lineno
             self._close_pending(frame, line)
             snap = {"line": line, "event": "line", "before": capture_state(frame)}
+            snap.update(self._scope(frame))
             header, is_header = self._loop_for_line(line)
             if header is not None:
+                key = (self.call_ids.get(fid, 1), header)
                 if is_header:
-                    self.header_counts[header] = self.header_counts.get(header, 0) + 1
-                    self._pending_header = header
-                snap["iteration"] = self.header_counts.get(header, 0)
-            self.pending = self._add(snap)
+                    self.header_counts[key] = self.header_counts.get(key, 0) + 1
+                    snap["iteration"] = self.header_counts[key]
+                else:
+                    snap["iteration"] = self.header_counts.get(key, 0)
+            pending = {"snap": self._add(snap), "header": header if is_header else None}
+            self.pending[fid] = pending
         elif event == "exception":
-            self._close_pending(frame, None)
+            self._close_pending(frame, frame.f_lineno)
             exc = arg[1]
-            self._add({
+            snap = {
                 "line": frame.f_lineno,
                 "event": "exception",
                 "before": capture_state(frame),
-                "detail": f"{type(exc).__name__}: {exc}",
-            })
-            self.raised = True
+                "detail": "%s: %s" % (type(exc).__name__, exc),
+            }
+            snap.update(self._scope(frame))
+            self._add(snap)
+            self.raised.add(fid)
         elif event == "return":
-            self._close_pending(frame, None)
-            if not self.raised:
-                self._add({
+            self._close_pending(frame, frame.f_lineno)
+            if fid not in self.raised:
+                snap = {
                     "line": frame.f_lineno,
                     "event": "return",
                     "before": capture_state(frame),
-                })
+                }
+                snap.update(self._scope(frame))
+                if self.depth.get(fid, 0) > 0:
+                    snap["returnValue"] = normalize(arg)
+                self._add(snap)
+            # Al salir de la funcion, sus locales dejan de existir: no se
+            # mezclan con el marco llamador.
+            self.pending.pop(fid, None)
+            self.depth.pop(fid, None)
+            self.call_ids.pop(fid, None)
+            self.raised.discard(fid)
         return self.local_trace
 
 
@@ -180,9 +404,15 @@ def run_traced(source):
     tracer = None
     try:
         tree = ast.parse(source, FILENAME)
+        loops = find_loops(tree)
+        conditions = find_conditionals(tree, source)
         code = compile(tree, FILENAME, "exec")
-        tracer = Tracer(find_loops(tree))
-        namespace = {"__builtins__": dict(SAFE_BUILTINS), "__name__": "__traza__"}
+        tracer = Tracer(loops, conditions)
+        namespace = {
+            "__builtins__": dict(SAFE_BUILTINS),
+            "__name__": "__traza__",
+            "__traza_cond__": make_condition_recorder(tracer),
+        }
         buffer = io.StringIO()
         previous = sys.gettrace()
         try:
@@ -195,14 +425,18 @@ def run_traced(source):
         finally:
             output = buffer.getvalue()
     except SyntaxError as exc:
-        error = f"SyntaxError: {exc.msg} (linea {exc.lineno})"
+        error = "SyntaxError: %s (linea %s)" % (exc.msg, exc.lineno)
+    except TraceLimitError as exc:
+        error = "TraceLimitError: %s" % exc
     except Exception as exc:  # noqa: BLE001 - se informa al estudiante
-        error = f"{type(exc).__name__}: {exc}"
+        error = "%s: %s" % (type(exc).__name__, exc)
     if tracer is not None:
         snapshots = tracer.snapshots
-    return json.dumps({
-        "output": output,
-        "snapshots": snapshots,
-        "error": error,
-        "pythonMs": round((time.perf_counter() - started) * 1000, 3),
-    })
+    return json.dumps(
+        {
+            "output": output,
+            "snapshots": snapshots,
+            "error": error,
+            "pythonMs": round((time.perf_counter() - started) * 1000, 3),
+        }
+    )

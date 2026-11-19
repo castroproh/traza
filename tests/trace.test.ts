@@ -1,12 +1,15 @@
 import { describe, expect, it } from "vitest";
 import demo from "./fixtures/demo-trace.cpython.json";
+import functionsAndConditions from "./fixtures/demo-functions-cond.cpython.json";
 import { EXERCISES, sourceLine } from "../src/domain/exercises";
 import { EngineProtocolError, parseEngineJson } from "../src/domain/parseTrace";
 import { buildRows, formatValue, variableColumns } from "../src/domain/rows";
 
 // El fixture es la salida REAL de src/python/tracer.py ejecutada con CPython 3.13.
 const parsed = parseEngineJson(JSON.stringify(demo));
-const code = EXERCISES["suma-1-3"].code;
+const demoExercise = EXERCISES["suma-1-3"];
+if (!demoExercise) throw new Error("Falta el ejercicio suma-1-3");
+const code = demoExercise.code;
 
 describe("parseEngineJson (traza del ejercicio)", () => {
   it("conserva el orden de los eventos", () => {
@@ -81,6 +84,57 @@ describe("parseEngineJson (errores de protocolo)", () => {
   it("devuelve el error del programa como texto", () => {
     const withError = { ...base, error: "ZeroDivisionError: division by zero" };
     expect(parseEngineJson(JSON.stringify(withError)).error).toBe("ZeroDivisionError: division by zero");
+  });
+});
+
+// Fixture REAL de src/python/tracer.py con funciones y condicionales (CPython 3.13).
+const fnParsed = parseEngineJson(JSON.stringify(functionsAndConditions));
+
+describe("parseEngineJson (funciones y condicionales)", () => {
+  it("registra la entrada y la salida de la función con identidad de marco", () => {
+    const call = fnParsed.snapshots.find((s) => s.event === "call" && s.callType === "function");
+    const returned = fnParsed.snapshots.find((s) => s.event === "return" && s.scope === "function");
+    expect(call).toMatchObject({
+      function: "clasificar",
+      depth: 1,
+      callId: 2,
+      scope: "function",
+      before: { edad: 20 },
+    });
+    expect(returned).toMatchObject({ function: "clasificar", depth: 1, callId: 2, returnValue: "mayor" });
+  });
+
+  it("separa los locales del marco de las variables globales", () => {
+    const inside = fnParsed.snapshots.find((s) => s.scope === "function" && s.event === "line");
+    expect(inside?.before).toEqual({ edad: 20 });
+    expect(inside?.globals).toBeDefined();
+    expect(inside?.globals?.["clasificar"]).toEqual({ unsupported: "function" });
+  });
+
+  it("registra la condición real, el resultado y la rama ejecutada", () => {
+    const condition = fnParsed.snapshots.find((s) => s.condition)?.condition;
+    expect(condition).toMatchObject({
+      line: 2,
+      expression: "edad >= 18",
+      result: true,
+      hasElse: false,
+      branch: "then",
+      branchLine: 3,
+    });
+    expect(condition?.notExecuted).toBeUndefined();
+  });
+
+  it("identifica la llamada al programa y las llamadas a funciones", () => {
+    expect(fnParsed.snapshots[0]).toMatchObject({ callType: "program", function: "<module>", depth: 0, callId: 1 });
+    expect(fnParsed.snapshots.filter((s) => s.event === "call")).toHaveLength(2);
+  });
+
+  it("muestra marcos y valores devueltos en las filas", () => {
+    const rows = buildRows(fnParsed.snapshots, variableColumns(fnParsed.snapshots));
+    const functionRow = rows.find((row) => row.event === "call" && row.scope === "function");
+    expect(functionRow?.frameLabel).toBe("Entrada a clasificar()");
+    expect(functionRow?.frame).toBe("clasificar");
+    expect(rows.find((row) => row.event === "return" && row.scope === "function")?.returnValue).toBe("'mayor'");
   });
 });
 

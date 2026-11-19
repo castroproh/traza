@@ -10,7 +10,7 @@
  */
 import { loadPyodide, type PyodideInterface } from "pyodide";
 import tracerSource from "../python/tracer.py?raw";
-import { EXERCISES, isExerciseId } from "../domain/exercises";
+import { getExercise, isExerciseId } from "../domain/exercises";
 import { parseEngineJson } from "../domain/parseTrace";
 import type { ExecutionResult } from "../domain/types";
 import { isWorkerRequest, type WorkerResponse } from "./messages";
@@ -48,7 +48,8 @@ function getPyodide(): Promise<PyodideInterface> {
 
 async function runExercise(exerciseId: string): Promise<ExecutionResult> {
   if (!isExerciseId(exerciseId)) throw new Error("Ejercicio desconocido.");
-  const exercise = EXERCISES[exerciseId];
+  const exercise = getExercise(exerciseId);
+  if (!exercise) throw new Error("Ejercicio desconocido.");
   const pyodide = await getPyodide();
   const started = performance.now();
   const runTraced = pyodide.globals.get("run_traced") as ((source: string) => string) & {

@@ -28,8 +28,8 @@ export function useTraceEngine() {
     }
   }
 
-  async function run(exerciseId: ExerciseId): Promise<void> {
-    if (status.value === "running" || status.value === "loading") return;
+  async function run(exerciseId: ExerciseId): Promise<ExecutionResult | null> {
+    if (status.value === "running" || status.value === "loading") return null;
     status.value = "running";
     errorMessage.value = null;
     result.value = null;
@@ -42,10 +42,27 @@ export function useTraceEngine() {
         status.value = "error";
         errorMessage.value = describeProgramError(outcome.error ?? "error desconocido");
       }
+      return outcome;
     } catch (cause) {
       status.value = "error";
       errorMessage.value = describeError(cause);
+      return null;
     }
+  }
+
+  /** Descarta el aviso de error de un programa cuando el error forma parte del resultado esperado. */
+  function clearProgramError(): void {
+    errorMessage.value = null;
+    if (status.value === "error" && result.value) status.value = "success";
+  }
+
+  /** Reinicio voluntario del motor: termina el Worker y lo vuelve a cargar. */
+  function restart(): void {
+    client.terminate();
+    result.value = null;
+    errorMessage.value = null;
+    status.value = "idle";
+    void initialize();
   }
 
   onMounted(() => {
@@ -53,5 +70,5 @@ export function useTraceEngine() {
   });
   onBeforeUnmount(() => client.terminate());
 
-  return { status, result, errorMessage, run, initialize };
+  return { status, result, errorMessage, run, initialize, restart };
 }
