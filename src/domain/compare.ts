@@ -14,7 +14,25 @@ export interface PredictionComparison {
   variables: VariableDiff[];
   iterationsMatch: boolean;
   observedIterations: number[];
+  variableSequences: VariableSequenceDiff[];
+  firstDivergence: PredictionDivergence | undefined;
   allMatch: boolean;
+}
+
+export interface VariableSequenceDiff {
+  name: string;
+  expected: number[];
+  actual: (number | undefined)[];
+  matches: boolean;
+}
+
+export interface PredictionDivergence {
+  kind: "iteration" | "variable" | "output";
+  iteration?: number;
+  line?: number;
+  variable?: string;
+  expected?: number | string;
+  actual?: number | string;
 }
 
 /** Estado final observado: el del evento "return"; si no hay, el último `after`. */
@@ -43,6 +61,7 @@ function normalizeOutput(text: string): string {
 export function comparePrediction(
   prediction: StudentPrediction,
   result: ExecutionResult,
+  loopHeaderLine?: number,
 ): PredictionComparison {
   const state = finalState(result) ?? {};
   const variables = Object.entries(prediction.expectedVariables).map(([name, expected]) => {
@@ -56,11 +75,89 @@ export function comparePrediction(
     observed.length === expectedIt.length && observed.every((n, i) => n === expectedIt[i]);
   const outputMatches =
     normalizeOutput(prediction.expectedOutput) === normalizeOutput(result.output);
+  const statesByIteration = new Map<number, { line: number; state: VariableState }>();
+  for (const snapshot of result.snapshots) {
+    if (snapshot.event === "line" && snapshot.iteration !== undefined && snapshot.after) {
+      statesByIteration.set(snapshot.iteration, {
+        line: snapshot.line,
+        state: snapshot.after,
+      });
+    }
+  }
+  const variableSequences = Object.entries(prediction.expectedVariableValues).map(
+    ([name, expected]) => {
+      const actual = observed.map((iteration) => {
+        const value = statesByIteration.get(iteration)?.state[name];
+        return typeof value === "number" ? value : undefined;
+      });
+      return {
+        name,
+        expected,
+        actual,
+        matches:
+          actual.length === expected.length &&
+          actual.every((value, index) => value === expected[index]),
+      };
+    },
+  );
+  const divergences: Array<{ position: number; value: PredictionDivergence }> = [];
+  const iterationIndex = observed.findIndex((iteration, index) => iteration !== expectedIt[index]);
+  if (iterationIndex >= 0 || observed.length !== expectedIt.length) {
+    const position = iterationIndex >= 0 ? iterationIndex : Math.min(observed.length, expectedIt.length);
+    divergences.push({
+      position,
+      value: {
+        kind: "iteration",
+        iteration: observed[position] ?? expectedIt[position] ?? position + 1,
+        line:
+          observed[position] !== undefined
+            ? statesByIteration.get(observed[position])?.line ?? loopHeaderLine
+            : loopHeaderLine,
+        expected: expectedIt[position],
+        actual: observed[position],
+      },
+    });
+  }
+  for (const sequence of variableSequences) {
+    const index = sequence.actual.findIndex((value, itemIndex) => value !== sequence.expected[itemIndex]);
+    if (index >= 0 || sequence.actual.length !== sequence.expected.length) {
+      const position = index >= 0 ? index : Math.min(sequence.actual.length, sequence.expected.length);
+      const iteration = observed[position] ?? expectedIt[position] ?? position + 1;
+      divergences.push({
+        position,
+        value: {
+          kind: "variable",
+          iteration,
+          line: statesByIteration.get(iteration)?.line ?? loopHeaderLine,
+          variable: sequence.name,
+          expected: sequence.expected[position],
+          actual: sequence.actual[position],
+        },
+      });
+    }
+  }
+  if (!outputMatches) {
+    divergences.push({
+      position: Math.max(observed.length, expectedIt.length) + 1,
+      value: {
+        kind: "output",
+        expected: normalizeOutput(prediction.expectedOutput),
+        actual: normalizeOutput(result.output),
+      },
+    });
+  }
+  divergences.sort((a, b) => a.position - b.position);
   return {
     outputMatches,
     variables,
     iterationsMatch,
     observedIterations: observed,
-    allMatch: outputMatches && iterationsMatch && variables.every((v) => v.matches),
+    variableSequences,
+    firstDivergence: divergences[0]?.value,
+    allMatch:
+      outputMatches &&
+      iterationsMatch &&
+      variables.every((v) => v.matches) &&
+      variableSequences.every((sequence) => sequence.matches),
   };
 }

@@ -10,11 +10,18 @@ export type WorkerRequest =
 export type WorkerResponse =
   | { type: "status"; status: "loading" | "ready" }
   | { type: "result"; requestId: number; result: ExecutionResult }
-  | { type: "error"; phase: "init" | "run"; requestId?: number; message: string };
+  | { type: "error"; phase: "init"; message: string }
+  | { type: "error"; phase: "run"; requestId: number; message: string };
 
 export function isWorkerRequest(value: unknown): value is WorkerRequest {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
   if (v["type"] === "init") return true;
-  return v["type"] === "run" && typeof v["requestId"] === "number" && typeof v["exerciseId"] === "string";
+  return (
+    v["type"] === "run" &&
+    typeof v["requestId"] === "number" &&
+    Number.isSafeInteger(v["requestId"]) &&
+    v["requestId"] > 0 &&
+    typeof v["exerciseId"] === "string"
+  );
 }

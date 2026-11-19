@@ -69,6 +69,8 @@ async function runExercise(exerciseId: string): Promise<ExecutionResult> {
     durationMs: Math.round((performance.now() - started) * 100) / 100,
   };
   if (raw.error !== undefined) result.error = raw.error;
+  if (raw.errorKind !== undefined) result.errorKind = raw.errorKind;
+  if (raw.errorLine !== undefined) result.errorLine = raw.errorLine;
   return result;
 }
 

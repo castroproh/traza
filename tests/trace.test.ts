@@ -85,6 +85,15 @@ describe("parseEngineJson (errores de protocolo)", () => {
     const withError = { ...base, error: "ZeroDivisionError: division by zero" };
     expect(parseEngineJson(JSON.stringify(withError)).error).toBe("ZeroDivisionError: division by zero");
   });
+  it("valida y conserva el tipo y la línea del error estructurado", () => {
+    const withError = { ...base, error: "No se puede dividir entre cero.", errorKind: "runtime", errorLine: 2 };
+    expect(parseEngineJson(JSON.stringify(withError))).toMatchObject({
+      errorKind: "runtime",
+      errorLine: 2,
+    });
+    expect(() => parseEngineJson(JSON.stringify({ ...withError, errorKind: "secret" }))).toThrow(/Tipo de error/);
+    expect(() => parseEngineJson(JSON.stringify({ ...withError, errorLine: 0 }))).toThrow(/Línea del error/);
+  });
 });
 
 // Fixture REAL de src/python/tracer.py con funciones y condicionales (CPython 3.13).
