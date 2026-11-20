@@ -1,6 +1,6 @@
 import type { ExerciseId } from "../domain/exercises";
-import { TRACE_LIMITS } from "../domain/limits";
 import type { EngineStatus, ExecutionResult } from "../domain/types";
+import { ENGINE_TIMEOUTS } from "./config";
 import type { WorkerRequest, WorkerResponse } from "./messages";
 
 /** Abstracción mínima de un Worker (permite probar sin navegador). */
@@ -11,7 +11,7 @@ export interface WorkerLike {
 }
 
 export class EngineError extends Error {
-  readonly kind: "init" | "run" | "timeout" | "worker";
+  readonly kind: "init" | "run" | "timeout" | "worker" | "cancelled";
   constructor(kind: EngineError["kind"], message: string) {
     super(message);
     this.name = "EngineError";
@@ -21,6 +21,8 @@ export class EngineError extends Error {
 
 export interface ClientOptions {
   runTimeoutMs?: number;
+  /** Tiempo máximo para que Pyodide termine de cargar. */
+  initTimeoutMs?: number;
   onStatus?: (status: EngineStatus) => void;
 }
 
@@ -33,6 +35,7 @@ export class TraceEngineClient {
   private worker: WorkerLike | null = null;
   private initPromise: Promise<void> | null = null;
   private initWaiter: Waiter<void> | null = null;
+  private initTimer: ReturnType<typeof setTimeout> | null = null;
   private nextId = 1;
   private readonly pending = new Map<number, Waiter<ExecutionResult> & { timer: ReturnType<typeof setTimeout> }>();
 
@@ -56,11 +59,22 @@ export class TraceEngineClient {
     this.initPromise = new Promise<void>((resolve, reject) => {
       this.initWaiter = { resolve, reject };
     });
+    this.initTimer = setTimeout(
+      () => this.fail(new EngineError("timeout", "La carga de Python tardó demasiado.")),
+      this.options.initTimeoutMs ?? ENGINE_TIMEOUTS.initializationMs,
+    );
     worker.listen(
       (response) => this.handle(response),
       (reason) => this.fail(new EngineError("worker", reason)),
     );
-    worker.post({ type: "init" });
+    try {
+      worker.post({ type: "init" });
+    } catch (cause) {
+      const reason = cause instanceof Error ? cause.message : "No se pudo iniciar el Worker.";
+      this.fail(new EngineError("worker", reason));
+      this.initPromise.catch(() => undefined);
+      return this.initPromise;
+    }
     this.options.onStatus?.("loading");
     this.initPromise.catch(() => undefined); // evita "unhandled rejection"; el llamador la recibe igualmente
     return this.initPromise;
@@ -71,14 +85,24 @@ export class TraceEngineClient {
     const worker = this.worker;
     if (!worker) throw new EngineError("worker", "El motor no está disponible.");
     const requestId = this.nextId++;
-    const timeoutMs = this.options.runTimeoutMs ?? TRACE_LIMITS.runTimeoutMs;
+    const timeoutMs = this.options.runTimeoutMs ?? ENGINE_TIMEOUTS.runMs;
     return new Promise<ExecutionResult>((resolve, reject) => {
       const timer = setTimeout(() => {
         this.fail(new EngineError("timeout", "El programa tardó demasiado y se detuvo."));
       }, timeoutMs);
       this.pending.set(requestId, { resolve, reject, timer });
-      worker.post({ type: "run", requestId, exerciseId });
+      try {
+        worker.post({ type: "run", requestId, exerciseId });
+      } catch (cause) {
+        const reason = cause instanceof Error ? cause.message : "No se pudo enviar la ejecución.";
+        this.fail(new EngineError("worker", reason));
+      }
     });
+  }
+
+  /** Cancela la ejecución en curso y termina el Worker (recuperación explícita). */
+  cancel(): void {
+    this.fail(new EngineError("cancelled", "La ejecución se canceló."));
   }
 
   terminate(): void {
@@ -88,8 +112,14 @@ export class TraceEngineClient {
   private handle(response: WorkerResponse): void {
     switch (response.type) {
       case "status":
-        if (response.status === "ready") this.initWaiter?.resolve();
-        if (response.status === "ready") this.initWaiter = null;
+        if (response.status === "ready") {
+          if (this.initTimer) {
+            clearTimeout(this.initTimer);
+            this.initTimer = null;
+          }
+          this.initWaiter?.resolve();
+          this.initWaiter = null;
+        }
         this.options.onStatus?.(response.status);
         return;
       case "result": {
@@ -106,11 +136,9 @@ export class TraceEngineClient {
           return;
         }
         if (response.requestId !== undefined) {
-          const waiter = this.pending.get(response.requestId);
-          if (!waiter) return;
-          clearTimeout(waiter.timer);
-          this.pending.delete(response.requestId);
-          waiter.reject(new EngineError("run", response.message));
+          // Un error de ejecución deja el Worker en un estado incierto: se
+          // termina para que la siguiente ejecución use un Worker limpio.
+          this.fail(new EngineError("run", response.message));
         }
         return;
     }
@@ -118,6 +146,10 @@ export class TraceEngineClient {
 
   /** Rechaza todo lo pendiente, destruye el Worker y deja el cliente listo para re-inicializar. */
   private fail(error: EngineError, notify = true): void {
+    if (this.initTimer) {
+      clearTimeout(this.initTimer);
+      this.initTimer = null;
+    }
     this.worker?.terminate();
     this.worker = null;
     this.initPromise = null;

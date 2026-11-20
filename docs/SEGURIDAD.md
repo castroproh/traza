@@ -1,10 +1,10 @@
-# Revisión de seguridad — TRAZA 0.7.0
+# Revisión de seguridad — TRAZA 0.8.0
 
 **Alcance:** esta revisión cubre el motor de ejecución (Pyodide en un Web Worker), la validación de
 mensajes, los límites, la recuperación y la persistencia local. **No** es una auditoría de
 seguridad externa ni una garantía para código arbitrario.
 
-> **Conclusión principal:** el Worker con Pyodide **no es un sandbox de seguridad**. En 0.7.0 no se
+> **Conclusión principal:** el Worker con Pyodide **no es un sandbox de seguridad**. En 0.8.0 no se
 > ejecuta código escrito por estudiantes: solo ejercicios de una lista blanca. Cualquier ampliación
 > a código libre requiere aislamiento adicional y una revisión específica.
 
@@ -21,7 +21,7 @@ seguridad externa ni una garantía para código arbitrario.
 ## 2. Controles verificados
 
 - **Sin editor ni ejecución libre.** La interfaz no ofrece un campo para escribir Python.
-- **Lista blanca cerrada.** `EXERCISES` contiene los cuatro ejercicios PACT y las 12 micropruebas;
+- **Lista blanca cerrada.** `EXERCISES` contiene los ejercicios PACT y 26 micropruebas para cuatro patrones;
   un identificador desconocido produce error antes de ejecutar.
 - **Builtins reducidos.** El programa recibe solo `print` y `range`; los `import` fallan.
 - **Límite de eventos.** Máximo 2000 eventos de traza (`TraceLimitError`).
@@ -40,7 +40,7 @@ seguridad externa ni una garantía para código arbitrario.
 ## 3. Riesgos que permanecen
 
 1. **Escape del Worker.** Aunque los builtins estén reducidos, el código podría intentar escapar por
-   introspección (`().__class__.__mro__…`). En 0.7.0 el código es de la lista blanca y no del
+   introspección (`().__class__.__mro__…`). En 0.8.0 el código es de la lista blanca y no del
    estudiante, por lo que el riesgo es de cadena de suministro, no de entrada libre.
 2. **Bucles que no emiten eventos.** Un bucle infinito dentro de una sola instrucción no incrementa
    el contador de 2000 eventos; solo lo detiene el timeout de 15 s al terminar el Worker.
@@ -81,5 +81,4 @@ Cambios aplicados en 0.7.0:
 Resultado: `npm audit` → **0 vulnerabilidades**. Requisito derivado: Node.js **>= 22.12** (Vitest 5).
 El lockfile se regeneró con `npm install`.
 
-> Nota: la ausencia de avisos no demuestra ausencia de vulnerabilidades; es el resultado de la base
-> de datos pública en la fecha indicada.
+> Nota: la ausencia de avisos no demuestra ausencia de vulnerabilidades; el resultado de la auditoría final de 0.8.0 se registra en `docs/ESTADO_DEL_PROYECTO.md`. Debe repetirse antes de desplegar.

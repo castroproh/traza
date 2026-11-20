@@ -1,6 +1,7 @@
 import { normalizeState, normalizeValue } from "./normalize";
 import type {
   ConditionBranch,
+  ProgramErrorKind,
   TraceCondition,
   TraceEventKind,
   TraceSnapshot,
@@ -17,8 +18,12 @@ export interface RawEngineResult {
   output: string;
   snapshots: TraceSnapshot[];
   error?: string;
+  errorKind?: ProgramErrorKind;
+  errorLine?: number;
   pythonMs: number;
 }
+
+const ERROR_KINDS: readonly ProgramErrorKind[] = ["syntax", "unsupported", "runtime", "resource"];
 
 const EVENTS: readonly TraceEventKind[] = ["call", "line", "return", "exception"];
 const BRANCHES: readonly ConditionBranch[] = ["then", "elif", "else", "none"];
@@ -173,11 +178,17 @@ export function parseEngineJson(json: string): RawEngineResult {
     throw new EngineProtocolError("El motor devolvió datos que no son JSON.");
   }
   if (!isRecord(data)) throw new EngineProtocolError("El motor devolvió un formato inesperado.");
-  const { output, snapshots, error, pythonMs } = data;
+  const { output, snapshots, error, errorKind, errorLine, pythonMs } = data;
   if (typeof output !== "string") throw new EngineProtocolError("Falta la salida del programa.");
   if (!Array.isArray(snapshots)) throw new EngineProtocolError("Falta la lista de eventos.");
   if (error !== null && error !== undefined && typeof error !== "string") {
     throw new EngineProtocolError("Error del programa con formato inválido.");
+  }
+  if (errorKind !== undefined && (typeof errorKind !== "string" || !(ERROR_KINDS as readonly string[]).includes(errorKind))) {
+    throw new EngineProtocolError("Tipo de error del programa desconocido.");
+  }
+  if (errorLine !== undefined && (!Number.isInteger(errorLine) || (errorLine as number) < 1)) {
+    throw new EngineProtocolError("Línea del error inválida.");
   }
   const result: RawEngineResult = {
     output,
@@ -185,5 +196,7 @@ export function parseEngineJson(json: string): RawEngineResult {
     pythonMs: typeof pythonMs === "number" ? pythonMs : 0,
   };
   if (typeof error === "string") result.error = error;
+  if (typeof errorKind === "string") result.errorKind = errorKind as ProgramErrorKind;
+  if (typeof errorLine === "number") result.errorLine = errorLine;
   return result;
 }

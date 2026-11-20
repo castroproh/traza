@@ -47,6 +47,24 @@ describe("perfiles simulados (reglas contra perfiles de respuesta)", () => {
     expect(outcome.statuses["H-ACC-03"]).toBe("supported");
   });
 
+  it("range-un-argumento-01 distingue la interpretación inclusiva también con un solo argumento", () => {
+    const outcome = evaluatePattern("RANGE", [{ microtestId: "range-un-argumento-01", response: "0, 1, 2, 3, 4, 5" }]);
+    expect(outcome.statuses["H-RANGE-01"]).toBe("supported");
+    expect(outcome.statuses["H-RANGE-02"]).toBe("contradicted");
+    const correcto = evaluatePattern("RANGE", [{ microtestId: "range-un-argumento-01", response: "0, 1, 2, 3, 4" }]);
+    expect(correcto.statuses["H-RANGE-02"]).toBe("supported");
+    expect(correcto.statuses["H-RANGE-01"]).toBe("contradicted");
+  });
+
+  it("acc-inicial-cero-02 separa sustitución de inicialización ignorada desde cero", () => {
+    const sustitucion = evaluatePattern("ACUMULADORES", [{ microtestId: "acc-inicial-cero-02", response: "2, 3, 4" }]);
+    expect(sustitucion.statuses["H-ACC-02"]).toBe("supported");
+    expect(sustitucion.statuses["H-ACC-03"]).toBe("contradicted");
+    const inicial = evaluatePattern("ACUMULADORES", [{ microtestId: "acc-inicial-cero-02", response: "2, 5, 9" }]);
+    expect(inicial.statuses["H-ACC-03"]).toBe("insufficient");
+    expect(inicial.statuses["H-ACC-02"]).toBe("contradicted");
+  });
+
   it("perfil mixto no genera conclusiones excesivas", () => {
     const outcome = evaluatePattern("ACUMULADORES", [
       { microtestId: "acc-final-01", response: "6" },
@@ -88,7 +106,7 @@ describe("perfiles simulados (reglas contra perfiles de respuesta)", () => {
     expect(parsed.instrument.version).toBe("0.8.0");
     expect(parsed.patterns.length).toBe(4);
     expect(parsed.hypotheses.length).toBe(11);
-    expect(parsed.microtests.length).toBe(24);
+    expect(parsed.microtests.length).toBe(26);
     expect(parsed.discriminationMatrices.length).toBe(4);
     const bank = buildBankExport();
     expect(bank.instrument.version).toBe("0.8.0");

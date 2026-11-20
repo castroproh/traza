@@ -1,0 +1,6064 @@
+{
+  "warning": "Experimento enteramente sintético. No mide aprendizaje, prevalencia ni desempeño de estudiantes reales.",
+  "methodology": {
+    "seed": 2026,
+    "sessionsPerProfile": 20,
+    "patterns": [
+      "RANGE",
+      "ACUMULADORES",
+      "CONDICIONALES",
+      "FUNCIONES"
+    ],
+    "noiseLevels": [
+      0.0,
+      0.1,
+      0.2,
+      0.4
+    ],
+    "maxPerSession": 8,
+    "bayesianThreshold": 0.7,
+    "arms": {
+      "A_24_adaptive": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 24,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "adaptive"
+        ],
+        "notes": [
+          "Las sesiones usan perfiles artificiales definidos por reglas.",
+          "La hipótesis generadora se usa para medir, nunca para seleccionar micropruebas."
+        ]
+      },
+      "B_26_adaptive": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 26,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "adaptive"
+        ],
+        "notes": [
+          "Las sesiones usan perfiles artificiales definidos por reglas.",
+          "La hipótesis generadora se usa para medir, nunca para seleccionar micropruebas."
+        ]
+      },
+      "C_26_information_gain": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 26,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "information_gain"
+        ],
+        "notes": [
+          "Las sesiones usan perfiles artificiales definidos por reglas.",
+          "La hipótesis generadora se usa para medir, nunca para seleccionar micropruebas."
+        ]
+      },
+      "D_26_bayesian_threshold": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 26,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "adaptive+bayesian"
+        ],
+        "notes": [
+          "Se reutilizan exactamente las respuestas y micropruebas de B_26_adaptive.",
+          "La decisión final usa el umbral experimental configurable 0.70.",
+          "La selección sigue siendo adaptive; el prototipo Bayes solo cambia la decisión final.",
+          "No se usan hipótesis generadoras para seleccionar micropruebas."
+        ]
+      },
+      "E_25_range_only": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 25,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "adaptive"
+        ],
+        "notes": [
+          "Las sesiones usan perfiles artificiales definidos por reglas.",
+          "La hipótesis generadora se usa para medir, nunca para seleccionar micropruebas."
+        ]
+      },
+      "F_25_accumulator_only": {
+        "instrument": {
+          "version": "0.8.0",
+          "hypotheses": 11,
+          "microtests": 25,
+          "pairs": 10
+        },
+        "selectionModes": [
+          "adaptive"
+        ],
+        "notes": [
+          "Las sesiones usan perfiles artificiales definidos por reglas.",
+          "La hipótesis generadora se usa para medir, nunca para seleccionar micropruebas."
+        ]
+      }
+    },
+    "comparison": "A-D son los brazos principales. E/F añaden cada microprueba nueva por separado para estimar contribuciones dentro de este simulador. Todos comparten perfiles, semillas, ruido y límite. D reutiliza exactamente las respuestas de B; cambia solo la decisión final.",
+    "byPatternNoise": {
+      "A_24_adaptive": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6786,
+            "normative_rate": 0.6786,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.1929,
+            "microtests_median": 1.0,
+            "microtests_max": 5,
+            "ambiguous_answers_mean": 0.1929,
+            "total_microtests": 167
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 0.9955,
+            "resolution_rate_ci": {
+              "rate": 0.9955,
+              "n": 220,
+              "ci_low": 0.9747,
+              "ci_high": 0.9992
+            },
+            "abstention_rate": 0.0045,
+            "abstention_rate_ci": {
+              "rate": 0.0045,
+              "n": 220,
+              "ci_low": 0.0008,
+              "ci_high": 0.0253
+            },
+            "no_misconception_rate": 0.4045,
+            "normative_rate": 0.4045,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 0.9955,
+            "microtests_mean": 1.2045,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.2091,
+            "total_microtests": 265
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 0.9857,
+            "resolution_rate_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "abstention_rate": 0.0143,
+            "abstention_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "no_misconception_rate": 0.6,
+            "normative_rate": 0.6,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9857,
+            "microtests_mean": 1.3429,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3571,
+            "total_microtests": 188
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9643,
+            "resolution_rate_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "abstention_rate": 0.0357,
+            "abstention_rate_ci": {
+              "rate": 0.0357,
+              "n": 140,
+              "ci_low": 0.0153,
+              "ci_high": 0.0809
+            },
+            "no_misconception_rate": 0.5071,
+            "normative_rate": 0.5071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9643,
+            "microtests_mean": 1.5429,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.5786,
+            "total_microtests": 216
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.675,
+            "resolution_rate_ci": {
+              "rate": 0.675,
+              "n": 160,
+              "ci_low": 0.5991,
+              "ci_high": 0.7427
+            },
+            "abstention_rate": 0.0688,
+            "abstention_rate_ci": {
+              "rate": 0.0688,
+              "n": 160,
+              "ci_low": 0.0388,
+              "ci_high": 0.1189
+            },
+            "no_misconception_rate": 0.55,
+            "normative_rate": 0.475,
+            "multiple_rate": 0.0563,
+            "multiple_rate_ci": {
+              "rate": 0.0563,
+              "n": 160,
+              "ci_low": 0.0299,
+              "ci_high": 0.1034
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.8875,
+            "microtests_mean": 2.1938,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3187,
+            "total_microtests": 351
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.5125,
+            "resolution_rate_ci": {
+              "rate": 0.5125,
+              "n": 240,
+              "ci_low": 0.4496,
+              "ci_high": 0.575
+            },
+            "abstention_rate": 0.0458,
+            "abstention_rate_ci": {
+              "rate": 0.0458,
+              "n": 240,
+              "ci_low": 0.0258,
+              "ci_high": 0.0802
+            },
+            "no_misconception_rate": 0.3542,
+            "normative_rate": 0.275,
+            "multiple_rate": 0.0917,
+            "multiple_rate_ci": {
+              "rate": 0.0917,
+              "n": 240,
+              "ci_low": 0.0613,
+              "ci_high": 0.1349
+            },
+            "identification_accuracy": 0.8417,
+            "identification_accuracy_ci": {
+              "rate": 0.8417,
+              "n": 120,
+              "ci_low": 0.7659,
+              "ci_high": 0.8962
+            },
+            "false_positive_rate": 0.0083,
+            "false_positive_rate_ci": {
+              "rate": 0.0083,
+              "n": 120,
+              "ci_low": 0.0015,
+              "ci_high": 0.0457
+            },
+            "coverage_mean": 0.8375,
+            "microtests_mean": 2.1583,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.225,
+            "total_microtests": 518
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.6625,
+            "resolution_rate_ci": {
+              "rate": 0.6625,
+              "n": 160,
+              "ci_low": 0.5862,
+              "ci_high": 0.7312
+            },
+            "abstention_rate": 0.0813,
+            "abstention_rate_ci": {
+              "rate": 0.0813,
+              "n": 160,
+              "ci_low": 0.0481,
+              "ci_high": 0.134
+            },
+            "no_misconception_rate": 0.4562,
+            "normative_rate": 0.3125,
+            "multiple_rate": 0.1187,
+            "multiple_rate_ci": {
+              "rate": 0.1187,
+              "n": 160,
+              "ci_low": 0.0774,
+              "ci_high": 0.178
+            },
+            "identification_accuracy": 0.725,
+            "identification_accuracy_ci": {
+              "rate": 0.725,
+              "n": 40,
+              "ci_low": 0.5716,
+              "ci_high": 0.8389
+            },
+            "false_positive_rate": 0.025,
+            "false_positive_rate_ci": {
+              "rate": 0.025,
+              "n": 40,
+              "ci_low": 0.0044,
+              "ci_high": 0.1288
+            },
+            "coverage_mean": 0.8875,
+            "microtests_mean": 2.175,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.2938,
+            "total_microtests": 348
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.5813,
+            "resolution_rate_ci": {
+              "rate": 0.5813,
+              "n": 160,
+              "ci_low": 0.5038,
+              "ci_high": 0.6549
+            },
+            "abstention_rate": 0.0688,
+            "abstention_rate_ci": {
+              "rate": 0.0688,
+              "n": 160,
+              "ci_low": 0.0388,
+              "ci_high": 0.1189
+            },
+            "no_misconception_rate": 0.4188,
+            "normative_rate": 0.2375,
+            "multiple_rate": 0.1313,
+            "multiple_rate_ci": {
+              "rate": 0.1313,
+              "n": 160,
+              "ci_low": 0.0875,
+              "ci_high": 0.1923
+            },
+            "identification_accuracy": 0.625,
+            "identification_accuracy_ci": {
+              "rate": 0.625,
+              "n": 40,
+              "ci_low": 0.4703,
+              "ci_high": 0.7578
+            },
+            "false_positive_rate": 0.05,
+            "false_positive_rate_ci": {
+              "rate": 0.05,
+              "n": 40,
+              "ci_low": 0.0138,
+              "ci_high": 0.165
+            },
+            "coverage_mean": 0.8562,
+            "microtests_mean": 2.1437,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3187,
+            "total_microtests": 343
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0778,
+            "abstention_rate_ci": {
+              "rate": 0.0778,
+              "n": 180,
+              "ci_low": 0.0469,
+              "ci_high": 0.1263
+            },
+            "no_misconception_rate": 0.3944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0167,
+            "multiple_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9593,
+            "microtests_mean": 3.9222,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4722,
+            "total_microtests": 706
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0346,
+            "abstention_rate_ci": {
+              "rate": 0.0346,
+              "n": 260,
+              "ci_low": 0.0183,
+              "ci_high": 0.0645
+            },
+            "no_misconception_rate": 0.2269,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0115,
+            "multiple_rate_ci": {
+              "rate": 0.0115,
+              "n": 260,
+              "ci_low": 0.0039,
+              "ci_high": 0.0334
+            },
+            "identification_accuracy": 0.9643,
+            "identification_accuracy_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "false_positive_rate": 0.0143,
+            "false_positive_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "coverage_mean": 0.9769,
+            "microtests_mean": 3.5731,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3115,
+            "total_microtests": 929
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9278,
+            "resolution_rate_ci": {
+              "rate": 0.9278,
+              "n": 180,
+              "ci_low": 0.8804,
+              "ci_high": 0.9573
+            },
+            "abstention_rate": 0.0278,
+            "abstention_rate_ci": {
+              "rate": 0.0278,
+              "n": 180,
+              "ci_low": 0.0119,
+              "ci_high": 0.0634
+            },
+            "no_misconception_rate": 0.2778,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0222,
+            "multiple_rate_ci": {
+              "rate": 0.0222,
+              "n": 180,
+              "ci_low": 0.0087,
+              "ci_high": 0.0557
+            },
+            "identification_accuracy": 0.8833,
+            "identification_accuracy_ci": {
+              "rate": 0.8833,
+              "n": 60,
+              "ci_low": 0.7782,
+              "ci_high": 0.9423
+            },
+            "false_positive_rate": 0.0833,
+            "false_positive_rate_ci": {
+              "rate": 0.0833,
+              "n": 60,
+              "ci_low": 0.0361,
+              "ci_high": 0.1807
+            },
+            "coverage_mean": 0.9722,
+            "microtests_mean": 3.7056,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4056,
+            "total_microtests": 667
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9556,
+            "resolution_rate_ci": {
+              "rate": 0.9556,
+              "n": 180,
+              "ci_low": 0.9148,
+              "ci_high": 0.9773
+            },
+            "abstention_rate": 0.0111,
+            "abstention_rate_ci": {
+              "rate": 0.0111,
+              "n": 180,
+              "ci_low": 0.0031,
+              "ci_high": 0.0396
+            },
+            "no_misconception_rate": 0.2278,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0333,
+            "multiple_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "identification_accuracy": 0.7333,
+            "identification_accuracy_ci": {
+              "rate": 0.7333,
+              "n": 60,
+              "ci_low": 0.6099,
+              "ci_high": 0.8287
+            },
+            "false_positive_rate": 0.1667,
+            "false_positive_rate_ci": {
+              "rate": 0.1667,
+              "n": 60,
+              "ci_low": 0.0931,
+              "ci_high": 0.2803
+            },
+            "coverage_mean": 0.9852,
+            "microtests_mean": 3.4944,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 629
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.45,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1333,
+            "multiple_rate_ci": {
+              "rate": 0.1333,
+              "n": 180,
+              "ci_low": 0.0913,
+              "ci_high": 0.1907
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.4611,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4444,
+            "total_microtests": 803
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0269,
+            "abstention_rate_ci": {
+              "rate": 0.0269,
+              "n": 260,
+              "ci_low": 0.0131,
+              "ci_high": 0.0545
+            },
+            "no_misconception_rate": 0.2962,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1,
+            "multiple_rate_ci": {
+              "rate": 0.1,
+              "n": 260,
+              "ci_low": 0.0692,
+              "ci_high": 0.1425
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9808,
+            "microtests_mean": 4.8192,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3423,
+            "total_microtests": 1253
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9056,
+            "resolution_rate_ci": {
+              "rate": 0.9056,
+              "n": 180,
+              "ci_low": 0.854,
+              "ci_high": 0.9402
+            },
+            "abstention_rate": 0.0333,
+            "abstention_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "no_misconception_rate": 0.4,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.15,
+            "multiple_rate_ci": {
+              "rate": 0.15,
+              "n": 180,
+              "ci_low": 0.1052,
+              "ci_high": 0.2094
+            },
+            "identification_accuracy": 0.9333,
+            "identification_accuracy_ci": {
+              "rate": 0.9333,
+              "n": 60,
+              "ci_low": 0.8407,
+              "ci_high": 0.9738
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.7667,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 858
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.2944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.2444,
+            "multiple_rate_ci": {
+              "rate": 0.2444,
+              "n": 180,
+              "ci_low": 0.1874,
+              "ci_high": 0.3121
+            },
+            "identification_accuracy": 0.7167,
+            "identification_accuracy_ci": {
+              "rate": 0.7167,
+              "n": 60,
+              "ci_low": 0.5923,
+              "ci_high": 0.8149
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9648,
+            "microtests_mean": 4.9944,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3333,
+            "total_microtests": 899
+          }
+        }
+      },
+      "B_26_adaptive": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6786,
+            "normative_rate": 0.6786,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.1929,
+            "microtests_median": 1.0,
+            "microtests_max": 5,
+            "ambiguous_answers_mean": 0.1929,
+            "total_microtests": 167
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 220,
+              "ci_low": 0.9828,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "no_misconception_rate": 0.4091,
+            "normative_rate": 0.4091,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.2091,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.2091,
+            "total_microtests": 266
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6071,
+            "normative_rate": 0.6071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.3571,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.3571,
+            "total_microtests": 190
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9929,
+            "resolution_rate_ci": {
+              "rate": 0.9929,
+              "n": 140,
+              "ci_low": 0.9607,
+              "ci_high": 0.9987
+            },
+            "abstention_rate": 0.0071,
+            "abstention_rate_ci": {
+              "rate": 0.0071,
+              "n": 140,
+              "ci_low": 0.0013,
+              "ci_high": 0.0393
+            },
+            "no_misconception_rate": 0.5214,
+            "normative_rate": 0.5214,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9929,
+            "microtests_mean": 1.5643,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.5714,
+            "total_microtests": 219
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.8313,
+            "resolution_rate_ci": {
+              "rate": 0.8313,
+              "n": 160,
+              "ci_low": 0.7656,
+              "ci_high": 0.8814
+            },
+            "abstention_rate": 0.0625,
+            "abstention_rate_ci": {
+              "rate": 0.0625,
+              "n": 160,
+              "ci_low": 0.0343,
+              "ci_high": 0.1112
+            },
+            "no_misconception_rate": 0.5813,
+            "normative_rate": 0.475,
+            "multiple_rate": 0.0187,
+            "multiple_rate_ci": {
+              "rate": 0.0187,
+              "n": 160,
+              "ci_low": 0.0064,
+              "ci_high": 0.0537
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.9396,
+            "microtests_mean": 2.7375,
+            "microtests_median": 3.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.4062,
+            "total_microtests": 438
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.9083,
+            "resolution_rate_ci": {
+              "rate": 0.9083,
+              "n": 240,
+              "ci_low": 0.8651,
+              "ci_high": 0.9387
+            },
+            "abstention_rate": 0.0542,
+            "abstention_rate_ci": {
+              "rate": 0.0542,
+              "n": 240,
+              "ci_low": 0.0319,
+              "ci_high": 0.0905
+            },
+            "no_misconception_rate": 0.4042,
+            "normative_rate": 0.2792,
+            "multiple_rate": 0.0042,
+            "multiple_rate_ci": {
+              "rate": 0.0042,
+              "n": 240,
+              "ci_low": 0.0007,
+              "ci_high": 0.0232
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 120,
+              "ci_low": 0.8952,
+              "ci_high": 0.9769
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 120,
+              "ci_low": 0.0,
+              "ci_high": 0.031
+            },
+            "coverage_mean": 0.9694,
+            "microtests_mean": 2.8333,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 680
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.85,
+            "resolution_rate_ci": {
+              "rate": 0.85,
+              "n": 160,
+              "ci_low": 0.7865,
+              "ci_high": 0.8971
+            },
+            "abstention_rate": 0.0938,
+            "abstention_rate_ci": {
+              "rate": 0.0938,
+              "n": 160,
+              "ci_low": 0.0576,
+              "ci_high": 0.1489
+            },
+            "no_misconception_rate": 0.5437,
+            "normative_rate": 0.3187,
+            "multiple_rate": 0.0125,
+            "multiple_rate_ci": {
+              "rate": 0.0125,
+              "n": 160,
+              "ci_low": 0.0034,
+              "ci_high": 0.0444
+            },
+            "identification_accuracy": 0.75,
+            "identification_accuracy_ci": {
+              "rate": 0.75,
+              "n": 40,
+              "ci_low": 0.5981,
+              "ci_high": 0.8581
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.95,
+            "microtests_mean": 2.7625,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 442
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.8375,
+            "resolution_rate_ci": {
+              "rate": 0.8375,
+              "n": 160,
+              "ci_low": 0.7725,
+              "ci_high": 0.8866
+            },
+            "abstention_rate": 0.1062,
+            "abstention_rate_ci": {
+              "rate": 0.1062,
+              "n": 160,
+              "ci_low": 0.0674,
+              "ci_high": 0.1636
+            },
+            "no_misconception_rate": 0.5,
+            "normative_rate": 0.2375,
+            "multiple_rate": 0.0063,
+            "multiple_rate_ci": {
+              "rate": 0.0063,
+              "n": 160,
+              "ci_low": 0.0011,
+              "ci_high": 0.0345
+            },
+            "identification_accuracy": 0.625,
+            "identification_accuracy_ci": {
+              "rate": 0.625,
+              "n": 40,
+              "ci_low": 0.4703,
+              "ci_high": 0.7578
+            },
+            "false_positive_rate": 0.05,
+            "false_positive_rate_ci": {
+              "rate": 0.05,
+              "n": 40,
+              "ci_low": 0.0138,
+              "ci_high": 0.165
+            },
+            "coverage_mean": 0.9458,
+            "microtests_mean": 2.7687,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 443
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0778,
+            "abstention_rate_ci": {
+              "rate": 0.0778,
+              "n": 180,
+              "ci_low": 0.0469,
+              "ci_high": 0.1263
+            },
+            "no_misconception_rate": 0.3944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0167,
+            "multiple_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9593,
+            "microtests_mean": 3.9222,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4722,
+            "total_microtests": 706
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0346,
+            "abstention_rate_ci": {
+              "rate": 0.0346,
+              "n": 260,
+              "ci_low": 0.0183,
+              "ci_high": 0.0645
+            },
+            "no_misconception_rate": 0.2269,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0115,
+            "multiple_rate_ci": {
+              "rate": 0.0115,
+              "n": 260,
+              "ci_low": 0.0039,
+              "ci_high": 0.0334
+            },
+            "identification_accuracy": 0.9643,
+            "identification_accuracy_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "false_positive_rate": 0.0143,
+            "false_positive_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "coverage_mean": 0.9769,
+            "microtests_mean": 3.5731,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3115,
+            "total_microtests": 929
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9278,
+            "resolution_rate_ci": {
+              "rate": 0.9278,
+              "n": 180,
+              "ci_low": 0.8804,
+              "ci_high": 0.9573
+            },
+            "abstention_rate": 0.0278,
+            "abstention_rate_ci": {
+              "rate": 0.0278,
+              "n": 180,
+              "ci_low": 0.0119,
+              "ci_high": 0.0634
+            },
+            "no_misconception_rate": 0.2778,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0222,
+            "multiple_rate_ci": {
+              "rate": 0.0222,
+              "n": 180,
+              "ci_low": 0.0087,
+              "ci_high": 0.0557
+            },
+            "identification_accuracy": 0.8833,
+            "identification_accuracy_ci": {
+              "rate": 0.8833,
+              "n": 60,
+              "ci_low": 0.7782,
+              "ci_high": 0.9423
+            },
+            "false_positive_rate": 0.0833,
+            "false_positive_rate_ci": {
+              "rate": 0.0833,
+              "n": 60,
+              "ci_low": 0.0361,
+              "ci_high": 0.1807
+            },
+            "coverage_mean": 0.9722,
+            "microtests_mean": 3.7056,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4056,
+            "total_microtests": 667
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9556,
+            "resolution_rate_ci": {
+              "rate": 0.9556,
+              "n": 180,
+              "ci_low": 0.9148,
+              "ci_high": 0.9773
+            },
+            "abstention_rate": 0.0111,
+            "abstention_rate_ci": {
+              "rate": 0.0111,
+              "n": 180,
+              "ci_low": 0.0031,
+              "ci_high": 0.0396
+            },
+            "no_misconception_rate": 0.2278,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0333,
+            "multiple_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "identification_accuracy": 0.7333,
+            "identification_accuracy_ci": {
+              "rate": 0.7333,
+              "n": 60,
+              "ci_low": 0.6099,
+              "ci_high": 0.8287
+            },
+            "false_positive_rate": 0.1667,
+            "false_positive_rate_ci": {
+              "rate": 0.1667,
+              "n": 60,
+              "ci_low": 0.0931,
+              "ci_high": 0.2803
+            },
+            "coverage_mean": 0.9852,
+            "microtests_mean": 3.4944,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 629
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.45,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1333,
+            "multiple_rate_ci": {
+              "rate": 0.1333,
+              "n": 180,
+              "ci_low": 0.0913,
+              "ci_high": 0.1907
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.4611,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4444,
+            "total_microtests": 803
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0269,
+            "abstention_rate_ci": {
+              "rate": 0.0269,
+              "n": 260,
+              "ci_low": 0.0131,
+              "ci_high": 0.0545
+            },
+            "no_misconception_rate": 0.2962,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1,
+            "multiple_rate_ci": {
+              "rate": 0.1,
+              "n": 260,
+              "ci_low": 0.0692,
+              "ci_high": 0.1425
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9808,
+            "microtests_mean": 4.8192,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3423,
+            "total_microtests": 1253
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9056,
+            "resolution_rate_ci": {
+              "rate": 0.9056,
+              "n": 180,
+              "ci_low": 0.854,
+              "ci_high": 0.9402
+            },
+            "abstention_rate": 0.0333,
+            "abstention_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "no_misconception_rate": 0.4,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.15,
+            "multiple_rate_ci": {
+              "rate": 0.15,
+              "n": 180,
+              "ci_low": 0.1052,
+              "ci_high": 0.2094
+            },
+            "identification_accuracy": 0.9333,
+            "identification_accuracy_ci": {
+              "rate": 0.9333,
+              "n": 60,
+              "ci_low": 0.8407,
+              "ci_high": 0.9738
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.7667,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 858
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.2944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.2444,
+            "multiple_rate_ci": {
+              "rate": 0.2444,
+              "n": 180,
+              "ci_low": 0.1874,
+              "ci_high": 0.3121
+            },
+            "identification_accuracy": 0.7167,
+            "identification_accuracy_ci": {
+              "rate": 0.7167,
+              "n": 60,
+              "ci_low": 0.5923,
+              "ci_high": 0.8149
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9648,
+            "microtests_mean": 4.9944,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3333,
+            "total_microtests": 899
+          }
+        }
+      },
+      "C_26_information_gain": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.8286,
+            "normative_rate": 0.3071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 5.4214,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.7571,
+            "total_microtests": 759
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 220,
+              "ci_low": 0.9828,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "no_misconception_rate": 0.5273,
+            "normative_rate": 0.1545,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 5.8409,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 1.0182,
+            "total_microtests": 1285
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.8071,
+            "normative_rate": 0.1929,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 5.05,
+            "microtests_median": 5.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 1.1857,
+            "total_microtests": 707
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9929,
+            "resolution_rate_ci": {
+              "rate": 0.9929,
+              "n": 140,
+              "ci_low": 0.9607,
+              "ci_high": 0.9987
+            },
+            "abstention_rate": 0.0071,
+            "abstention_rate_ci": {
+              "rate": 0.0071,
+              "n": 140,
+              "ci_low": 0.0013,
+              "ci_high": 0.0393
+            },
+            "no_misconception_rate": 0.7929,
+            "normative_rate": 0.0929,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9929,
+            "microtests_mean": 4.9143,
+            "microtests_median": 5.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 1.6643,
+            "total_microtests": 688
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.85,
+            "resolution_rate_ci": {
+              "rate": 0.85,
+              "n": 160,
+              "ci_low": 0.7865,
+              "ci_high": 0.8971
+            },
+            "abstention_rate": 0.0938,
+            "abstention_rate_ci": {
+              "rate": 0.0938,
+              "n": 160,
+              "ci_low": 0.0576,
+              "ci_high": 0.1489
+            },
+            "no_misconception_rate": 0.5938,
+            "normative_rate": 0.2687,
+            "multiple_rate": 0.0063,
+            "multiple_rate_ci": {
+              "rate": 0.0063,
+              "n": 160,
+              "ci_low": 0.0011,
+              "ci_high": 0.0345
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.9458,
+            "microtests_mean": 5.9188,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.7125,
+            "total_microtests": 947
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.8833,
+            "resolution_rate_ci": {
+              "rate": 0.8833,
+              "n": 240,
+              "ci_low": 0.8366,
+              "ci_high": 0.918
+            },
+            "abstention_rate": 0.0917,
+            "abstention_rate_ci": {
+              "rate": 0.0917,
+              "n": 240,
+              "ci_low": 0.0613,
+              "ci_high": 0.1349
+            },
+            "no_misconception_rate": 0.3667,
+            "normative_rate": 0.1167,
+            "multiple_rate": 0.0125,
+            "multiple_rate_ci": {
+              "rate": 0.0125,
+              "n": 240,
+              "ci_low": 0.0043,
+              "ci_high": 0.0361
+            },
+            "identification_accuracy": 0.975,
+            "identification_accuracy_ci": {
+              "rate": 0.975,
+              "n": 120,
+              "ci_low": 0.9291,
+              "ci_high": 0.9915
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 120,
+              "ci_low": 0.0,
+              "ci_high": 0.031
+            },
+            "coverage_mean": 0.9611,
+            "microtests_mean": 6.1875,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.7042,
+            "total_microtests": 1485
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.7937,
+            "resolution_rate_ci": {
+              "rate": 0.7937,
+              "n": 160,
+              "ci_low": 0.7245,
+              "ci_high": 0.8492
+            },
+            "abstention_rate": 0.1875,
+            "abstention_rate_ci": {
+              "rate": 0.1875,
+              "n": 160,
+              "ci_low": 0.1346,
+              "ci_high": 0.255
+            },
+            "no_misconception_rate": 0.5062,
+            "normative_rate": 0.1,
+            "multiple_rate": 0.0125,
+            "multiple_rate_ci": {
+              "rate": 0.0125,
+              "n": 160,
+              "ci_low": 0.0034,
+              "ci_high": 0.0444
+            },
+            "identification_accuracy": 0.85,
+            "identification_accuracy_ci": {
+              "rate": 0.85,
+              "n": 40,
+              "ci_low": 0.7093,
+              "ci_high": 0.9294
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.9313,
+            "microtests_mean": 5.7687,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.9313,
+            "total_microtests": 923
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.8187,
+            "resolution_rate_ci": {
+              "rate": 0.8187,
+              "n": 160,
+              "ci_low": 0.7518,
+              "ci_high": 0.8707
+            },
+            "abstention_rate": 0.15,
+            "abstention_rate_ci": {
+              "rate": 0.15,
+              "n": 160,
+              "ci_low": 0.1029,
+              "ci_high": 0.2135
+            },
+            "no_misconception_rate": 0.55,
+            "normative_rate": 0.05,
+            "multiple_rate": 0.0063,
+            "multiple_rate_ci": {
+              "rate": 0.0063,
+              "n": 160,
+              "ci_low": 0.0011,
+              "ci_high": 0.0345
+            },
+            "identification_accuracy": 0.7,
+            "identification_accuracy_ci": {
+              "rate": 0.7,
+              "n": 40,
+              "ci_low": 0.5457,
+              "ci_high": 0.8193
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.9396,
+            "microtests_mean": 5.775,
+            "microtests_median": 7.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 1.1187,
+            "total_microtests": 924
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.8833,
+            "resolution_rate_ci": {
+              "rate": 0.8833,
+              "n": 180,
+              "ci_low": 0.8282,
+              "ci_high": 0.9224
+            },
+            "abstention_rate": 0.0944,
+            "abstention_rate_ci": {
+              "rate": 0.0944,
+              "n": 180,
+              "ci_low": 0.0598,
+              "ci_high": 0.146
+            },
+            "no_misconception_rate": 0.4333,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0056,
+            "multiple_rate_ci": {
+              "rate": 0.0056,
+              "n": 180,
+              "ci_low": 0.001,
+              "ci_high": 0.0308
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9556,
+            "microtests_mean": 5.4778,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.6222,
+            "total_microtests": 986
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.05,
+            "abstention_rate_ci": {
+              "rate": 0.05,
+              "n": 260,
+              "ci_low": 0.0294,
+              "ci_high": 0.0837
+            },
+            "no_misconception_rate": 0.4038,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0077,
+            "multiple_rate_ci": {
+              "rate": 0.0077,
+              "n": 260,
+              "ci_low": 0.0021,
+              "ci_high": 0.0276
+            },
+            "identification_accuracy": 0.7857,
+            "identification_accuracy_ci": {
+              "rate": 0.7857,
+              "n": 140,
+              "ci_low": 0.7106,
+              "ci_high": 0.8456
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9782,
+            "microtests_mean": 5.3885,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.45,
+            "total_microtests": 1401
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9222,
+            "resolution_rate_ci": {
+              "rate": 0.9222,
+              "n": 180,
+              "ci_low": 0.8737,
+              "ci_high": 0.9531
+            },
+            "abstention_rate": 0.0556,
+            "abstention_rate_ci": {
+              "rate": 0.0556,
+              "n": 180,
+              "ci_low": 0.0305,
+              "ci_high": 0.0992
+            },
+            "no_misconception_rate": 0.4778,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0056,
+            "multiple_rate_ci": {
+              "rate": 0.0056,
+              "n": 180,
+              "ci_low": 0.001,
+              "ci_high": 0.0308
+            },
+            "identification_accuracy": 0.65,
+            "identification_accuracy_ci": {
+              "rate": 0.65,
+              "n": 60,
+              "ci_low": 0.5236,
+              "ci_high": 0.7583
+            },
+            "false_positive_rate": 0.0333,
+            "false_positive_rate_ci": {
+              "rate": 0.0333,
+              "n": 60,
+              "ci_low": 0.0092,
+              "ci_high": 0.1136
+            },
+            "coverage_mean": 0.9722,
+            "microtests_mean": 5.1722,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.6167,
+            "total_microtests": 931
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9833,
+            "resolution_rate_ci": {
+              "rate": 0.9833,
+              "n": 180,
+              "ci_low": 0.9522,
+              "ci_high": 0.9943
+            },
+            "abstention_rate": 0.0167,
+            "abstention_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "no_misconception_rate": 0.4667,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0167,
+            "multiple_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "identification_accuracy": 0.4333,
+            "identification_accuracy_ci": {
+              "rate": 0.4333,
+              "n": 60,
+              "ci_low": 0.3157,
+              "ci_high": 0.559
+            },
+            "false_positive_rate": 0.1333,
+            "false_positive_rate_ci": {
+              "rate": 0.1333,
+              "n": 60,
+              "ci_low": 0.0691,
+              "ci_high": 0.2417
+            },
+            "coverage_mean": 0.9944,
+            "microtests_mean": 5.1611,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4111,
+            "total_microtests": 929
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.4444,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1278,
+            "multiple_rate_ci": {
+              "rate": 0.1278,
+              "n": 180,
+              "ci_low": 0.0867,
+              "ci_high": 0.1844
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.6,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 828
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9385,
+            "resolution_rate_ci": {
+              "rate": 0.9385,
+              "n": 260,
+              "ci_low": 0.9024,
+              "ci_high": 0.9618
+            },
+            "abstention_rate": 0.0308,
+            "abstention_rate_ci": {
+              "rate": 0.0308,
+              "n": 260,
+              "ci_low": 0.0157,
+              "ci_high": 0.0595
+            },
+            "no_misconception_rate": 0.2885,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0923,
+            "multiple_rate_ci": {
+              "rate": 0.0923,
+              "n": 260,
+              "ci_low": 0.0628,
+              "ci_high": 0.1337
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9782,
+            "microtests_mean": 5.1808,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3154,
+            "total_microtests": 1347
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9167,
+            "resolution_rate_ci": {
+              "rate": 0.9167,
+              "n": 180,
+              "ci_low": 0.8671,
+              "ci_high": 0.9489
+            },
+            "abstention_rate": 0.0333,
+            "abstention_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "no_misconception_rate": 0.4,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1389,
+            "multiple_rate_ci": {
+              "rate": 0.1389,
+              "n": 180,
+              "ci_low": 0.0959,
+              "ci_high": 0.197
+            },
+            "identification_accuracy": 0.9333,
+            "identification_accuracy_ci": {
+              "rate": 0.9333,
+              "n": 60,
+              "ci_low": 0.8407,
+              "ci_high": 0.9738
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.9778,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4167,
+            "total_microtests": 896
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8722,
+            "resolution_rate_ci": {
+              "rate": 0.8722,
+              "n": 180,
+              "ci_low": 0.8156,
+              "ci_high": 0.9133
+            },
+            "abstention_rate": 0.0389,
+            "abstention_rate_ci": {
+              "rate": 0.0389,
+              "n": 180,
+              "ci_low": 0.019,
+              "ci_high": 0.0781
+            },
+            "no_misconception_rate": 0.3167,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.2222,
+            "multiple_rate_ci": {
+              "rate": 0.2222,
+              "n": 180,
+              "ci_low": 0.1676,
+              "ci_high": 0.2884
+            },
+            "identification_accuracy": 0.7667,
+            "identification_accuracy_ci": {
+              "rate": 0.7667,
+              "n": 60,
+              "ci_low": 0.6456,
+              "ci_high": 0.8556
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9556,
+            "microtests_mean": 5.3222,
+            "microtests_median": 6.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3278,
+            "total_microtests": 958
+          }
+        }
+      },
+      "D_26_bayesian_threshold": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6786,
+            "normative_rate": 0.6786,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.5,
+            "microtests_mean": 1.1929,
+            "microtests_median": 1.0,
+            "microtests_max": 5,
+            "ambiguous_answers_mean": 0.1929,
+            "total_microtests": 167
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 220,
+              "ci_low": 0.9828,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "no_misconception_rate": 0.4091,
+            "normative_rate": 0.4091,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 0.5,
+            "microtests_mean": 1.2091,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.2091,
+            "total_microtests": 266
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6071,
+            "normative_rate": 0.6071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.5,
+            "microtests_mean": 1.3571,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.3571,
+            "total_microtests": 190
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9929,
+            "resolution_rate_ci": {
+              "rate": 0.9929,
+              "n": 140,
+              "ci_low": 0.9607,
+              "ci_high": 0.9987
+            },
+            "abstention_rate": 0.0071,
+            "abstention_rate_ci": {
+              "rate": 0.0071,
+              "n": 140,
+              "ci_low": 0.0013,
+              "ci_high": 0.0393
+            },
+            "no_misconception_rate": 0.5214,
+            "normative_rate": 0.5214,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.4964,
+            "microtests_mean": 1.5643,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.5714,
+            "total_microtests": 219
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.8562,
+            "resolution_rate_ci": {
+              "rate": 0.8562,
+              "n": 160,
+              "ci_low": 0.7935,
+              "ci_high": 0.9023
+            },
+            "abstention_rate": 0.1437,
+            "abstention_rate_ci": {
+              "rate": 0.1437,
+              "n": 160,
+              "ci_low": 0.0977,
+              "ci_high": 0.2065
+            },
+            "no_misconception_rate": 0.3812,
+            "normative_rate": 0.3812,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 160,
+              "ci_low": 0.0,
+              "ci_high": 0.0234
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.2854,
+            "microtests_mean": 2.7375,
+            "microtests_median": 3.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.4062,
+            "total_microtests": 438
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.9375,
+            "resolution_rate_ci": {
+              "rate": 0.9375,
+              "n": 240,
+              "ci_low": 0.8995,
+              "ci_high": 0.9618
+            },
+            "abstention_rate": 0.0625,
+            "abstention_rate_ci": {
+              "rate": 0.0625,
+              "n": 240,
+              "ci_low": 0.0382,
+              "ci_high": 0.1005
+            },
+            "no_misconception_rate": 0.2417,
+            "normative_rate": 0.2417,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 240,
+              "ci_low": 0.0,
+              "ci_high": 0.0158
+            },
+            "identification_accuracy": 0.9667,
+            "identification_accuracy_ci": {
+              "rate": 0.9667,
+              "n": 120,
+              "ci_low": 0.9174,
+              "ci_high": 0.987
+            },
+            "false_positive_rate": 0.0083,
+            "false_positive_rate_ci": {
+              "rate": 0.0083,
+              "n": 120,
+              "ci_low": 0.0015,
+              "ci_high": 0.0457
+            },
+            "coverage_mean": 0.3125,
+            "microtests_mean": 2.8333,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 680
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.9062,
+            "resolution_rate_ci": {
+              "rate": 0.9062,
+              "n": 160,
+              "ci_low": 0.8511,
+              "ci_high": 0.9424
+            },
+            "abstention_rate": 0.0938,
+            "abstention_rate_ci": {
+              "rate": 0.0938,
+              "n": 160,
+              "ci_low": 0.0576,
+              "ci_high": 0.1489
+            },
+            "no_misconception_rate": 0.2687,
+            "normative_rate": 0.2687,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 160,
+              "ci_low": 0.0,
+              "ci_high": 0.0234
+            },
+            "identification_accuracy": 0.85,
+            "identification_accuracy_ci": {
+              "rate": 0.85,
+              "n": 40,
+              "ci_low": 0.7093,
+              "ci_high": 0.9294
+            },
+            "false_positive_rate": 0.025,
+            "false_positive_rate_ci": {
+              "rate": 0.025,
+              "n": 40,
+              "ci_low": 0.0044,
+              "ci_high": 0.1288
+            },
+            "coverage_mean": 0.3021,
+            "microtests_mean": 2.7625,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 442
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.9313,
+            "resolution_rate_ci": {
+              "rate": 0.9313,
+              "n": 160,
+              "ci_low": 0.8811,
+              "ci_high": 0.9612
+            },
+            "abstention_rate": 0.0688,
+            "abstention_rate_ci": {
+              "rate": 0.0688,
+              "n": 160,
+              "ci_low": 0.0388,
+              "ci_high": 0.1189
+            },
+            "no_misconception_rate": 0.1812,
+            "normative_rate": 0.1812,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 160,
+              "ci_low": 0.0,
+              "ci_high": 0.0234
+            },
+            "identification_accuracy": 0.775,
+            "identification_accuracy_ci": {
+              "rate": 0.775,
+              "n": 40,
+              "ci_low": 0.625,
+              "ci_high": 0.8768
+            },
+            "false_positive_rate": 0.15,
+            "false_positive_rate_ci": {
+              "rate": 0.15,
+              "n": 40,
+              "ci_low": 0.0706,
+              "ci_high": 0.2907
+            },
+            "coverage_mean": 0.3104,
+            "microtests_mean": 2.7687,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 443
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.6333,
+            "resolution_rate_ci": {
+              "rate": 0.6333,
+              "n": 180,
+              "ci_low": 0.5608,
+              "ci_high": 0.7003
+            },
+            "abstention_rate": 0.3667,
+            "abstention_rate_ci": {
+              "rate": 0.3667,
+              "n": 180,
+              "ci_low": 0.2997,
+              "ci_high": 0.4392
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.2111,
+            "microtests_mean": 3.9222,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4722,
+            "total_microtests": 706
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.8231,
+            "resolution_rate_ci": {
+              "rate": 0.8231,
+              "n": 260,
+              "ci_low": 0.7721,
+              "ci_high": 0.8647
+            },
+            "abstention_rate": 0.1769,
+            "abstention_rate_ci": {
+              "rate": 0.1769,
+              "n": 260,
+              "ci_low": 0.1353,
+              "ci_high": 0.2279
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 260,
+              "ci_low": 0.0,
+              "ci_high": 0.0146
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0143,
+            "false_positive_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "coverage_mean": 0.2744,
+            "microtests_mean": 3.5731,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3115,
+            "total_microtests": 929
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.8333,
+            "resolution_rate_ci": {
+              "rate": 0.8333,
+              "n": 180,
+              "ci_low": 0.772,
+              "ci_high": 0.8807
+            },
+            "abstention_rate": 0.1667,
+            "abstention_rate_ci": {
+              "rate": 0.1667,
+              "n": 180,
+              "ci_low": 0.1193,
+              "ci_high": 0.228
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 0.9167,
+            "identification_accuracy_ci": {
+              "rate": 0.9167,
+              "n": 60,
+              "ci_low": 0.8193,
+              "ci_high": 0.9639
+            },
+            "false_positive_rate": 0.0833,
+            "false_positive_rate_ci": {
+              "rate": 0.0833,
+              "n": 60,
+              "ci_low": 0.0361,
+              "ci_high": 0.1807
+            },
+            "coverage_mean": 0.2778,
+            "microtests_mean": 3.7056,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4056,
+            "total_microtests": 667
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0889,
+            "abstention_rate_ci": {
+              "rate": 0.0889,
+              "n": 180,
+              "ci_low": 0.0555,
+              "ci_high": 0.1395
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 0.8,
+            "identification_accuracy_ci": {
+              "rate": 0.8,
+              "n": 60,
+              "ci_low": 0.6822,
+              "ci_high": 0.8817
+            },
+            "false_positive_rate": 0.2,
+            "false_positive_rate_ci": {
+              "rate": 0.2,
+              "n": 60,
+              "ci_low": 0.1183,
+              "ci_high": 0.3178
+            },
+            "coverage_mean": 0.3037,
+            "microtests_mean": 3.4944,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 629
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.6778,
+            "resolution_rate_ci": {
+              "rate": 0.6778,
+              "n": 180,
+              "ci_low": 0.6064,
+              "ci_high": 0.7417
+            },
+            "abstention_rate": 0.3222,
+            "abstention_rate_ci": {
+              "rate": 0.3222,
+              "n": 180,
+              "ci_low": 0.2583,
+              "ci_high": 0.3936
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.3833,
+            "microtests_mean": 4.4611,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4444,
+            "total_microtests": 803
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.8269,
+            "resolution_rate_ci": {
+              "rate": 0.8269,
+              "n": 260,
+              "ci_low": 0.7763,
+              "ci_high": 0.8681
+            },
+            "abstention_rate": 0.1731,
+            "abstention_rate_ci": {
+              "rate": 0.1731,
+              "n": 260,
+              "ci_low": 0.1319,
+              "ci_high": 0.2237
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 260,
+              "ci_low": 0.0,
+              "ci_high": 0.0146
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.5128,
+            "microtests_mean": 4.8192,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3423,
+            "total_microtests": 1253
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.8333,
+            "resolution_rate_ci": {
+              "rate": 0.8333,
+              "n": 180,
+              "ci_low": 0.772,
+              "ci_high": 0.8807
+            },
+            "abstention_rate": 0.1667,
+            "abstention_rate_ci": {
+              "rate": 0.1667,
+              "n": 180,
+              "ci_low": 0.1193,
+              "ci_high": 0.228
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.3685,
+            "microtests_mean": 4.7667,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 858
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8833,
+            "resolution_rate_ci": {
+              "rate": 0.8833,
+              "n": 180,
+              "ci_low": 0.8282,
+              "ci_high": 0.9224
+            },
+            "abstention_rate": 0.1167,
+            "abstention_rate_ci": {
+              "rate": 0.1167,
+              "n": 180,
+              "ci_low": 0.0776,
+              "ci_high": 0.1718
+            },
+            "no_misconception_rate": 0.0,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 180,
+              "ci_low": 0.0,
+              "ci_high": 0.0209
+            },
+            "identification_accuracy": 0.7667,
+            "identification_accuracy_ci": {
+              "rate": 0.7667,
+              "n": 60,
+              "ci_low": 0.6456,
+              "ci_high": 0.8556
+            },
+            "false_positive_rate": 0.2167,
+            "false_positive_rate_ci": {
+              "rate": 0.2167,
+              "n": 60,
+              "ci_low": 0.1312,
+              "ci_high": 0.3362
+            },
+            "coverage_mean": 0.3259,
+            "microtests_mean": 4.9944,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3333,
+            "total_microtests": 899
+          }
+        }
+      },
+      "E_25_range_only": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6786,
+            "normative_rate": 0.6786,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.1929,
+            "microtests_median": 1.0,
+            "microtests_max": 5,
+            "ambiguous_answers_mean": 0.1929,
+            "total_microtests": 167
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 220,
+              "ci_low": 0.9828,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "no_misconception_rate": 0.4091,
+            "normative_rate": 0.4091,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.2091,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.2091,
+            "total_microtests": 266
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6071,
+            "normative_rate": 0.6071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.3571,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.3571,
+            "total_microtests": 190
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9929,
+            "resolution_rate_ci": {
+              "rate": 0.9929,
+              "n": 140,
+              "ci_low": 0.9607,
+              "ci_high": 0.9987
+            },
+            "abstention_rate": 0.0071,
+            "abstention_rate_ci": {
+              "rate": 0.0071,
+              "n": 140,
+              "ci_low": 0.0013,
+              "ci_high": 0.0393
+            },
+            "no_misconception_rate": 0.5214,
+            "normative_rate": 0.5214,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9929,
+            "microtests_mean": 1.5643,
+            "microtests_median": 1.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.5714,
+            "total_microtests": 219
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.675,
+            "resolution_rate_ci": {
+              "rate": 0.675,
+              "n": 160,
+              "ci_low": 0.5991,
+              "ci_high": 0.7427
+            },
+            "abstention_rate": 0.0688,
+            "abstention_rate_ci": {
+              "rate": 0.0688,
+              "n": 160,
+              "ci_low": 0.0388,
+              "ci_high": 0.1189
+            },
+            "no_misconception_rate": 0.55,
+            "normative_rate": 0.475,
+            "multiple_rate": 0.0563,
+            "multiple_rate_ci": {
+              "rate": 0.0563,
+              "n": 160,
+              "ci_low": 0.0299,
+              "ci_high": 0.1034
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.8875,
+            "microtests_mean": 2.1938,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3187,
+            "total_microtests": 351
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.5125,
+            "resolution_rate_ci": {
+              "rate": 0.5125,
+              "n": 240,
+              "ci_low": 0.4496,
+              "ci_high": 0.575
+            },
+            "abstention_rate": 0.0458,
+            "abstention_rate_ci": {
+              "rate": 0.0458,
+              "n": 240,
+              "ci_low": 0.0258,
+              "ci_high": 0.0802
+            },
+            "no_misconception_rate": 0.3542,
+            "normative_rate": 0.275,
+            "multiple_rate": 0.0917,
+            "multiple_rate_ci": {
+              "rate": 0.0917,
+              "n": 240,
+              "ci_low": 0.0613,
+              "ci_high": 0.1349
+            },
+            "identification_accuracy": 0.8417,
+            "identification_accuracy_ci": {
+              "rate": 0.8417,
+              "n": 120,
+              "ci_low": 0.7659,
+              "ci_high": 0.8962
+            },
+            "false_positive_rate": 0.0083,
+            "false_positive_rate_ci": {
+              "rate": 0.0083,
+              "n": 120,
+              "ci_low": 0.0015,
+              "ci_high": 0.0457
+            },
+            "coverage_mean": 0.8375,
+            "microtests_mean": 2.1583,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.225,
+            "total_microtests": 518
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.6625,
+            "resolution_rate_ci": {
+              "rate": 0.6625,
+              "n": 160,
+              "ci_low": 0.5862,
+              "ci_high": 0.7312
+            },
+            "abstention_rate": 0.0813,
+            "abstention_rate_ci": {
+              "rate": 0.0813,
+              "n": 160,
+              "ci_low": 0.0481,
+              "ci_high": 0.134
+            },
+            "no_misconception_rate": 0.4562,
+            "normative_rate": 0.3125,
+            "multiple_rate": 0.1187,
+            "multiple_rate_ci": {
+              "rate": 0.1187,
+              "n": 160,
+              "ci_low": 0.0774,
+              "ci_high": 0.178
+            },
+            "identification_accuracy": 0.725,
+            "identification_accuracy_ci": {
+              "rate": 0.725,
+              "n": 40,
+              "ci_low": 0.5716,
+              "ci_high": 0.8389
+            },
+            "false_positive_rate": 0.025,
+            "false_positive_rate_ci": {
+              "rate": 0.025,
+              "n": 40,
+              "ci_low": 0.0044,
+              "ci_high": 0.1288
+            },
+            "coverage_mean": 0.8875,
+            "microtests_mean": 2.175,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.2938,
+            "total_microtests": 348
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.5813,
+            "resolution_rate_ci": {
+              "rate": 0.5813,
+              "n": 160,
+              "ci_low": 0.5038,
+              "ci_high": 0.6549
+            },
+            "abstention_rate": 0.0688,
+            "abstention_rate_ci": {
+              "rate": 0.0688,
+              "n": 160,
+              "ci_low": 0.0388,
+              "ci_high": 0.1189
+            },
+            "no_misconception_rate": 0.4188,
+            "normative_rate": 0.2375,
+            "multiple_rate": 0.1313,
+            "multiple_rate_ci": {
+              "rate": 0.1313,
+              "n": 160,
+              "ci_low": 0.0875,
+              "ci_high": 0.1923
+            },
+            "identification_accuracy": 0.625,
+            "identification_accuracy_ci": {
+              "rate": 0.625,
+              "n": 40,
+              "ci_low": 0.4703,
+              "ci_high": 0.7578
+            },
+            "false_positive_rate": 0.05,
+            "false_positive_rate_ci": {
+              "rate": 0.05,
+              "n": 40,
+              "ci_low": 0.0138,
+              "ci_high": 0.165
+            },
+            "coverage_mean": 0.8562,
+            "microtests_mean": 2.1437,
+            "microtests_median": 2.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3187,
+            "total_microtests": 343
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0778,
+            "abstention_rate_ci": {
+              "rate": 0.0778,
+              "n": 180,
+              "ci_low": 0.0469,
+              "ci_high": 0.1263
+            },
+            "no_misconception_rate": 0.3944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0167,
+            "multiple_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9593,
+            "microtests_mean": 3.9222,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4722,
+            "total_microtests": 706
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0346,
+            "abstention_rate_ci": {
+              "rate": 0.0346,
+              "n": 260,
+              "ci_low": 0.0183,
+              "ci_high": 0.0645
+            },
+            "no_misconception_rate": 0.2269,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0115,
+            "multiple_rate_ci": {
+              "rate": 0.0115,
+              "n": 260,
+              "ci_low": 0.0039,
+              "ci_high": 0.0334
+            },
+            "identification_accuracy": 0.9643,
+            "identification_accuracy_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "false_positive_rate": 0.0143,
+            "false_positive_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "coverage_mean": 0.9769,
+            "microtests_mean": 3.5731,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3115,
+            "total_microtests": 929
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9278,
+            "resolution_rate_ci": {
+              "rate": 0.9278,
+              "n": 180,
+              "ci_low": 0.8804,
+              "ci_high": 0.9573
+            },
+            "abstention_rate": 0.0278,
+            "abstention_rate_ci": {
+              "rate": 0.0278,
+              "n": 180,
+              "ci_low": 0.0119,
+              "ci_high": 0.0634
+            },
+            "no_misconception_rate": 0.2778,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0222,
+            "multiple_rate_ci": {
+              "rate": 0.0222,
+              "n": 180,
+              "ci_low": 0.0087,
+              "ci_high": 0.0557
+            },
+            "identification_accuracy": 0.8833,
+            "identification_accuracy_ci": {
+              "rate": 0.8833,
+              "n": 60,
+              "ci_low": 0.7782,
+              "ci_high": 0.9423
+            },
+            "false_positive_rate": 0.0833,
+            "false_positive_rate_ci": {
+              "rate": 0.0833,
+              "n": 60,
+              "ci_low": 0.0361,
+              "ci_high": 0.1807
+            },
+            "coverage_mean": 0.9722,
+            "microtests_mean": 3.7056,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4056,
+            "total_microtests": 667
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9556,
+            "resolution_rate_ci": {
+              "rate": 0.9556,
+              "n": 180,
+              "ci_low": 0.9148,
+              "ci_high": 0.9773
+            },
+            "abstention_rate": 0.0111,
+            "abstention_rate_ci": {
+              "rate": 0.0111,
+              "n": 180,
+              "ci_low": 0.0031,
+              "ci_high": 0.0396
+            },
+            "no_misconception_rate": 0.2278,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0333,
+            "multiple_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "identification_accuracy": 0.7333,
+            "identification_accuracy_ci": {
+              "rate": 0.7333,
+              "n": 60,
+              "ci_low": 0.6099,
+              "ci_high": 0.8287
+            },
+            "false_positive_rate": 0.1667,
+            "false_positive_rate_ci": {
+              "rate": 0.1667,
+              "n": 60,
+              "ci_low": 0.0931,
+              "ci_high": 0.2803
+            },
+            "coverage_mean": 0.9852,
+            "microtests_mean": 3.4944,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 629
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.45,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1333,
+            "multiple_rate_ci": {
+              "rate": 0.1333,
+              "n": 180,
+              "ci_low": 0.0913,
+              "ci_high": 0.1907
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.4611,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4444,
+            "total_microtests": 803
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0269,
+            "abstention_rate_ci": {
+              "rate": 0.0269,
+              "n": 260,
+              "ci_low": 0.0131,
+              "ci_high": 0.0545
+            },
+            "no_misconception_rate": 0.2962,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1,
+            "multiple_rate_ci": {
+              "rate": 0.1,
+              "n": 260,
+              "ci_low": 0.0692,
+              "ci_high": 0.1425
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9808,
+            "microtests_mean": 4.8192,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3423,
+            "total_microtests": 1253
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9056,
+            "resolution_rate_ci": {
+              "rate": 0.9056,
+              "n": 180,
+              "ci_low": 0.854,
+              "ci_high": 0.9402
+            },
+            "abstention_rate": 0.0333,
+            "abstention_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "no_misconception_rate": 0.4,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.15,
+            "multiple_rate_ci": {
+              "rate": 0.15,
+              "n": 180,
+              "ci_low": 0.1052,
+              "ci_high": 0.2094
+            },
+            "identification_accuracy": 0.9333,
+            "identification_accuracy_ci": {
+              "rate": 0.9333,
+              "n": 60,
+              "ci_low": 0.8407,
+              "ci_high": 0.9738
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.7667,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 858
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.2944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.2444,
+            "multiple_rate_ci": {
+              "rate": 0.2444,
+              "n": 180,
+              "ci_low": 0.1874,
+              "ci_high": 0.3121
+            },
+            "identification_accuracy": 0.7167,
+            "identification_accuracy_ci": {
+              "rate": 0.7167,
+              "n": 60,
+              "ci_low": 0.5923,
+              "ci_high": 0.8149
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9648,
+            "microtests_mean": 4.9944,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3333,
+            "total_microtests": 899
+          }
+        }
+      },
+      "F_25_accumulator_only": {
+        "RANGE": {
+          "0.0": {
+            "sessions": 140,
+            "resolution_rate": 1.0,
+            "resolution_rate_ci": {
+              "rate": 1.0,
+              "n": 140,
+              "ci_low": 0.9733,
+              "ci_high": 1.0
+            },
+            "abstention_rate": 0.0,
+            "abstention_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "no_misconception_rate": 0.6786,
+            "normative_rate": 0.6786,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 1.0,
+            "microtests_mean": 1.1929,
+            "microtests_median": 1.0,
+            "microtests_max": 5,
+            "ambiguous_answers_mean": 0.1929,
+            "total_microtests": 167
+          },
+          "0.1": {
+            "sessions": 220,
+            "resolution_rate": 0.9955,
+            "resolution_rate_ci": {
+              "rate": 0.9955,
+              "n": 220,
+              "ci_low": 0.9747,
+              "ci_high": 0.9992
+            },
+            "abstention_rate": 0.0045,
+            "abstention_rate_ci": {
+              "rate": 0.0045,
+              "n": 220,
+              "ci_low": 0.0008,
+              "ci_high": 0.0253
+            },
+            "no_misconception_rate": 0.4045,
+            "normative_rate": 0.4045,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 220,
+              "ci_low": 0.0,
+              "ci_high": 0.0172
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 100,
+              "ci_low": 0.963,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 100,
+              "ci_low": 0.0,
+              "ci_high": 0.037
+            },
+            "coverage_mean": 0.9955,
+            "microtests_mean": 1.2045,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.2091,
+            "total_microtests": 265
+          },
+          "0.2": {
+            "sessions": 140,
+            "resolution_rate": 0.9857,
+            "resolution_rate_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "abstention_rate": 0.0143,
+            "abstention_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "no_misconception_rate": 0.6,
+            "normative_rate": 0.6,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 20,
+              "ci_low": 0.8389,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9857,
+            "microtests_mean": 1.3429,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3571,
+            "total_microtests": 188
+          },
+          "0.4": {
+            "sessions": 140,
+            "resolution_rate": 0.9643,
+            "resolution_rate_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "abstention_rate": 0.0357,
+            "abstention_rate_ci": {
+              "rate": 0.0357,
+              "n": 140,
+              "ci_low": 0.0153,
+              "ci_high": 0.0809
+            },
+            "no_misconception_rate": 0.5071,
+            "normative_rate": 0.5071,
+            "multiple_rate": 0.0,
+            "multiple_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 20,
+              "ci_low": 0.7639,
+              "ci_high": 0.9911
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 20,
+              "ci_low": 0.0,
+              "ci_high": 0.1611
+            },
+            "coverage_mean": 0.9643,
+            "microtests_mean": 1.5429,
+            "microtests_median": 1.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.5786,
+            "total_microtests": 216
+          }
+        },
+        "ACUMULADORES": {
+          "0.0": {
+            "sessions": 160,
+            "resolution_rate": 0.8313,
+            "resolution_rate_ci": {
+              "rate": 0.8313,
+              "n": 160,
+              "ci_low": 0.7656,
+              "ci_high": 0.8814
+            },
+            "abstention_rate": 0.0625,
+            "abstention_rate_ci": {
+              "rate": 0.0625,
+              "n": 160,
+              "ci_low": 0.0343,
+              "ci_high": 0.1112
+            },
+            "no_misconception_rate": 0.5813,
+            "normative_rate": 0.475,
+            "multiple_rate": 0.0187,
+            "multiple_rate_ci": {
+              "rate": 0.0187,
+              "n": 160,
+              "ci_low": 0.0064,
+              "ci_high": 0.0537
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 40,
+              "ci_low": 0.9124,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.9396,
+            "microtests_mean": 2.7375,
+            "microtests_median": 3.0,
+            "microtests_max": 7,
+            "ambiguous_answers_mean": 0.4062,
+            "total_microtests": 438
+          },
+          "0.1": {
+            "sessions": 240,
+            "resolution_rate": 0.9083,
+            "resolution_rate_ci": {
+              "rate": 0.9083,
+              "n": 240,
+              "ci_low": 0.8651,
+              "ci_high": 0.9387
+            },
+            "abstention_rate": 0.0542,
+            "abstention_rate_ci": {
+              "rate": 0.0542,
+              "n": 240,
+              "ci_low": 0.0319,
+              "ci_high": 0.0905
+            },
+            "no_misconception_rate": 0.4042,
+            "normative_rate": 0.2792,
+            "multiple_rate": 0.0042,
+            "multiple_rate_ci": {
+              "rate": 0.0042,
+              "n": 240,
+              "ci_low": 0.0007,
+              "ci_high": 0.0232
+            },
+            "identification_accuracy": 0.95,
+            "identification_accuracy_ci": {
+              "rate": 0.95,
+              "n": 120,
+              "ci_low": 0.8952,
+              "ci_high": 0.9769
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 120,
+              "ci_low": 0.0,
+              "ci_high": 0.031
+            },
+            "coverage_mean": 0.9694,
+            "microtests_mean": 2.8333,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 680
+          },
+          "0.2": {
+            "sessions": 160,
+            "resolution_rate": 0.85,
+            "resolution_rate_ci": {
+              "rate": 0.85,
+              "n": 160,
+              "ci_low": 0.7865,
+              "ci_high": 0.8971
+            },
+            "abstention_rate": 0.0938,
+            "abstention_rate_ci": {
+              "rate": 0.0938,
+              "n": 160,
+              "ci_low": 0.0576,
+              "ci_high": 0.1489
+            },
+            "no_misconception_rate": 0.5437,
+            "normative_rate": 0.3187,
+            "multiple_rate": 0.0125,
+            "multiple_rate_ci": {
+              "rate": 0.0125,
+              "n": 160,
+              "ci_low": 0.0034,
+              "ci_high": 0.0444
+            },
+            "identification_accuracy": 0.75,
+            "identification_accuracy_ci": {
+              "rate": 0.75,
+              "n": 40,
+              "ci_low": 0.5981,
+              "ci_high": 0.8581
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 40,
+              "ci_low": 0.0,
+              "ci_high": 0.0876
+            },
+            "coverage_mean": 0.95,
+            "microtests_mean": 2.7625,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 442
+          },
+          "0.4": {
+            "sessions": 160,
+            "resolution_rate": 0.8375,
+            "resolution_rate_ci": {
+              "rate": 0.8375,
+              "n": 160,
+              "ci_low": 0.7725,
+              "ci_high": 0.8866
+            },
+            "abstention_rate": 0.1062,
+            "abstention_rate_ci": {
+              "rate": 0.1062,
+              "n": 160,
+              "ci_low": 0.0674,
+              "ci_high": 0.1636
+            },
+            "no_misconception_rate": 0.5,
+            "normative_rate": 0.2375,
+            "multiple_rate": 0.0063,
+            "multiple_rate_ci": {
+              "rate": 0.0063,
+              "n": 160,
+              "ci_low": 0.0011,
+              "ci_high": 0.0345
+            },
+            "identification_accuracy": 0.625,
+            "identification_accuracy_ci": {
+              "rate": 0.625,
+              "n": 40,
+              "ci_low": 0.4703,
+              "ci_high": 0.7578
+            },
+            "false_positive_rate": 0.05,
+            "false_positive_rate_ci": {
+              "rate": 0.05,
+              "n": 40,
+              "ci_low": 0.0138,
+              "ci_high": 0.165
+            },
+            "coverage_mean": 0.9458,
+            "microtests_mean": 2.7687,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3312,
+            "total_microtests": 443
+          }
+        },
+        "CONDICIONALES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0778,
+            "abstention_rate_ci": {
+              "rate": 0.0778,
+              "n": 180,
+              "ci_low": 0.0469,
+              "ci_high": 0.1263
+            },
+            "no_misconception_rate": 0.3944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0167,
+            "multiple_rate_ci": {
+              "rate": 0.0167,
+              "n": 180,
+              "ci_low": 0.0057,
+              "ci_high": 0.0478
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9593,
+            "microtests_mean": 3.9222,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4722,
+            "total_microtests": 706
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0346,
+            "abstention_rate_ci": {
+              "rate": 0.0346,
+              "n": 260,
+              "ci_low": 0.0183,
+              "ci_high": 0.0645
+            },
+            "no_misconception_rate": 0.2269,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0115,
+            "multiple_rate_ci": {
+              "rate": 0.0115,
+              "n": 260,
+              "ci_low": 0.0039,
+              "ci_high": 0.0334
+            },
+            "identification_accuracy": 0.9643,
+            "identification_accuracy_ci": {
+              "rate": 0.9643,
+              "n": 140,
+              "ci_low": 0.9191,
+              "ci_high": 0.9847
+            },
+            "false_positive_rate": 0.0143,
+            "false_positive_rate_ci": {
+              "rate": 0.0143,
+              "n": 140,
+              "ci_low": 0.0039,
+              "ci_high": 0.0506
+            },
+            "coverage_mean": 0.9769,
+            "microtests_mean": 3.5731,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3115,
+            "total_microtests": 929
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9278,
+            "resolution_rate_ci": {
+              "rate": 0.9278,
+              "n": 180,
+              "ci_low": 0.8804,
+              "ci_high": 0.9573
+            },
+            "abstention_rate": 0.0278,
+            "abstention_rate_ci": {
+              "rate": 0.0278,
+              "n": 180,
+              "ci_low": 0.0119,
+              "ci_high": 0.0634
+            },
+            "no_misconception_rate": 0.2778,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0222,
+            "multiple_rate_ci": {
+              "rate": 0.0222,
+              "n": 180,
+              "ci_low": 0.0087,
+              "ci_high": 0.0557
+            },
+            "identification_accuracy": 0.8833,
+            "identification_accuracy_ci": {
+              "rate": 0.8833,
+              "n": 60,
+              "ci_low": 0.7782,
+              "ci_high": 0.9423
+            },
+            "false_positive_rate": 0.0833,
+            "false_positive_rate_ci": {
+              "rate": 0.0833,
+              "n": 60,
+              "ci_low": 0.0361,
+              "ci_high": 0.1807
+            },
+            "coverage_mean": 0.9722,
+            "microtests_mean": 3.7056,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4056,
+            "total_microtests": 667
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.9556,
+            "resolution_rate_ci": {
+              "rate": 0.9556,
+              "n": 180,
+              "ci_low": 0.9148,
+              "ci_high": 0.9773
+            },
+            "abstention_rate": 0.0111,
+            "abstention_rate_ci": {
+              "rate": 0.0111,
+              "n": 180,
+              "ci_low": 0.0031,
+              "ci_high": 0.0396
+            },
+            "no_misconception_rate": 0.2278,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.0333,
+            "multiple_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "identification_accuracy": 0.7333,
+            "identification_accuracy_ci": {
+              "rate": 0.7333,
+              "n": 60,
+              "ci_low": 0.6099,
+              "ci_high": 0.8287
+            },
+            "false_positive_rate": 0.1667,
+            "false_positive_rate_ci": {
+              "rate": 0.1667,
+              "n": 60,
+              "ci_low": 0.0931,
+              "ci_high": 0.2803
+            },
+            "coverage_mean": 0.9852,
+            "microtests_mean": 3.4944,
+            "microtests_median": 3.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.25,
+            "total_microtests": 629
+          }
+        },
+        "FUNCIONES": {
+          "0.0": {
+            "sessions": 180,
+            "resolution_rate": 0.9111,
+            "resolution_rate_ci": {
+              "rate": 0.9111,
+              "n": 180,
+              "ci_low": 0.8605,
+              "ci_high": 0.9445
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.45,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1333,
+            "multiple_rate_ci": {
+              "rate": 0.1333,
+              "n": 180,
+              "ci_low": 0.0913,
+              "ci_high": 0.1907
+            },
+            "identification_accuracy": 1.0,
+            "identification_accuracy_ci": {
+              "rate": 1.0,
+              "n": 60,
+              "ci_low": 0.9398,
+              "ci_high": 1.0
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.4611,
+            "microtests_median": 4.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4444,
+            "total_microtests": 803
+          },
+          "0.1": {
+            "sessions": 260,
+            "resolution_rate": 0.9423,
+            "resolution_rate_ci": {
+              "rate": 0.9423,
+              "n": 260,
+              "ci_low": 0.907,
+              "ci_high": 0.9647
+            },
+            "abstention_rate": 0.0269,
+            "abstention_rate_ci": {
+              "rate": 0.0269,
+              "n": 260,
+              "ci_low": 0.0131,
+              "ci_high": 0.0545
+            },
+            "no_misconception_rate": 0.2962,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.1,
+            "multiple_rate_ci": {
+              "rate": 0.1,
+              "n": 260,
+              "ci_low": 0.0692,
+              "ci_high": 0.1425
+            },
+            "identification_accuracy": 0.9857,
+            "identification_accuracy_ci": {
+              "rate": 0.9857,
+              "n": 140,
+              "ci_low": 0.9494,
+              "ci_high": 0.9961
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 140,
+              "ci_low": 0.0,
+              "ci_high": 0.0267
+            },
+            "coverage_mean": 0.9808,
+            "microtests_mean": 4.8192,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3423,
+            "total_microtests": 1253
+          },
+          "0.2": {
+            "sessions": 180,
+            "resolution_rate": 0.9056,
+            "resolution_rate_ci": {
+              "rate": 0.9056,
+              "n": 180,
+              "ci_low": 0.854,
+              "ci_high": 0.9402
+            },
+            "abstention_rate": 0.0333,
+            "abstention_rate_ci": {
+              "rate": 0.0333,
+              "n": 180,
+              "ci_low": 0.0154,
+              "ci_high": 0.0708
+            },
+            "no_misconception_rate": 0.4,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.15,
+            "multiple_rate_ci": {
+              "rate": 0.15,
+              "n": 180,
+              "ci_low": 0.1052,
+              "ci_high": 0.2094
+            },
+            "identification_accuracy": 0.9333,
+            "identification_accuracy_ci": {
+              "rate": 0.9333,
+              "n": 60,
+              "ci_low": 0.8407,
+              "ci_high": 0.9738
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9685,
+            "microtests_mean": 4.7667,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.4278,
+            "total_microtests": 858
+          },
+          "0.4": {
+            "sessions": 180,
+            "resolution_rate": 0.8944,
+            "resolution_rate_ci": {
+              "rate": 0.8944,
+              "n": 180,
+              "ci_low": 0.841,
+              "ci_high": 0.9314
+            },
+            "abstention_rate": 0.0444,
+            "abstention_rate_ci": {
+              "rate": 0.0444,
+              "n": 180,
+              "ci_low": 0.0227,
+              "ci_high": 0.0852
+            },
+            "no_misconception_rate": 0.2944,
+            "normative_rate": 0.0,
+            "multiple_rate": 0.2444,
+            "multiple_rate_ci": {
+              "rate": 0.2444,
+              "n": 180,
+              "ci_low": 0.1874,
+              "ci_high": 0.3121
+            },
+            "identification_accuracy": 0.7167,
+            "identification_accuracy_ci": {
+              "rate": 0.7167,
+              "n": 60,
+              "ci_low": 0.5923,
+              "ci_high": 0.8149
+            },
+            "false_positive_rate": 0.0,
+            "false_positive_rate_ci": {
+              "rate": 0.0,
+              "n": 60,
+              "ci_low": 0.0,
+              "ci_high": 0.0602
+            },
+            "coverage_mean": 0.9648,
+            "microtests_mean": 4.9944,
+            "microtests_median": 5.0,
+            "microtests_max": 6,
+            "ambiguous_answers_mean": 0.3333,
+            "total_microtests": 899
+          }
+        }
+      }
+    },
+    "newMicrotestUsage": {
+      "A_24_adaptive": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 0,
+          "sessions": 2960,
+          "sessionRate": 0.0
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 0,
+          "sessions": 2960,
+          "sessionRate": 0.0
+        }
+      },
+      "B_26_adaptive": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 10,
+          "sessions": 2960,
+          "sessionRate": 0.0034
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 446,
+          "sessions": 2960,
+          "sessionRate": 0.1507
+        }
+      },
+      "C_26_information_gain": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 366,
+          "sessions": 2960,
+          "sessionRate": 0.1236
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 574,
+          "sessions": 2960,
+          "sessionRate": 0.1939
+        }
+      },
+      "D_26_bayesian_threshold": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 10,
+          "sessions": 2960,
+          "sessionRate": 0.0034
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 446,
+          "sessions": 2960,
+          "sessionRate": 0.1507
+        }
+      },
+      "E_25_range_only": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 10,
+          "sessions": 2960,
+          "sessionRate": 0.0034
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 0,
+          "sessions": 2960,
+          "sessionRate": 0.0
+        }
+      },
+      "F_25_accumulator_only": {
+        "range-un-argumento-01": {
+          "sessionsUsing": 0,
+          "sessions": 2960,
+          "sessionRate": 0.0
+        },
+        "acc-inicial-cero-02": {
+          "sessionsUsing": 446,
+          "sessions": 2960,
+          "sessionRate": 0.1507
+        }
+      }
+    },
+    "overall": {
+      "A_24_adaptive": {
+        "sessions": 2960,
+        "resolution_rate": 0.8581,
+        "resolution_rate_ci": {
+          "rate": 0.8581,
+          "n": 2960,
+          "ci_low": 0.8451,
+          "ci_high": 0.8702
+        },
+        "abstention_rate": 0.0382,
+        "abstention_rate_ci": {
+          "rate": 0.0382,
+          "n": 2960,
+          "ci_low": 0.0318,
+          "ci_high": 0.0457
+        },
+        "no_misconception_rate": 0.3905,
+        "normative_rate": 0.1922,
+        "multiple_rate": 0.0703,
+        "multiple_rate_ci": {
+          "rate": 0.0703,
+          "n": 2960,
+          "ci_low": 0.0616,
+          "ci_high": 0.08
+        },
+        "identification_accuracy": 0.9067,
+        "identification_accuracy_ci": {
+          "rate": 0.9067,
+          "n": 1040,
+          "ci_low": 0.8875,
+          "ci_high": 0.9229
+        },
+        "false_positive_rate": 0.0202,
+        "false_positive_rate_ci": {
+          "rate": 0.0202,
+          "n": 1040,
+          "ci_low": 0.0132,
+          "ci_high": 0.0307
+        },
+        "coverage_mean": 0.9494,
+        "microtests_mean": 3.0878,
+        "microtests_median": 3.0,
+        "microtests_max": 6,
+        "ambiguous_answers_mean": 0.3368,
+        "total_microtests": 9140
+      },
+      "B_26_adaptive": {
+        "sessions": 2960,
+        "resolution_rate": 0.925,
+        "resolution_rate_ci": {
+          "rate": 0.925,
+          "n": 2960,
+          "ci_low": 0.915,
+          "ci_high": 0.9339
+        },
+        "abstention_rate": 0.0389,
+        "abstention_rate_ci": {
+          "rate": 0.0389,
+          "n": 2960,
+          "ci_low": 0.0325,
+          "ci_high": 0.0464
+        },
+        "no_misconception_rate": 0.4068,
+        "normative_rate": 0.1943,
+        "multiple_rate": 0.0486,
+        "multiple_rate_ci": {
+          "rate": 0.0486,
+          "n": 2960,
+          "ci_low": 0.0415,
+          "ci_high": 0.057
+        },
+        "identification_accuracy": 0.9202,
+        "identification_accuracy_ci": {
+          "rate": 0.9202,
+          "n": 1040,
+          "ci_low": 0.9021,
+          "ci_high": 0.9352
+        },
+        "false_positive_rate": 0.0183,
+        "false_positive_rate_ci": {
+          "rate": 0.0183,
+          "n": 1040,
+          "ci_low": 0.0117,
+          "ci_high": 0.0284
+        },
+        "coverage_mean": 0.9735,
+        "microtests_mean": 3.2395,
+        "microtests_median": 3.0,
+        "microtests_max": 7,
+        "ambiguous_answers_mean": 0.3459,
+        "total_microtests": 9589
+      },
+      "C_26_information_gain": {
+        "sessions": 2960,
+        "resolution_rate": 0.9196,
+        "resolution_rate_ci": {
+          "rate": 0.9196,
+          "n": 2960,
+          "ci_low": 0.9092,
+          "ci_high": 0.9289
+        },
+        "abstention_rate": 0.0554,
+        "abstention_rate_ci": {
+          "rate": 0.0554,
+          "n": 2960,
+          "ci_low": 0.0477,
+          "ci_high": 0.0642
+        },
+        "no_misconception_rate": 0.4882,
+        "normative_rate": 0.0716,
+        "multiple_rate": 0.0426,
+        "multiple_rate_ci": {
+          "rate": 0.0426,
+          "n": 2960,
+          "ci_low": 0.0359,
+          "ci_high": 0.0505
+        },
+        "identification_accuracy": 0.8779,
+        "identification_accuracy_ci": {
+          "rate": 0.8779,
+          "n": 1040,
+          "ci_low": 0.8566,
+          "ci_high": 0.8964
+        },
+        "false_positive_rate": 0.0096,
+        "false_positive_rate_ci": {
+          "rate": 0.0096,
+          "n": 1040,
+          "ci_low": 0.0052,
+          "ci_high": 0.0176
+        },
+        "coverage_mean": 0.9715,
+        "microtests_mean": 5.4034,
+        "microtests_median": 6.0,
+        "microtests_max": 7,
+        "ambiguous_answers_mean": 0.6916,
+        "total_microtests": 15994
+      },
+      "D_26_bayesian_threshold": {
+        "sessions": 2960,
+        "resolution_rate": 0.8726,
+        "resolution_rate_ci": {
+          "rate": 0.8726,
+          "n": 2960,
+          "ci_low": 0.8601,
+          "ci_high": 0.8842
+        },
+        "abstention_rate": 0.1274,
+        "abstention_rate_ci": {
+          "rate": 0.1274,
+          "n": 2960,
+          "ci_low": 0.1158,
+          "ci_high": 0.1399
+        },
+        "no_misconception_rate": 0.1804,
+        "normative_rate": 0.1804,
+        "multiple_rate": 0.0,
+        "multiple_rate_ci": {
+          "rate": 0.0,
+          "n": 2960,
+          "ci_low": 0.0,
+          "ci_high": 0.0013
+        },
+        "identification_accuracy": 0.949,
+        "identification_accuracy_ci": {
+          "rate": 0.949,
+          "n": 1040,
+          "ci_low": 0.9339,
+          "ci_high": 0.9608
+        },
+        "false_positive_rate": 0.0385,
+        "false_positive_rate_ci": {
+          "rate": 0.0385,
+          "n": 1040,
+          "ci_low": 0.0284,
+          "ci_high": 0.0519
+        },
+        "coverage_mean": 0.3647,
+        "microtests_mean": 3.2395,
+        "microtests_median": 3.0,
+        "microtests_max": 7,
+        "ambiguous_answers_mean": 0.3459,
+        "total_microtests": 9589
+      },
+      "E_25_range_only": {
+        "sessions": 2960,
+        "resolution_rate": 0.8605,
+        "resolution_rate_ci": {
+          "rate": 0.8605,
+          "n": 2960,
+          "ci_low": 0.8475,
+          "ci_high": 0.8725
+        },
+        "abstention_rate": 0.0358,
+        "abstention_rate_ci": {
+          "rate": 0.0358,
+          "n": 2960,
+          "ci_low": 0.0297,
+          "ci_high": 0.0431
+        },
+        "no_misconception_rate": 0.3919,
+        "normative_rate": 0.1936,
+        "multiple_rate": 0.0703,
+        "multiple_rate_ci": {
+          "rate": 0.0703,
+          "n": 2960,
+          "ci_low": 0.0616,
+          "ci_high": 0.08
+        },
+        "identification_accuracy": 0.9067,
+        "identification_accuracy_ci": {
+          "rate": 0.9067,
+          "n": 1040,
+          "ci_low": 0.8875,
+          "ci_high": 0.9229
+        },
+        "false_positive_rate": 0.0202,
+        "false_positive_rate_ci": {
+          "rate": 0.0202,
+          "n": 1040,
+          "ci_low": 0.0132,
+          "ci_high": 0.0307
+        },
+        "coverage_mean": 0.9518,
+        "microtests_mean": 3.0899,
+        "microtests_median": 3.0,
+        "microtests_max": 7,
+        "ambiguous_answers_mean": 0.3365,
+        "total_microtests": 9146
+      },
+      "F_25_accumulator_only": {
+        "sessions": 2960,
+        "resolution_rate": 0.9226,
+        "resolution_rate_ci": {
+          "rate": 0.9226,
+          "n": 2960,
+          "ci_low": 0.9125,
+          "ci_high": 0.9317
+        },
+        "abstention_rate": 0.0412,
+        "abstention_rate_ci": {
+          "rate": 0.0412,
+          "n": 2960,
+          "ci_low": 0.0346,
+          "ci_high": 0.049
+        },
+        "no_misconception_rate": 0.4054,
+        "normative_rate": 0.1929,
+        "multiple_rate": 0.0486,
+        "multiple_rate_ci": {
+          "rate": 0.0486,
+          "n": 2960,
+          "ci_low": 0.0415,
+          "ci_high": 0.057
+        },
+        "identification_accuracy": 0.9202,
+        "identification_accuracy_ci": {
+          "rate": 0.9202,
+          "n": 1040,
+          "ci_low": 0.9021,
+          "ci_high": 0.9352
+        },
+        "false_positive_rate": 0.0183,
+        "false_positive_rate_ci": {
+          "rate": 0.0183,
+          "n": 1040,
+          "ci_low": 0.0117,
+          "ci_high": 0.0284
+        },
+        "coverage_mean": 0.9712,
+        "microtests_mean": 3.2375,
+        "microtests_median": 3.0,
+        "microtests_max": 7,
+        "ambiguous_answers_mean": 0.3463,
+        "total_microtests": 9583
+      }
+    },
+    "byPattern": {
+      "A_24_adaptive": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.5972,
+          "resolution_rate_ci": {
+            "rate": 0.5972,
+            "n": 720,
+            "ci_low": 0.561,
+            "ci_high": 0.6324
+          },
+          "abstention_rate": 0.0639,
+          "abstention_rate_ci": {
+            "rate": 0.0639,
+            "n": 720,
+            "ci_low": 0.0482,
+            "ci_high": 0.0842
+          },
+          "no_misconception_rate": 0.4347,
+          "normative_rate": 0.3194,
+          "multiple_rate": 0.0986,
+          "multiple_rate_ci": {
+            "rate": 0.0986,
+            "n": 720,
+            "ci_low": 0.0789,
+            "ci_high": 0.1226
+          },
+          "identification_accuracy": 0.8125,
+          "identification_accuracy_ci": {
+            "rate": 0.8125,
+            "n": 240,
+            "ci_low": 0.7583,
+            "ci_high": 0.8568
+          },
+          "false_positive_rate": 0.0167,
+          "false_positive_rate_ci": {
+            "rate": 0.0167,
+            "n": 240,
+            "ci_low": 0.0065,
+            "ci_high": 0.0421
+          },
+          "coverage_mean": 0.8639,
+          "microtests_mean": 2.1667,
+          "microtests_median": 2.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.2819,
+          "total_microtests": 1560
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.9313,
+          "resolution_rate_ci": {
+            "rate": 0.9313,
+            "n": 800,
+            "ci_low": 0.9116,
+            "ci_high": 0.9468
+          },
+          "abstention_rate": 0.0375,
+          "abstention_rate_ci": {
+            "rate": 0.0375,
+            "n": 800,
+            "ci_low": 0.0264,
+            "ci_high": 0.053
+          },
+          "no_misconception_rate": 0.2762,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.02,
+          "multiple_rate_ci": {
+            "rate": 0.02,
+            "n": 800,
+            "ci_low": 0.0123,
+            "ci_high": 0.0322
+          },
+          "identification_accuracy": 0.9125,
+          "identification_accuracy_ci": {
+            "rate": 0.9125,
+            "n": 320,
+            "ci_low": 0.8764,
+            "ci_high": 0.9388
+          },
+          "false_positive_rate": 0.0531,
+          "false_positive_rate_ci": {
+            "rate": 0.0531,
+            "n": 320,
+            "ci_low": 0.0334,
+            "ci_high": 0.0834
+          },
+          "coverage_mean": 0.9738,
+          "microtests_mean": 3.6637,
+          "microtests_median": 4.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.355,
+          "total_microtests": 2931
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.9163,
+          "resolution_rate_ci": {
+            "rate": 0.9163,
+            "n": 800,
+            "ci_low": 0.895,
+            "ci_high": 0.9335
+          },
+          "abstention_rate": 0.0362,
+          "abstention_rate_ci": {
+            "rate": 0.0362,
+            "n": 800,
+            "ci_low": 0.0254,
+            "ci_high": 0.0516
+          },
+          "no_misconception_rate": 0.3538,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.1512,
+          "multiple_rate_ci": {
+            "rate": 0.1512,
+            "n": 800,
+            "ci_low": 0.1281,
+            "ci_high": 0.1777
+          },
+          "identification_accuracy": 0.9281,
+          "identification_accuracy_ci": {
+            "rate": 0.9281,
+            "n": 320,
+            "ci_low": 0.8945,
+            "ci_high": 0.9516
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 320,
+            "ci_low": 0.0,
+            "ci_high": 0.0119
+          },
+          "coverage_mean": 0.9717,
+          "microtests_mean": 4.7663,
+          "microtests_median": 5.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3825,
+          "total_microtests": 3813
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9875,
+          "resolution_rate_ci": {
+            "rate": 0.9875,
+            "n": 640,
+            "ci_low": 0.9755,
+            "ci_high": 0.9937
+          },
+          "abstention_rate": 0.0125,
+          "abstention_rate_ci": {
+            "rate": 0.0125,
+            "n": 640,
+            "ci_low": 0.0063,
+            "ci_high": 0.0245
+          },
+          "no_misconception_rate": 0.5297,
+          "normative_rate": 0.5297,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.9875,
+          "microtests_mean": 1.3062,
+          "microtests_median": 1.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3187,
+          "total_microtests": 836
+        }
+      },
+      "B_26_adaptive": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.8625,
+          "resolution_rate_ci": {
+            "rate": 0.8625,
+            "n": 720,
+            "ci_low": 0.8354,
+            "ci_high": 0.8857
+          },
+          "abstention_rate": 0.0764,
+          "abstention_rate_ci": {
+            "rate": 0.0764,
+            "n": 720,
+            "ci_low": 0.0592,
+            "ci_high": 0.0981
+          },
+          "no_misconception_rate": 0.4958,
+          "normative_rate": 0.3222,
+          "multiple_rate": 0.0097,
+          "multiple_rate_ci": {
+            "rate": 0.0097,
+            "n": 720,
+            "ci_low": 0.0047,
+            "ci_high": 0.0199
+          },
+          "identification_accuracy": 0.8708,
+          "identification_accuracy_ci": {
+            "rate": 0.8708,
+            "n": 240,
+            "ci_low": 0.8225,
+            "ci_high": 0.9075
+          },
+          "false_positive_rate": 0.0083,
+          "false_positive_rate_ci": {
+            "rate": 0.0083,
+            "n": 240,
+            "ci_low": 0.0023,
+            "ci_high": 0.0299
+          },
+          "coverage_mean": 0.9532,
+          "microtests_mean": 2.7819,
+          "microtests_median": 3.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3208,
+          "total_microtests": 2003
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.9313,
+          "resolution_rate_ci": {
+            "rate": 0.9313,
+            "n": 800,
+            "ci_low": 0.9116,
+            "ci_high": 0.9468
+          },
+          "abstention_rate": 0.0375,
+          "abstention_rate_ci": {
+            "rate": 0.0375,
+            "n": 800,
+            "ci_low": 0.0264,
+            "ci_high": 0.053
+          },
+          "no_misconception_rate": 0.2762,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.02,
+          "multiple_rate_ci": {
+            "rate": 0.02,
+            "n": 800,
+            "ci_low": 0.0123,
+            "ci_high": 0.0322
+          },
+          "identification_accuracy": 0.9125,
+          "identification_accuracy_ci": {
+            "rate": 0.9125,
+            "n": 320,
+            "ci_low": 0.8764,
+            "ci_high": 0.9388
+          },
+          "false_positive_rate": 0.0531,
+          "false_positive_rate_ci": {
+            "rate": 0.0531,
+            "n": 320,
+            "ci_low": 0.0334,
+            "ci_high": 0.0834
+          },
+          "coverage_mean": 0.9738,
+          "microtests_mean": 3.6637,
+          "microtests_median": 4.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.355,
+          "total_microtests": 2931
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.9163,
+          "resolution_rate_ci": {
+            "rate": 0.9163,
+            "n": 800,
+            "ci_low": 0.895,
+            "ci_high": 0.9335
+          },
+          "abstention_rate": 0.0362,
+          "abstention_rate_ci": {
+            "rate": 0.0362,
+            "n": 800,
+            "ci_low": 0.0254,
+            "ci_high": 0.0516
+          },
+          "no_misconception_rate": 0.3538,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.1512,
+          "multiple_rate_ci": {
+            "rate": 0.1512,
+            "n": 800,
+            "ci_low": 0.1281,
+            "ci_high": 0.1777
+          },
+          "identification_accuracy": 0.9281,
+          "identification_accuracy_ci": {
+            "rate": 0.9281,
+            "n": 320,
+            "ci_low": 0.8945,
+            "ci_high": 0.9516
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 320,
+            "ci_low": 0.0,
+            "ci_high": 0.0119
+          },
+          "coverage_mean": 0.9717,
+          "microtests_mean": 4.7663,
+          "microtests_median": 5.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3825,
+          "total_microtests": 3813
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9984,
+          "resolution_rate_ci": {
+            "rate": 0.9984,
+            "n": 640,
+            "ci_low": 0.9912,
+            "ci_high": 0.9997
+          },
+          "abstention_rate": 0.0016,
+          "abstention_rate_ci": {
+            "rate": 0.0016,
+            "n": 640,
+            "ci_low": 0.0003,
+            "ci_high": 0.0088
+          },
+          "no_misconception_rate": 0.5359,
+          "normative_rate": 0.5359,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.9984,
+          "microtests_mean": 1.3156,
+          "microtests_median": 1.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3172,
+          "total_microtests": 842
+        }
+      },
+      "C_26_information_gain": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.8417,
+          "resolution_rate_ci": {
+            "rate": 0.8417,
+            "n": 720,
+            "ci_low": 0.8132,
+            "ci_high": 0.8665
+          },
+          "abstention_rate": 0.1264,
+          "abstention_rate_ci": {
+            "rate": 0.1264,
+            "n": 720,
+            "ci_low": 0.1041,
+            "ci_high": 0.1527
+          },
+          "no_misconception_rate": 0.4889,
+          "normative_rate": 0.1319,
+          "multiple_rate": 0.0097,
+          "multiple_rate_ci": {
+            "rate": 0.0097,
+            "n": 720,
+            "ci_low": 0.0047,
+            "ci_high": 0.0199
+          },
+          "identification_accuracy": 0.9125,
+          "identification_accuracy_ci": {
+            "rate": 0.9125,
+            "n": 240,
+            "ci_low": 0.8699,
+            "ci_high": 0.9421
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 240,
+            "ci_low": 0.0,
+            "ci_high": 0.0158
+          },
+          "coverage_mean": 0.9463,
+          "microtests_mean": 5.9431,
+          "microtests_median": 7.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.8486,
+          "total_microtests": 4279
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.9337,
+          "resolution_rate_ci": {
+            "rate": 0.9337,
+            "n": 800,
+            "ci_low": 0.9144,
+            "ci_high": 0.949
+          },
+          "abstention_rate": 0.0537,
+          "abstention_rate_ci": {
+            "rate": 0.0537,
+            "n": 800,
+            "ci_low": 0.0401,
+            "ci_high": 0.0716
+          },
+          "no_misconception_rate": 0.4412,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.0088,
+          "multiple_rate_ci": {
+            "rate": 0.0088,
+            "n": 800,
+            "ci_low": 0.0042,
+            "ci_high": 0.018
+          },
+          "identification_accuracy": 0.7344,
+          "identification_accuracy_ci": {
+            "rate": 0.7344,
+            "n": 320,
+            "ci_low": 0.6834,
+            "ci_high": 0.7798
+          },
+          "false_positive_rate": 0.0312,
+          "false_positive_rate_ci": {
+            "rate": 0.0312,
+            "n": 320,
+            "ci_low": 0.0171,
+            "ci_high": 0.0566
+          },
+          "coverage_mean": 0.9754,
+          "microtests_mean": 5.3087,
+          "microtests_median": 6.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.5175,
+          "total_microtests": 4247
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.9125,
+          "resolution_rate_ci": {
+            "rate": 0.9125,
+            "n": 800,
+            "ci_low": 0.8909,
+            "ci_high": 0.9302
+          },
+          "abstention_rate": 0.0362,
+          "abstention_rate_ci": {
+            "rate": 0.0362,
+            "n": 800,
+            "ci_low": 0.0254,
+            "ci_high": 0.0516
+          },
+          "no_misconception_rate": 0.355,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.14,
+          "multiple_rate_ci": {
+            "rate": 0.14,
+            "n": 800,
+            "ci_low": 0.1177,
+            "ci_high": 0.1658
+          },
+          "identification_accuracy": 0.9375,
+          "identification_accuracy_ci": {
+            "rate": 0.9375,
+            "n": 320,
+            "ci_low": 0.9054,
+            "ci_high": 0.9592
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 320,
+            "ci_low": 0.0,
+            "ci_high": 0.0119
+          },
+          "coverage_mean": 0.9688,
+          "microtests_mean": 5.0362,
+          "microtests_median": 6.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3663,
+          "total_microtests": 4029
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9984,
+          "resolution_rate_ci": {
+            "rate": 0.9984,
+            "n": 640,
+            "ci_low": 0.9912,
+            "ci_high": 0.9997
+          },
+          "abstention_rate": 0.0016,
+          "abstention_rate_ci": {
+            "rate": 0.0016,
+            "n": 640,
+            "ci_low": 0.0003,
+            "ci_high": 0.0088
+          },
+          "no_misconception_rate": 0.7125,
+          "normative_rate": 0.1828,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.9984,
+          "microtests_mean": 5.3734,
+          "microtests_median": 7.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 1.1391,
+          "total_microtests": 3439
+        }
+      },
+      "D_26_bayesian_threshold": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.9111,
+          "resolution_rate_ci": {
+            "rate": 0.9111,
+            "n": 720,
+            "ci_low": 0.8881,
+            "ci_high": 0.9298
+          },
+          "abstention_rate": 0.0889,
+          "abstention_rate_ci": {
+            "rate": 0.0889,
+            "n": 720,
+            "ci_low": 0.0702,
+            "ci_high": 0.1119
+          },
+          "no_misconception_rate": 0.2653,
+          "normative_rate": 0.2653,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 720,
+            "ci_low": 0.0,
+            "ci_high": 0.0053
+          },
+          "identification_accuracy": 0.9208,
+          "identification_accuracy_ci": {
+            "rate": 0.9208,
+            "n": 240,
+            "ci_low": 0.8797,
+            "ci_high": 0.9487
+          },
+          "false_positive_rate": 0.0333,
+          "false_positive_rate_ci": {
+            "rate": 0.0333,
+            "n": 240,
+            "ci_low": 0.017,
+            "ci_high": 0.0644
+          },
+          "coverage_mean": 0.3037,
+          "microtests_mean": 2.7819,
+          "microtests_median": 3.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3208,
+          "total_microtests": 2003
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.8025,
+          "resolution_rate_ci": {
+            "rate": 0.8025,
+            "n": 800,
+            "ci_low": 0.7735,
+            "ci_high": 0.8286
+          },
+          "abstention_rate": 0.1975,
+          "abstention_rate_ci": {
+            "rate": 0.1975,
+            "n": 800,
+            "ci_low": 0.1714,
+            "ci_high": 0.2265
+          },
+          "no_misconception_rate": 0.0,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 800,
+            "ci_low": 0.0,
+            "ci_high": 0.0048
+          },
+          "identification_accuracy": 0.9406,
+          "identification_accuracy_ci": {
+            "rate": 0.9406,
+            "n": 320,
+            "ci_low": 0.9091,
+            "ci_high": 0.9617
+          },
+          "false_positive_rate": 0.0594,
+          "false_positive_rate_ci": {
+            "rate": 0.0594,
+            "n": 320,
+            "ci_low": 0.0383,
+            "ci_high": 0.0909
+          },
+          "coverage_mean": 0.2675,
+          "microtests_mean": 3.6637,
+          "microtests_median": 4.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.355,
+          "total_microtests": 2931
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.8075,
+          "resolution_rate_ci": {
+            "rate": 0.8075,
+            "n": 800,
+            "ci_low": 0.7787,
+            "ci_high": 0.8333
+          },
+          "abstention_rate": 0.1925,
+          "abstention_rate_ci": {
+            "rate": 0.1925,
+            "n": 800,
+            "ci_low": 0.1667,
+            "ci_high": 0.2213
+          },
+          "no_misconception_rate": 0.0,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 800,
+            "ci_low": 0.0,
+            "ci_high": 0.0048
+          },
+          "identification_accuracy": 0.9563,
+          "identification_accuracy_ci": {
+            "rate": 0.9563,
+            "n": 320,
+            "ci_low": 0.9279,
+            "ci_high": 0.9738
+          },
+          "false_positive_rate": 0.0406,
+          "false_positive_rate_ci": {
+            "rate": 0.0406,
+            "n": 320,
+            "ci_low": 0.0239,
+            "ci_high": 0.0683
+          },
+          "coverage_mean": 0.4092,
+          "microtests_mean": 4.7663,
+          "microtests_median": 5.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3825,
+          "total_microtests": 3813
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9984,
+          "resolution_rate_ci": {
+            "rate": 0.9984,
+            "n": 640,
+            "ci_low": 0.9912,
+            "ci_high": 0.9997
+          },
+          "abstention_rate": 0.0016,
+          "abstention_rate_ci": {
+            "rate": 0.0016,
+            "n": 640,
+            "ci_low": 0.0003,
+            "ci_high": 0.0088
+          },
+          "no_misconception_rate": 0.5359,
+          "normative_rate": 0.5359,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.4992,
+          "microtests_mean": 1.3156,
+          "microtests_median": 1.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3172,
+          "total_microtests": 842
+        }
+      },
+      "E_25_range_only": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.5972,
+          "resolution_rate_ci": {
+            "rate": 0.5972,
+            "n": 720,
+            "ci_low": 0.561,
+            "ci_high": 0.6324
+          },
+          "abstention_rate": 0.0639,
+          "abstention_rate_ci": {
+            "rate": 0.0639,
+            "n": 720,
+            "ci_low": 0.0482,
+            "ci_high": 0.0842
+          },
+          "no_misconception_rate": 0.4347,
+          "normative_rate": 0.3194,
+          "multiple_rate": 0.0986,
+          "multiple_rate_ci": {
+            "rate": 0.0986,
+            "n": 720,
+            "ci_low": 0.0789,
+            "ci_high": 0.1226
+          },
+          "identification_accuracy": 0.8125,
+          "identification_accuracy_ci": {
+            "rate": 0.8125,
+            "n": 240,
+            "ci_low": 0.7583,
+            "ci_high": 0.8568
+          },
+          "false_positive_rate": 0.0167,
+          "false_positive_rate_ci": {
+            "rate": 0.0167,
+            "n": 240,
+            "ci_low": 0.0065,
+            "ci_high": 0.0421
+          },
+          "coverage_mean": 0.8639,
+          "microtests_mean": 2.1667,
+          "microtests_median": 2.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.2819,
+          "total_microtests": 1560
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.9313,
+          "resolution_rate_ci": {
+            "rate": 0.9313,
+            "n": 800,
+            "ci_low": 0.9116,
+            "ci_high": 0.9468
+          },
+          "abstention_rate": 0.0375,
+          "abstention_rate_ci": {
+            "rate": 0.0375,
+            "n": 800,
+            "ci_low": 0.0264,
+            "ci_high": 0.053
+          },
+          "no_misconception_rate": 0.2762,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.02,
+          "multiple_rate_ci": {
+            "rate": 0.02,
+            "n": 800,
+            "ci_low": 0.0123,
+            "ci_high": 0.0322
+          },
+          "identification_accuracy": 0.9125,
+          "identification_accuracy_ci": {
+            "rate": 0.9125,
+            "n": 320,
+            "ci_low": 0.8764,
+            "ci_high": 0.9388
+          },
+          "false_positive_rate": 0.0531,
+          "false_positive_rate_ci": {
+            "rate": 0.0531,
+            "n": 320,
+            "ci_low": 0.0334,
+            "ci_high": 0.0834
+          },
+          "coverage_mean": 0.9738,
+          "microtests_mean": 3.6637,
+          "microtests_median": 4.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.355,
+          "total_microtests": 2931
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.9163,
+          "resolution_rate_ci": {
+            "rate": 0.9163,
+            "n": 800,
+            "ci_low": 0.895,
+            "ci_high": 0.9335
+          },
+          "abstention_rate": 0.0362,
+          "abstention_rate_ci": {
+            "rate": 0.0362,
+            "n": 800,
+            "ci_low": 0.0254,
+            "ci_high": 0.0516
+          },
+          "no_misconception_rate": 0.3538,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.1512,
+          "multiple_rate_ci": {
+            "rate": 0.1512,
+            "n": 800,
+            "ci_low": 0.1281,
+            "ci_high": 0.1777
+          },
+          "identification_accuracy": 0.9281,
+          "identification_accuracy_ci": {
+            "rate": 0.9281,
+            "n": 320,
+            "ci_low": 0.8945,
+            "ci_high": 0.9516
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 320,
+            "ci_low": 0.0,
+            "ci_high": 0.0119
+          },
+          "coverage_mean": 0.9717,
+          "microtests_mean": 4.7663,
+          "microtests_median": 5.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3825,
+          "total_microtests": 3813
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9984,
+          "resolution_rate_ci": {
+            "rate": 0.9984,
+            "n": 640,
+            "ci_low": 0.9912,
+            "ci_high": 0.9997
+          },
+          "abstention_rate": 0.0016,
+          "abstention_rate_ci": {
+            "rate": 0.0016,
+            "n": 640,
+            "ci_low": 0.0003,
+            "ci_high": 0.0088
+          },
+          "no_misconception_rate": 0.5359,
+          "normative_rate": 0.5359,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.9984,
+          "microtests_mean": 1.3156,
+          "microtests_median": 1.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3172,
+          "total_microtests": 842
+        }
+      },
+      "F_25_accumulator_only": {
+        "ACUMULADORES": {
+          "sessions": 720,
+          "resolution_rate": 0.8625,
+          "resolution_rate_ci": {
+            "rate": 0.8625,
+            "n": 720,
+            "ci_low": 0.8354,
+            "ci_high": 0.8857
+          },
+          "abstention_rate": 0.0764,
+          "abstention_rate_ci": {
+            "rate": 0.0764,
+            "n": 720,
+            "ci_low": 0.0592,
+            "ci_high": 0.0981
+          },
+          "no_misconception_rate": 0.4958,
+          "normative_rate": 0.3222,
+          "multiple_rate": 0.0097,
+          "multiple_rate_ci": {
+            "rate": 0.0097,
+            "n": 720,
+            "ci_low": 0.0047,
+            "ci_high": 0.0199
+          },
+          "identification_accuracy": 0.8708,
+          "identification_accuracy_ci": {
+            "rate": 0.8708,
+            "n": 240,
+            "ci_low": 0.8225,
+            "ci_high": 0.9075
+          },
+          "false_positive_rate": 0.0083,
+          "false_positive_rate_ci": {
+            "rate": 0.0083,
+            "n": 240,
+            "ci_low": 0.0023,
+            "ci_high": 0.0299
+          },
+          "coverage_mean": 0.9532,
+          "microtests_mean": 2.7819,
+          "microtests_median": 3.0,
+          "microtests_max": 7,
+          "ambiguous_answers_mean": 0.3208,
+          "total_microtests": 2003
+        },
+        "CONDICIONALES": {
+          "sessions": 800,
+          "resolution_rate": 0.9313,
+          "resolution_rate_ci": {
+            "rate": 0.9313,
+            "n": 800,
+            "ci_low": 0.9116,
+            "ci_high": 0.9468
+          },
+          "abstention_rate": 0.0375,
+          "abstention_rate_ci": {
+            "rate": 0.0375,
+            "n": 800,
+            "ci_low": 0.0264,
+            "ci_high": 0.053
+          },
+          "no_misconception_rate": 0.2762,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.02,
+          "multiple_rate_ci": {
+            "rate": 0.02,
+            "n": 800,
+            "ci_low": 0.0123,
+            "ci_high": 0.0322
+          },
+          "identification_accuracy": 0.9125,
+          "identification_accuracy_ci": {
+            "rate": 0.9125,
+            "n": 320,
+            "ci_low": 0.8764,
+            "ci_high": 0.9388
+          },
+          "false_positive_rate": 0.0531,
+          "false_positive_rate_ci": {
+            "rate": 0.0531,
+            "n": 320,
+            "ci_low": 0.0334,
+            "ci_high": 0.0834
+          },
+          "coverage_mean": 0.9738,
+          "microtests_mean": 3.6637,
+          "microtests_median": 4.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.355,
+          "total_microtests": 2931
+        },
+        "FUNCIONES": {
+          "sessions": 800,
+          "resolution_rate": 0.9163,
+          "resolution_rate_ci": {
+            "rate": 0.9163,
+            "n": 800,
+            "ci_low": 0.895,
+            "ci_high": 0.9335
+          },
+          "abstention_rate": 0.0362,
+          "abstention_rate_ci": {
+            "rate": 0.0362,
+            "n": 800,
+            "ci_low": 0.0254,
+            "ci_high": 0.0516
+          },
+          "no_misconception_rate": 0.3538,
+          "normative_rate": 0.0,
+          "multiple_rate": 0.1512,
+          "multiple_rate_ci": {
+            "rate": 0.1512,
+            "n": 800,
+            "ci_low": 0.1281,
+            "ci_high": 0.1777
+          },
+          "identification_accuracy": 0.9281,
+          "identification_accuracy_ci": {
+            "rate": 0.9281,
+            "n": 320,
+            "ci_low": 0.8945,
+            "ci_high": 0.9516
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 320,
+            "ci_low": 0.0,
+            "ci_high": 0.0119
+          },
+          "coverage_mean": 0.9717,
+          "microtests_mean": 4.7663,
+          "microtests_median": 5.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3825,
+          "total_microtests": 3813
+        },
+        "RANGE": {
+          "sessions": 640,
+          "resolution_rate": 0.9875,
+          "resolution_rate_ci": {
+            "rate": 0.9875,
+            "n": 640,
+            "ci_low": 0.9755,
+            "ci_high": 0.9937
+          },
+          "abstention_rate": 0.0125,
+          "abstention_rate_ci": {
+            "rate": 0.0125,
+            "n": 640,
+            "ci_low": 0.0063,
+            "ci_high": 0.0245
+          },
+          "no_misconception_rate": 0.5297,
+          "normative_rate": 0.5297,
+          "multiple_rate": 0.0,
+          "multiple_rate_ci": {
+            "rate": 0.0,
+            "n": 640,
+            "ci_low": 0.0,
+            "ci_high": 0.006
+          },
+          "identification_accuracy": 0.9938,
+          "identification_accuracy_ci": {
+            "rate": 0.9938,
+            "n": 160,
+            "ci_low": 0.9655,
+            "ci_high": 0.9989
+          },
+          "false_positive_rate": 0.0,
+          "false_positive_rate_ci": {
+            "rate": 0.0,
+            "n": 160,
+            "ci_low": 0.0,
+            "ci_high": 0.0234
+          },
+          "coverage_mean": 0.9875,
+          "microtests_mean": 1.3062,
+          "microtests_median": 1.0,
+          "microtests_max": 6,
+          "ambiguous_answers_mean": 0.3187,
+          "total_microtests": 836
+        }
+      }
+    }
+  }
+}

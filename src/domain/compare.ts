@@ -84,7 +84,7 @@ export function comparePrediction(
       });
     }
   }
-  const variableSequences = Object.entries(prediction.expectedVariableValues).map(
+  const variableSequences = Object.entries(prediction.expectedVariableValues ?? {}).map(
     ([name, expected]) => {
       const actual = observed.map((iteration) => {
         const value = statesByIteration.get(iteration)?.state[name];

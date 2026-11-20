@@ -17,7 +17,7 @@ test("evidencia insuficiente: se reconoce sin forzar una conclusión", async ({ 
   await page.getByTestId("go-contrast").click();
 
   // Se responden todas las micropruebas disponibles con incertidumbre explícita.
-  for (let index = 1; index <= 6; index += 1) {
+  for (let index = 1; index <= 7; index += 1) {
     await chooseContrastOption(page, "No estoy seguro");
     await waitForContrastEvidence(page, index);
   }

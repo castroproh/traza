@@ -38,6 +38,13 @@ function result(output: string, success = true): ExecutionResult {
   return { success, output, snapshots: [], durationMs: 1 };
 }
 
+/** Salida esperada del ejercicio heredado; falla si el catálogo está incompleto. */
+function expectedOutputOf(exerciseId: string): string {
+  const exercise = EXERCISES[exerciseId];
+  if (!exercise) throw new Error(`Falta el ejercicio ${exerciseId}`);
+  return exercise.expectedOutput;
+}
+
 const demoResult = (() => {
   const raw = parseEngineJson(JSON.stringify(demo));
   return { success: true, output: raw.output, snapshots: raw.snapshots, durationMs: 1 };
@@ -76,7 +83,7 @@ describe("evidencia diagnóstica contrastiva", () => {
     const firstEvidence = evaluateDiagnostic(
       first,
       prediction(firstInclusive.output, firstInclusive.iterations, firstInclusive.variableValues),
-      result(EXERCISES[first.exerciseId].expectedOutput),
+      result(expectedOutputOf(first.exerciseId)),
     );
     expect(firstEvidence.evidence).toEqual(
       expect.arrayContaining([
@@ -89,7 +96,7 @@ describe("evidencia diagnóstica contrastiva", () => {
     const secondEvidence = evaluateDiagnostic(
       second,
       prediction(secondExclusive.output, secondExclusive.iterations, secondExclusive.variableValues),
-      result(EXERCISES[second.exerciseId].expectedOutput),
+      result(expectedOutputOf(second.exerciseId)),
     );
     expect(secondEvidence.evidence.find((item) => item.hypothesisId === "range-exclusive")?.status)
       .toBe("supports");
@@ -101,7 +108,7 @@ describe("evidencia diagnóstica contrastiva", () => {
     const evidence = evaluateDiagnostic(
       test,
       prediction(matchingResponse.output, matchingResponse.iterations, matchingResponse.variableValues),
-      result(EXERCISES[test.exerciseId].expectedOutput),
+      result(expectedOutputOf(test.exerciseId)),
     );
 
     expect(evidence.evidence.find((item) => item.hypothesisId === "accumulate")?.status)
@@ -118,7 +125,7 @@ describe("evidencia diagnóstica contrastiva", () => {
     const evidence = evaluateDiagnostic(
       test,
       prediction(ignoresSeed.output, ignoresSeed.iterations, ignoresSeed.variableValues),
-      result(EXERCISES[test.exerciseId].expectedOutput),
+      result(expectedOutputOf(test.exerciseId)),
     );
     expect(evidence.evidence.find((item) => item.hypothesisId === "ignore-seed")?.status)
       .toBe("supports");
@@ -126,7 +133,7 @@ describe("evidencia diagnóstica contrastiva", () => {
     const unmatched = evaluateDiagnostic(
       test,
       prediction("999", 1, { pago: [99], saldo: [999] }),
-      result(EXERCISES[test.exerciseId].expectedOutput),
+      result(expectedOutputOf(test.exerciseId)),
     );
     expect(unmatched.evidence.every((item) => item.status === "insufficient")).toBe(true);
   });

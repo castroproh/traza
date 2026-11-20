@@ -23,10 +23,26 @@ export const PACT_EXERCISE_IDS = [
 
 export type PactExerciseId = (typeof PACT_EXERCISE_IDS)[number];
 
+/**
+ * Ejercicios del recorrido PACT anterior (0.5) que se conservan para no romper
+ * las funciones ni las pruebas heredadas. No forman parte del recorrido 0.8.0,
+ * pero siguen en la lista blanca controlada.
+ */
+export const LEGACY_EXERCISE_IDS = [
+  "range-contrast-0-3",
+  "range-contrast-2-6",
+  "range-transfer-4-7",
+  "accumulator-contrast-zero",
+  "accumulator-contrast-seed",
+  "accumulator-transfer-wallet",
+] as const;
+
+export type LegacyExerciseId = (typeof LEGACY_EXERCISE_IDS)[number];
+
 /** Las micropruebas se ejecutan con un identificador derivado y estable. */
 export type MicrotestExerciseId = `mt-${string}`;
 
-export type ExerciseId = PactExerciseId | MicrotestExerciseId;
+export type ExerciseId = PactExerciseId | LegacyExerciseId | MicrotestExerciseId;
 
 export interface Exercise {
   id: ExerciseId;
@@ -147,6 +163,66 @@ const PACT_EXERCISES: Record<PactExerciseId, Exercise> = {
   },
 };
 
+const LEGACY_EXERCISES: Record<LegacyExerciseId, Exercise> = {
+  "range-contrast-0-3": {
+    id: "range-contrast-0-3",
+    title: "Microprueba heredada: range(0, 3)",
+    description: "Muestra los valores de un rango pequeño que empieza en cero.",
+    code: ["for numero in range(0, 3):", "    print(numero)"].join("\n"),
+    expectedOutput: ["0", "1", "2"].join("\n"),
+  },
+  "range-contrast-2-6": {
+    id: "range-contrast-2-6",
+    title: "Microprueba heredada: range(2, 6)",
+    description: "Repite el intervalo con un inicio y un límite distintos.",
+    code: ["for numero in range(2, 6):", "    print(numero)"].join("\n"),
+    expectedOutput: ["2", "3", "4", "5"].join("\n"),
+  },
+  "range-transfer-4-7": {
+    id: "range-transfer-4-7",
+    title: "Transferencia heredada: range(4, 7)",
+    description: "Aplica el límite superior exclusivo en otro intervalo.",
+    code: ["for numero in range(4, 7):", "    print(numero)"].join("\n"),
+    expectedOutput: ["4", "5", "6"].join("\n"),
+  },
+  "accumulator-contrast-zero": {
+    id: "accumulator-contrast-zero",
+    title: "Microprueba heredada: acumulador desde cero",
+    description: "Acumula precios 2, 3 y 4 en un subtotal que empieza en cero.",
+    code: [
+      "subtotal = 0",
+      "for precio in range(2, 5):",
+      "    subtotal = subtotal + precio",
+      "print(subtotal)",
+    ].join("\n"),
+    expectedOutput: "9",
+  },
+  "accumulator-contrast-seed": {
+    id: "accumulator-contrast-seed",
+    title: "Microprueba heredada: valor inicial distinto de cero",
+    description: "Comprueba si el valor inicial participa en el total.",
+    code: [
+      "saldo = 7",
+      "for pago in range(2, 5):",
+      "    saldo = saldo + pago",
+      "print(saldo)",
+    ].join("\n"),
+    expectedOutput: "16",
+  },
+  "accumulator-transfer-wallet": {
+    id: "accumulator-transfer-wallet",
+    title: "Transferencia heredada: monedero",
+    description: "Resta cada pago al saldo anterior.",
+    code: [
+      "saldo = 100",
+      "for pago in range(20, 40, 10):",
+      "    saldo = saldo - pago",
+      "print(saldo)",
+    ].join("\n"),
+    expectedOutput: "50",
+  },
+};
+
 /** Prefijo estable que relaciona una microprueba con su ejercicio ejecutable. */
 export function microtestExerciseId(microtestId: string): MicrotestExerciseId {
   return `mt-${microtestId}`;
@@ -170,6 +246,7 @@ const MICROTEST_EXERCISES: Record<string, Exercise> = Object.fromEntries(
 
 export const EXERCISES: Readonly<Record<string, Exercise>> = {
   ...PACT_EXERCISES,
+  ...LEGACY_EXERCISES,
   ...MICROTEST_EXERCISES,
 };
 

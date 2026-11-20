@@ -1,6 +1,6 @@
 import { loadPyodide, type PyodideInterface } from "pyodide";
 import tracerSource from "../../src/python/tracer.py?raw";
-import { EXERCISES } from "../../src/domain/exercises";
+import { getExercise } from "../../src/domain/exercises";
 import { parseEngineJson } from "../../src/domain/parseTrace";
 import type { ExecutionResult } from "../../src/domain/types";
 import type { WorkerResponse } from "../../src/engine/messages";
@@ -37,7 +37,9 @@ async function runProgram(request: TestRequest): Promise<ExecutionResult> {
     pyodide.runPython("while True:\n    pass");
     throw new Error("El bucle de prueba debía bloquearse hasta terminar el Worker.");
   }
-  const source = request.runtimeFailure ? "x = 1\ny = x / 0" : EXERCISES["suma-1-3"].code;
+  const source = request.runtimeFailure
+    ? "x = 1\ny = x / 0"
+    : (getExercise("suma-1-3")?.code ?? "");
   const runTraced = pyodide.globals.get("run_traced") as ((code: string) => string) & {
     destroy(): void;
   };

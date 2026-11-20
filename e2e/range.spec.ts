@@ -73,7 +73,7 @@ test("RANGE: recorrido PACT completo con ejecución real y transferencia", async
     summary: { supported: string[]; contradicted: string[] };
   };
   expect(exported.schemaVersion).toBe(1);
-  expect(exported.instrumentVersion).toBe("0.7.0");
+  expect(exported.instrumentVersion).toBe("0.8.0");
   expect(exported.session.patternId).toBe("RANGE");
   expect(exported.session.stage).toBe("completed");
   expect(exported.summary.supported).toContain("H-RANGE-02");

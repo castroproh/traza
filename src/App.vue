@@ -146,8 +146,14 @@ async function runContrast(microtestId: string, response: string): Promise<void>
   const current = session.value;
   if (!current || current.stage !== "contrast") return;
   const result = await runExercise(microtestExerciseId(microtestId), "contrast");
-  if (!result?.success) return;
-  pact.answerContrast({ microtestId, response, observedOutput: result.output });
+  if (!result) return;
+  // Un error del programa (por ejemplo NameError) también es un resultado real:
+  // algunas micropruebas lo usan como evidencia. Solo se descarta si el Worker falló.
+  const observedOutput = result.error
+    ? [result.output.trimEnd(), result.error].filter((part) => part.length > 0).join("\n")
+    : result.output;
+  pact.answerContrast({ microtestId, response, observedOutput });
+  if (result.error) engine.clearProgramError();
 }
 
 async function runTransfer(): Promise<void> {

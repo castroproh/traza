@@ -1,14 +1,15 @@
 {
   "name": "traza",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
-  "description": "TRAZA: recorrido PACT (predicción, análisis, contraste y transferencia) para el razonamiento algorítmico (0.7.0).",
+  "description": "TRAZA: recorrido PACT (predicción, análisis, contraste y transferencia) para el razonamiento algorítmico (0.8.0).",
   "engines": {
     "node": ">=22.12"
   },
   "scripts": {
     "prepare:pyodide": "node scripts/copy-pyodide.mjs",
+    "export:bank": "node scripts/export-bank.mjs",
     "dev": "npm run prepare:pyodide && vite",
     "build": "npm run prepare:pyodide && vue-tsc --noEmit && vite build",
     "preview": "vite preview",

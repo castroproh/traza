@@ -1,0 +1,11 @@
+# Dependencias del simulador (opcionales)
+#
+# Las pruebas usan solo la biblioteca estándar (`unittest`). Este archivo no se
+# instala desde `package.json` ni forma parte del bundle de la aplicación.
+#
+# Para gráficos PNG:
+#   python3 -m pip install -r analysis/simulator/requirements.txt
+#
+# Si matplotlib no está instalado, el simulador genera igualmente JSON, CSV y
+# Markdown y omite los gráficos con un aviso.
+matplotlib>=3.7

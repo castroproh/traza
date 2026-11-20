@@ -1,8 +1,9 @@
-# Plan de patrones 0.8.0 — condicionales y funciones
+# Plan histórico de patrones 0.8.0 — condicionales y funciones
 
-**Estado: propuesta, no implementada.** TRAZA 0.7.0 solo cubre `RANGE` y `ACUMULADORES`. Este
-documento describe cómo se añadirían dos patrones nuevos sin romper el recorrido PACT ni el
-diagnóstico existente. No debe presentarse como funcionalidad disponible.
+**Estado: propuesta histórica implementada en TRAZA 0.8.0.** Este documento conserva el diseño
+original previo a la implementación. Las propuestas, cantidades de hipótesis y ejemplos de este
+plan no son la especificación vigente; para el estado y banco actuales consultar
+`docs/REVISION_DOCENTE.md` y `src/domain/diagnosis/`.
 
 ## 1. Objetivo
 

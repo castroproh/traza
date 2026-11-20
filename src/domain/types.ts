@@ -95,7 +95,7 @@ export interface StudentPrediction {
   expectedOutput: string;
   expectedVariables: Record<string, number>;
   /** Valores que se esperan para cada variable al terminar cada iteración. */
-  expectedVariableValues: Record<string, number[]>;
+  expectedVariableValues?: Record<string, number[]>;
   /** Números de iteración que el estudiante espera ver (p. ej. [1, 2, 3]). */
   expectedIterations: number[];
   /** 0–100. */

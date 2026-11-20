@@ -1,0 +1,1242 @@
+{
+  "instrument": {
+    "name": "traza",
+    "version": "0.8.0"
+  },
+  "generatedBy": "TRAZA 0.8.0",
+  "patterns": [
+    {
+      "id": "RANGE",
+      "name": "Límite superior de range()",
+      "concept": "range(inicio, fin) excluye el límite superior.",
+      "description": "El estudiante distingue la semántica de exclusión del límite superior de range().",
+      "version": 1
+    },
+    {
+      "id": "ACUMULADORES",
+      "name": "Acumulación de estado",
+      "concept": "El valor anterior del acumulador se conserva y se actualiza mediante una operación acumulativa.",
+      "description": "El estudiante distingue la acumulación real de la sustitución del valor anterior.",
+      "version": 1
+    },
+    {
+      "id": "CONDICIONALES",
+      "name": "Evaluación de condiciones",
+      "concept": "and exige que ambas partes sean verdaderas; or exige que al menos una lo sea; not invierte el valor.",
+      "description": "El estudiante distingue la semántica de and, or y not al elegir una rama.",
+      "version": 1
+    },
+    {
+      "id": "FUNCIONES",
+      "name": "Funciones, parámetros y ámbito",
+      "concept": "Una función devuelve un valor con return, recibe argumentos en sus parámetros y sus locales no persisten fuera.",
+      "description": "El estudiante distingue return de print, el paso de argumentos y el ámbito local.",
+      "version": 1
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H-RANGE-01",
+      "patternId": "RANGE",
+      "title": "Límite superior inclusive",
+      "description": "El estudiante espera que el segundo argumento de range() también se incluya.",
+      "expectedBehavior": "Cree que la secuencia incluye el valor final del rango.",
+      "expectedResponses": [
+        "1, 2, 3, 4"
+      ],
+      "supportingEvidence": [
+        "Predicciones consistentes con secuencias que incluyen el límite final."
+      ],
+      "contradictingEvidence": [
+        "Cuando el estudiante predice correctamente el resultado de un rango, la hipótesis queda en contradicción."
+      ],
+      "alternatives": [
+        "Confusión entre índice y valor (range(i, j) genera valores, no índices)."
+      ],
+      "limitations": [
+        "No distingue todavía la causa exacta del desajuste (conceptual vs. de lectura)."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-RANGE-02",
+      "patternId": "RANGE",
+      "title": "Límite superior exclusivo",
+      "description": "El estudiante reconoce que el límite superior de range() se excluye.",
+      "expectedBehavior": "Reconoce que la secuencia termina en el valor anterior al límite final.",
+      "expectedResponses": [
+        "1, 2, 3"
+      ],
+      "supportingEvidence": [
+        "Predicciones consistentes con rangos de distintos valores iniciales y finales."
+      ],
+      "contradictingEvidence": [
+        "Cuando el estudiante incluye el límite final, la hipótesis queda en contradicción."
+      ],
+      "alternatives": [
+        "No se identificó una alternativa explicativa en esta versión."
+      ],
+      "limitations": [
+        "Todavía no se evalúa si el estudiante generaliza el concepto a otros métodos."
+      ],
+      "normative": true,
+      "version": 1
+    },
+    {
+      "id": "H-ACC-01",
+      "patternId": "ACUMULADORES",
+      "title": "Acumulación correcta",
+      "description": "El estudiante comprende que el valor anterior se conserva y se actualiza acumulativamente.",
+      "expectedBehavior": "Mantiene el estado acumulado y lo suma sucesivamente.",
+      "expectedResponses": [
+        "6",
+        "1, 3, 6"
+      ],
+      "supportingEvidence": [
+        "Predicciones con estados intermedios correctos."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que reemplazan el acumulador en lugar de conservarlo."
+      ],
+      "alternatives": [
+        "Error de cálculo independiente de la acumulación."
+      ],
+      "limitations": [
+        "No evalúa operaciones acumulativas distintas a la suma."
+      ],
+      "normative": true,
+      "version": 1
+    },
+    {
+      "id": "H-ACC-02",
+      "patternId": "ACUMULADORES",
+      "title": "Sustitución del acumulador",
+      "description": "El estudiante confunde la acumulación con reemplazar el valor anterior por el valor actual.",
+      "expectedBehavior": "Cada iteración sobrescribe el acumulador con el valor actual de la iteración.",
+      "expectedResponses": [
+        "3",
+        "1, 2, 3"
+      ],
+      "supportingEvidence": [
+        "Predicciones de totales finales o secuencias que reflejan reemplazo."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que muestran conservación del valor previo."
+      ],
+      "alternatives": [
+        "Desconocida: podría deberse a una confusión de semántica de asignación."
+      ],
+      "limitations": [
+        "Requiere micropruebas que muestren estados intermedios."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-ACC-03",
+      "patternId": "ACUMULADORES",
+      "title": "Inicialización no incorporada",
+      "description": "El estudiante no incorpora el valor inicial del acumulador y cuenta como si empezara en cero.",
+      "expectedBehavior": "Ignora el valor inicial o lo trata como si fuera cero antes de acumular.",
+      "expectedResponses": [
+        "6"
+      ],
+      "supportingEvidence": [
+        "Predicciones que ignoran o malinterpretan el valor inicial."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que respetan el valor inicial y acumulan correctamente."
+      ],
+      "alternatives": [
+        "Puede confundirse con la sustitución cuando el valor inicial es distinto de cero."
+      ],
+      "limitations": [
+        "No distingue todavía si el error viene del valor inicial o de la operación."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-COND-01",
+      "patternId": "CONDICIONALES",
+      "title": "Confusión entre and y or",
+      "description": "El estudiante evalúa `and` como si fuera `or`: basta que una parte sea verdadera.",
+      "expectedBehavior": "Ejecuta la rama cuando al menos una de las dos condiciones es verdadera, aunque la otra sea falsa.",
+      "expectedResponses": [
+        "Se ejecuta la rama del if",
+        "Se imprime el mensaje del if"
+      ],
+      "supportingEvidence": [
+        "Predicciones que ejecutan una rama con una sola parte verdadera en una condición con and."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que respetan que and exige ambas partes verdaderas."
+      ],
+      "alternatives": [
+        "Lectura parcial de la condición o error de cálculo en los valores comparados."
+      ],
+      "limitations": [
+        "No distingue si la confusión es conceptual o un desliz de lectura en una prueba concreta."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-COND-02",
+      "patternId": "CONDICIONALES",
+      "title": "Confusión entre or y and",
+      "description": "El estudiante evalúa `or` como si fuera `and`: exige que ambas partes sean verdaderas.",
+      "expectedBehavior": "No ejecuta la rama de un `or` cuando solo una parte es verdadera.",
+      "expectedResponses": [
+        "No se ejecuta la rama del if",
+        "Se imprime el mensaje del else"
+      ],
+      "supportingEvidence": [
+        "Predicciones que exigen ambas partes verdaderas en una condición con or."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que respetan que or se satisface con una sola parte verdadera."
+      ],
+      "alternatives": [
+        "Confusión con la exigencia de que ambas condiciones sean ciertas por seguridad."
+      ],
+      "limitations": [
+        "No evalúa el orden de evaluación ni los cortocircuitos con efectos secundarios."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-COND-03",
+      "patternId": "CONDICIONALES",
+      "title": "Interpretación de not",
+      "description": "El estudiante invierte o ignora el efecto de `not` al decidir la rama.",
+      "expectedBehavior": "Elige la rama contraria a la que produce la negación real.",
+      "expectedResponses": [
+        "Se ejecuta la rama contraria",
+        "Se imprime el mensaje opuesto"
+      ],
+      "supportingEvidence": [
+        "Predicciones que tratan `not` como si no estuviera o como una doble negación."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que invierten correctamente el valor de la condición."
+      ],
+      "alternatives": [
+        "Confusión entre `not` y `!=` en una comparación concreta."
+      ],
+      "limitations": [
+        "No distingue entre ignorar `not` e invertirlo dos veces; ambas producen el mismo resultado en una prueba binaria."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-FUNC-01",
+      "patternId": "FUNCIONES",
+      "title": "Confusión entre return y print",
+      "description": "El estudiante cree que imprimir dentro de una función equivale a devolver un valor, o que return no produce un valor utilizable.",
+      "expectedBehavior": "Espera que el valor impreso por la función sea también su valor devuelto, o que print(funcion()) no muestre nada.",
+      "expectedResponses": [
+        "El valor impreso se reutiliza como resultado",
+        "None",
+        "No se imprime nada"
+      ],
+      "supportingEvidence": [
+        "Predicciones que igualan la salida de print con el valor de return."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que separan la salida impresa del valor devuelto."
+      ],
+      "alternatives": [
+        "Confusión entre el efecto observable (salida) y el valor que la función entrega."
+      ],
+      "limitations": [
+        "No mide si el estudiante comprende return en funciones sin print."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-FUNC-02",
+      "patternId": "FUNCIONES",
+      "title": "Confusión entre parámetros y argumentos",
+      "description": "El estudiante confunde el nombre del parámetro con el valor del argumento, o invierte el orden de los argumentos.",
+      "expectedBehavior": "Usa el nombre del parámetro como valor, intercambia argumentos o espera que el nombre de la variable llamadora se use dentro.",
+      "expectedResponses": [
+        "Se usa el nombre del parámetro como texto",
+        "El resultado se calcula con los argumentos invertidos"
+      ],
+      "supportingEvidence": [
+        "Predicciones que sustituyen el valor del argumento por el nombre del parámetro o cambian su orden."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que asignan cada argumento a su parámetro en el orden correcto."
+      ],
+      "alternatives": [
+        "Confusión entre el nombre de la variable y el valor que contiene."
+      ],
+      "limitations": [
+        "No evalúa argumentos por nombre ni valores por defecto en esta versión."
+      ],
+      "normative": false,
+      "version": 1
+    },
+    {
+      "id": "H-FUNC-03",
+      "patternId": "FUNCIONES",
+      "title": "Alcance local no reconocido",
+      "description": "El estudiante espera que las variables locales de una función sigan existiendo fuera de ella o que modifiquen variables globales.",
+      "expectedBehavior": "Usa una variable local después de la llamada o espera que reasignar un parámetro cambie la variable del llamador.",
+      "expectedResponses": [
+        "La variable local conserva su valor fuera de la función",
+        "La variable global cambia"
+      ],
+      "supportingEvidence": [
+        "Predicciones que consultan locales fuera del marco o que esperan mutación del llamador."
+      ],
+      "contradictingEvidence": [
+        "Predicciones que reconocen que los locales dejan de existir al terminar la función."
+      ],
+      "alternatives": [
+        "Confusión entre el ámbito de una función y el orden de ejecución del programa."
+      ],
+      "limitations": [
+        "No evalúa closures, variables globales declaradas con global ni objetos mutables compartidos."
+      ],
+      "normative": false,
+      "version": 1
+    }
+  ],
+  "microtests": [
+    {
+      "id": "range-iteracion-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Predecir qué valores genera range(1, 4) y en qué posición de la secuencia aparecen.",
+      "code": "for numero in range(1, 4):\n    print(numero)",
+      "predictionQuestion": "¿Cuántos números itera range(1, 4) y cuáles son?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "1, 2, 3, 4"
+        ],
+        "H-RANGE-02": [
+          "1, 2, 3"
+        ]
+      },
+      "expectedOutcome": "1, 2, 3",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Con range(1, 4) la secuencia correcta es 1, 2, 3: el límite final (4) se excluye. Una interpretación inclusive predice 1, 2, 3, 4.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "del 1 al 3"
+      ],
+      "prerequisites": [
+        "Conocer la sintaxis básica de range()."
+      ]
+    },
+    {
+      "id": "range-cero-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Predecir la secuencia de un rango que comienza en cero.",
+      "code": "for numero in range(0, 3):\n    print(numero)",
+      "predictionQuestion": "¿Qué números imprime range(0, 3)?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "0, 1, 2, 3"
+        ],
+        "H-RANGE-02": [
+          "0, 1, 2"
+        ]
+      },
+      "expectedOutcome": "0, 1, 2",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "El cero es un valor válido de inicio; la exclusión aplica al límite final, no al inicial. La secuencia correcta es 0, 1, 2.",
+      "difficulty": "beginner",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "range-valor-inicial-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Predecir la secuencia cuando el valor inicial y el límite final son distintos de los ejemplos anteriores.",
+      "code": "for numero in range(2, 5):\n    print(numero)",
+      "predictionQuestion": "¿Qué números genera range(2, 5)?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "2, 3, 4, 5"
+        ],
+        "H-RANGE-02": [
+          "2, 3, 4"
+        ]
+      },
+      "expectedOutcome": "2, 3, 4",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "La variación de valores no debe cambiar el concepto: el límite final (5) se excluye aunque el inicio sea 2.",
+      "difficulty": "beginner",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "range-pequeno-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Predecir la secuencia de un rango de longitud pequeña.",
+      "code": "for numero in range(0, 2):\n    print(numero)",
+      "predictionQuestion": "¿Qué números genera range(0, 2)?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "0, 1, 2"
+        ],
+        "H-RANGE-02": [
+          "0, 1"
+        ]
+      },
+      "expectedOutcome": "0, 1",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Con rangos cortos la diferencia entre incluir o excluir el límite final es muy visible; aquí la secuencia correcta es 0, 1.",
+      "difficulty": "beginner",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "range-tabla-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Interpretar una tabla de iteraciones construida a partir de un rango.",
+      "code": "for numero in range(1, 4):\n    print(numero)",
+      "predictionQuestion": "Completa la tabla de iteraciones: ¿qué números aparecen?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "1, 2, 3, 4"
+        ],
+        "H-RANGE-02": [
+          "1, 2, 3"
+        ]
+      },
+      "expectedOutcome": "1, 2, 3",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "La tabla debe reflejar que el límite final no se genera. Una fila extra con el valor final del rango delata una interpretación inclusive.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "del 1 al 3"
+      ],
+      "prerequisites": [
+        "Comprender qué es una iteración de un bucle."
+      ]
+    },
+    {
+      "id": "range-negativo-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Predecir la secuencia de un rango con valores negativos.",
+      "code": "for numero in range(-3, 2):\n    print(numero)",
+      "predictionQuestion": "¿Qué números genera range(-3, 2)?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "-3, -2, -1, 0, 1, 2"
+        ],
+        "H-RANGE-02": [
+          "-3, -2, -1, 0, 1"
+        ]
+      },
+      "expectedOutcome": "-3, -2, -1, 0, 1",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Los valores negativos no cambian la regla: el límite final (2) se excluye.",
+      "difficulty": "beginner",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "range-un-argumento-01",
+      "version": 1,
+      "patternId": "RANGE",
+      "targetHypotheses": [
+        "H-RANGE-01",
+        "H-RANGE-02"
+      ],
+      "objective": "Comprobar si el estudiante generaliza la exclusión del límite superior a range() llamado con un solo argumento.",
+      "code": "for numero in range(5):\n    print(numero)",
+      "predictionQuestion": "¿Qué números genera range(5)?",
+      "responseSignatures": {
+        "H-RANGE-01": [
+          "0, 1, 2, 3, 4, 5"
+        ],
+        "H-RANGE-02": [
+          "0, 1, 2, 3, 4"
+        ]
+      },
+      "expectedOutcome": "0, 1, 2, 3, 4",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Con un solo argumento, range(5) empieza en cero y se detiene antes del límite (5): 0, 1, 2, 3, 4. Una interpretación inclusive añadiría el 5.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "del 0 al 4"
+      ],
+      "prerequisites": [
+        "Conocer range() con un solo argumento."
+      ]
+    },
+    {
+      "id": "acc-final-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02"
+      ],
+      "objective": "Predecir el valor final del acumulador tras varias iteraciones.",
+      "code": "total = 0\nfor numero in range(1, 4):\n    total = total + numero\nprint(total)",
+      "predictionQuestion": "El acumulador suma 1, 2 y 3 (partiendo en 0). ¿Cuál es el valor final?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "6"
+        ],
+        "H-ACC-02": [
+          "3"
+        ]
+      },
+      "expectedOutcome": "6",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Acumular significa conservar el parcial: 0 + 1 = 1, 1 + 2 = 3, 3 + 3 = 6. Reemplazar produciría solo el último valor (3).",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-secuencia-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02"
+      ],
+      "objective": "Predecir la secuencia de valores del acumulador durante la iteración.",
+      "code": "total = 0\nfor numero in range(1, 4):\n    total = total + numero\n    print(total)",
+      "predictionQuestion": "¿Qué valores se imprimen mientras se acumula?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "1, 3, 6"
+        ],
+        "H-ACC-02": [
+          "1, 2, 3"
+        ]
+      },
+      "expectedOutcome": "1, 3, 6",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "La secuencia correcta muestra acumulación: cada impresión incluye el parcial anterior.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-inicial-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02",
+        "H-ACC-03"
+      ],
+      "objective": "Identificar el papel del valor inicial del acumulador.",
+      "code": "total = 10\nfor numero in range(1, 4):\n    total = total + numero\nprint(total)",
+      "predictionQuestion": "El acumulador empieza en 10 y suma 1, 2 y 3. ¿Cuál es el valor final?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "16"
+        ],
+        "H-ACC-02": [
+          "3"
+        ],
+        "H-ACC-03": [
+          "6"
+        ]
+      },
+      "expectedOutcome": "16",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Con acumulador inicial 10 el valor final es 16 (10 + 1 + 2 + 3). Ignorar el inicial (6) o reemplazar (3) son errores distintos.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "El estudiante puede confundir la sustitución con la dificultad de inicialización cuando el valor inicial es distinto de cero."
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-imprime-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02"
+      ],
+      "objective": "Interpretar los cambios de estado observados en el acumulador.",
+      "code": "total = 0\nfor numero in range(2, 5):\n    total = total + numero\n    print(total)",
+      "predictionQuestion": "El acumulador empieza en 0 y suma números de un rango. ¿Qué secuencia se imprime?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "2, 5, 9"
+        ],
+        "H-ACC-02": [
+          "2, 3, 4"
+        ]
+      },
+      "expectedOutcome": "2, 5, 9",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Los valores impresos deben reflejar acumulación (partials crecientes), no un reemplazo simple.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-general-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02"
+      ],
+      "objective": "Generalizar la predicción de acumulación a más iteraciones.",
+      "code": "total = 0\nfor numero in range(1, 6):\n    total = total + numero\n    print(total)",
+      "predictionQuestion": "El acumulador suma todos los números del 1 al 5. ¿Cuál es el valor final y la secuencia?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "1, 3, 6, 10, 15"
+        ],
+        "H-ACC-02": [
+          "1, 2, 3, 4, 5"
+        ]
+      },
+      "expectedOutcome": "1, 3, 6, 10, 15",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Con más iteraciones la diferencia entre reemplazar y acumular se vuelve más pronunciada.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-parcial-01",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-01",
+        "H-ACC-02"
+      ],
+      "objective": "Predecir el valor del acumulador tras algunas iteraciones concretas.",
+      "code": "total = 100\nfor numero in range(2, 5):\n    total = total + numero\n    print(total)",
+      "predictionQuestion": "El acumulador empieza en 100 y suma números del rango 2..4. ¿Qué secuencia se imprime?",
+      "responseSignatures": {
+        "H-ACC-01": [
+          "102, 105, 109"
+        ],
+        "H-ACC-02": [
+          "2, 3, 4"
+        ]
+      },
+      "expectedOutcome": "102, 105, 109",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+      "explanation": "Predecir un parcial (102, 105, 109) exige mantener el acumulado entre iteraciones.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [],
+      "prerequisites": []
+    },
+    {
+      "id": "acc-inicial-cero-02",
+      "version": 1,
+      "patternId": "ACUMULADORES",
+      "targetHypotheses": [
+        "H-ACC-02",
+        "H-ACC-03"
+      ],
+      "objective": "Separar la sustitución del acumulador de la inicialización ignorada cuando el acumulador arranca en cero.",
+      "code": "total = 0\nfor numero in range(2, 5):\n    total = total + numero\n    print(total)",
+      "predictionQuestion": "El acumulador empieza en 0 y suma 2, 3 y 4 imprimiendo tras cada suma. ¿Qué secuencia se imprime?",
+      "responseSignatures": {
+        "H-ACC-02": [
+          "2, 3, 4"
+        ],
+        "H-ACC-03": [
+          "2, 5, 9"
+        ]
+      },
+      "expectedOutcome": "2, 5, 9",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si la respuesta es el resultado correcto y la hipótesis predicía otra cosa, queda en 'contradice'. Si la hipótesis predicía el resultado correcto, la respuesta correcta no la apoya por sí sola (es compatible con una acumulación correcta).",
+      "explanation": "Con inicio en cero, ignorar el inicial y acumular correctamente dan la misma secuencia (2, 5, 9); solo la sustitución produce 2, 3, 4. Por eso esta prueba no distingue comprensión correcta de inicialización ignorada con inicio cero; se necesita un inicio distinto de cero (acc-inicial-01) para separarlas.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Distinguir sustitución de acumulación."
+      ]
+    },
+    {
+      "id": "cond-and-01",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-01",
+        "H-COND-02"
+      ],
+      "objective": "Decidir una rama con una condición and en la que solo una parte es verdadera.",
+      "code": "edad = 20\nif edad >= 14 and edad <= 18:\n    print(\"adolescente\")\nelse:\n    print(\"otra etapa\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-01": [
+          "adolescente"
+        ],
+        "H-COND-02": [
+          "otra etapa"
+        ]
+      },
+      "expectedOutcome": "otra etapa",
+      "answerFormat": "text",
+      "interpretationRule": "Si la respuesta ejecuta la rama del if con una sola parte verdadera, apoya la confusión and/or. Si respeta que and exige ambas partes, contradice esa confusión. La respuesta correcta no apoya a la hipótesis rival que predice el mismo resultado.",
+      "explanation": "20 >= 14 es verdadero, pero 20 <= 18 es falso. Con and la condición completa es falsa y se ejecuta el else: «otra etapa».",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Leer comparaciones con >= y <=.",
+        "Conocer if/else."
+      ]
+    },
+    {
+      "id": "cond-and-02",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-01",
+        "H-COND-02"
+      ],
+      "objective": "Decidir una rama con dos condiciones and donde la segunda es falsa.",
+      "code": "temperatura = 30\nlluvia = True\nif temperatura > 35 and lluvia:\n    print(\"cancelar\")\nelse:\n    print(\"realizar\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-01": [
+          "cancelar"
+        ],
+        "H-COND-02": [
+          "realizar"
+        ]
+      },
+      "expectedOutcome": "realizar",
+      "answerFormat": "text",
+      "interpretationRule": "La rama del if exige que ambas partes sean verdaderas. Una predicción que la ejecuta con solo lluvia verdadera apoya la confusión and/or.",
+      "explanation": "Llueve, pero la temperatura no supera 35. Como and exige las dos partes, la condición es falsa: «realizar».",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Interpretar valores booleanos.",
+        "Conocer and."
+      ]
+    },
+    {
+      "id": "cond-or-01",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-02",
+        "H-COND-01"
+      ],
+      "objective": "Decidir una rama con una condición or en la que solo una parte es verdadera.",
+      "code": "dia = \"sabado\"\nif dia == \"sabado\" or dia == \"domingo\":\n    print(\"fin de semana\")\nelse:\n    print(\"dia laborable\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-02": [
+          "dia laborable"
+        ],
+        "H-COND-01": [
+          "fin de semana"
+        ]
+      },
+      "expectedOutcome": "fin de semana",
+      "answerFormat": "text",
+      "interpretationRule": "Si la respuesta no ejecuta la rama cuando solo una parte del or es verdadera, apoya la confusión or/and. Si reconoce que basta una parte, la contradice.",
+      "explanation": "«sabado» coincide con la primera comparación; con or no hace falta que coincida también con la segunda. Se imprime «fin de semana».",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Comparar cadenas con ==.",
+        "Conocer or."
+      ]
+    },
+    {
+      "id": "cond-or-02",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-02",
+        "H-COND-01"
+      ],
+      "objective": "Decidir una rama con or cuando la primera parte es verdadera y la segunda falsa.",
+      "code": "tiene_entrada = True\nesta_en_lista = False\nif tiene_entrada or esta_en_lista:\n    print(\"puede entrar\")\nelse:\n    print(\"no puede entrar\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-02": [
+          "no puede entrar"
+        ],
+        "H-COND-01": [
+          "puede entrar"
+        ]
+      },
+      "expectedOutcome": "puede entrar",
+      "answerFormat": "text",
+      "interpretationRule": "Exigir ambas partes para un or es la firma de la confusión or/and. Basta una parte verdadera para ejecutar la rama.",
+      "explanation": "Tiene entrada, aunque no esté en la lista. Con or la condición es verdadera: «puede entrar».",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Interpretar variables booleanas.",
+        "Conocer or."
+      ]
+    },
+    {
+      "id": "cond-not-01",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-03",
+        "H-COND-01"
+      ],
+      "objective": "Decidir una rama que depende de una negación simple.",
+      "code": "aprobado = False\nif not aprobado:\n    print(\"recuperar\")\nelse:\n    print(\"promocionar\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-03": [
+          "promocionar"
+        ],
+        "H-COND-01": [
+          "recuperar"
+        ]
+      },
+      "expectedOutcome": "recuperar",
+      "answerFormat": "text",
+      "interpretationRule": "Si la respuesta ignora o invierte not, apoya la mala interpretación de not. Si invierte correctamente el valor, la contradice.",
+      "explanation": "aprobado es False; not False es True, así que se ejecuta la rama del if: «recuperar».",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Conocer los valores True y False.",
+        "Conocer not."
+      ]
+    },
+    {
+      "id": "cond-not-02",
+      "version": 1,
+      "patternId": "CONDICIONALES",
+      "targetHypotheses": [
+        "H-COND-03",
+        "H-COND-02"
+      ],
+      "objective": "Decidir una rama con not aplicado a una comparación.",
+      "code": "edad = 20\nif not (edad < 18):\n    print(\"mayor de edad\")\nelse:\n    print(\"menor de edad\")",
+      "predictionQuestion": "¿Qué mensaje se imprime?",
+      "responseSignatures": {
+        "H-COND-03": [
+          "menor de edad"
+        ],
+        "H-COND-02": [
+          "mayor de edad"
+        ]
+      },
+      "expectedOutcome": "mayor de edad",
+      "answerFormat": "text",
+      "interpretationRule": "Ignorar not invierte la rama observada. La respuesta correcta contradice esa interpretación sin apoyar a la hipótesis neutral.",
+      "explanation": "edad < 18 es False; not False es True, de modo que se imprime «mayor de edad».",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Leer paréntesis en condiciones.",
+        "Conocer not."
+      ]
+    },
+    {
+      "id": "func-print-01",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-01",
+        "H-FUNC-02"
+      ],
+      "objective": "Distinguir lo que una función imprime de lo que devuelve.",
+      "code": "def saludar(nombre):\n    print(\"Hola\", nombre)\n\nresultado = saludar(\"Ana\")\nprint(resultado)",
+      "predictionQuestion": "¿Qué se imprime, en orden?",
+      "responseSignatures": {
+        "H-FUNC-01": [
+          "Hola Ana",
+          "Hola Ana\nHola Ana"
+        ],
+        "H-FUNC-02": [
+          "Hola nombre\nNone"
+        ]
+      },
+      "expectedOutcome": "Hola Ana\nNone",
+      "answerFormat": "text",
+      "interpretationRule": "Si la respuesta espera que la salida de print sea también el valor devuelto, apoya la confusión return/print. Si espera None, la contradice.",
+      "explanation": "La función imprime «Hola Ana» y no tiene return, así que devuelve None. La segunda impresión muestra None.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Conocer print.",
+        "Haber visto funciones sin return."
+      ]
+    },
+    {
+      "id": "func-param-01",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-02",
+        "H-FUNC-01"
+      ],
+      "objective": "Asignar correctamente los argumentos a los parámetros por posición.",
+      "code": "def restar(a, b):\n    return a - b\n\nprint(restar(10, 3))",
+      "predictionQuestion": "¿Qué número se imprime?",
+      "responseSignatures": {
+        "H-FUNC-02": [
+          "-7"
+        ],
+        "H-FUNC-01": [
+          "None"
+        ]
+      },
+      "expectedOutcome": "7",
+      "answerFormat": "numbers",
+      "interpretationRule": "Si la respuesta invierte el orden de los argumentos, apoya la confusión parámetro/argumento. Si espera None, apoya la confusión return/print.",
+      "explanation": "a recibe 10 y b recibe 3; 10 - 3 = 7. Invertirlos produciría -7.",
+      "difficulty": "beginner",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Leer la definición de una función.",
+        "Conocer el orden de los argumentos."
+      ]
+    },
+    {
+      "id": "func-local-print-01",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-03",
+        "H-FUNC-01"
+      ],
+      "objective": "Reconocer que una variable local no existe fuera de la función.",
+      "code": "def crear():\n    valor = 3\n    print(valor)\n\nresultado = crear()\nprint(resultado)\nprint(valor)",
+      "predictionQuestion": "¿Qué se imprime, en orden, hasta que el programa se detiene?",
+      "responseSignatures": {
+        "H-FUNC-03": [
+          "3\nNone\n3"
+        ],
+        "H-FUNC-01": [
+          "3\n3"
+        ]
+      },
+      "expectedOutcome": "3\nNone\nNameError",
+      "answerFormat": "text",
+      "interpretationRule": "Si la respuesta espera que valor siga existiendo, apoya la hipótesis de ámbito local no reconocido. Si espera un NameError, la contradice.",
+      "explanation": "valor es local a crear() y deja de existir al terminar. La función sin return devuelve None; el último print provoca NameError.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Distinguir locales de globales.",
+        "Conocer NameError."
+      ]
+    },
+    {
+      "id": "func-local-param-01",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-03",
+        "H-FUNC-02"
+      ],
+      "objective": "Comprobar que reasignar un parámetro no modifica la variable del llamador.",
+      "code": "def cambiar(valor):\n    valor = \"local\"\n    print(valor)\n\nmensaje = \"global\"\ncambiar(mensaje)\nprint(mensaje)",
+      "predictionQuestion": "¿Qué se imprime, en orden?",
+      "responseSignatures": {
+        "H-FUNC-03": [
+          "local\nlocal"
+        ],
+        "H-FUNC-02": [
+          "mensaje\nglobal"
+        ]
+      },
+      "expectedOutcome": "local\nglobal",
+      "answerFormat": "text",
+      "interpretationRule": "Esperar que el cambio del parámetro altere la variable externa apoya la hipótesis de ámbito. Usar el nombre del parámetro como valor apoya la confusión parámetro/argumento.",
+      "explanation": "El parámetro valor es una variable local; asignarle «local» no cambia mensaje, que sigue siendo «global».",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Distinguir parámetro de argumento.",
+        "Conocer el paso por asignación."
+      ]
+    },
+    {
+      "id": "func-return-02",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-02",
+        "H-FUNC-01"
+      ],
+      "objective": "Reutilizar el valor devuelto por una función en una expresión.",
+      "code": "def sumar_uno(numero):\n    numero = numero + 1\n    return numero\n\nvalor = 10\nnuevo = sumar_uno(valor)\nprint(valor)\nprint(nuevo)",
+      "predictionQuestion": "¿Qué se imprime, en orden?",
+      "responseSignatures": {
+        "H-FUNC-02": [
+          "11\n11"
+        ],
+        "H-FUNC-01": [
+          "10\nNone"
+        ]
+      },
+      "expectedOutcome": "10\n11",
+      "answerFormat": "numbers",
+      "interpretationRule": "Esperar que el argumento original cambie apoya la confusión entre parámetro y variable externa. Esperar None apoya la confusión return/print.",
+      "explanation": "sumar_uno recibe el valor 10 y devuelve 11, pero la variable valor del llamador sigue siendo 10.",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Asignar el resultado de una llamada.",
+        "Conocer return."
+      ]
+    },
+    {
+      "id": "func-scope-02",
+      "version": 1,
+      "patternId": "FUNCIONES",
+      "targetHypotheses": [
+        "H-FUNC-03",
+        "H-FUNC-02"
+      ],
+      "objective": "Distinguir una variable global de una variable local con el mismo nombre.",
+      "code": "mensaje = \"global\"\n\ndef mostrar():\n    mensaje = \"local\"\n    print(mensaje)\n\nmostrar()\nprint(mensaje)",
+      "predictionQuestion": "¿Qué se imprime, en orden?",
+      "responseSignatures": {
+        "H-FUNC-03": [
+          "local\nlocal"
+        ],
+        "H-FUNC-02": [
+          "global\nglobal"
+        ]
+      },
+      "expectedOutcome": "local\nglobal",
+      "answerFormat": "text",
+      "interpretationRule": "Esperar que la asignación local cambie la global apoya la hipótesis de ámbito. Ignorar la asignación local y usar la global dentro de la función apoya la confusión de nombres.",
+      "explanation": "Dentro de mostrar(), mensaje es una variable local distinta de la global. Se imprime «local» y después «global».",
+      "difficulty": "intermediate",
+      "ambiguityCases": [
+        "No estoy seguro",
+        "No sé"
+      ],
+      "prerequisites": [
+        "Distinguir ámbito local y global.",
+        "Conocer el orden de ejecución."
+      ]
+    }
+  ],
+  "discriminationMatrices": [
+    {
+      "patternId": "RANGE",
+      "pairs": [
+        {
+          "hypothesisAId": "H-RANGE-01",
+          "hypothesisBId": "H-RANGE-02",
+          "discriminatingMicrotests": [
+            "range-iteracion-01",
+            "range-cero-01",
+            "range-valor-inicial-01",
+            "range-pequeno-01",
+            "range-tabla-01",
+            "range-negativo-01",
+            "range-un-argumento-01"
+          ],
+          "insufficientWhen": "Cuando la respuesta del estudiante no fija el límite superior (p. ej. describir el rango como intervalo) o cuando la respuesta coincide con la predicción de ambas hipótesis."
+        }
+      ]
+    },
+    {
+      "patternId": "ACUMULADORES",
+      "pairs": [
+        {
+          "hypothesisAId": "H-ACC-01",
+          "hypothesisBId": "H-ACC-02",
+          "discriminatingMicrotests": [
+            "acc-final-01",
+            "acc-secuencia-01",
+            "acc-imprime-01",
+            "acc-general-01",
+            "acc-parcial-01"
+          ],
+          "insufficientWhen": "Cuando la respuesta no distingue entre conservar el parcial o reemplazarlo (p. ej. respuesta ambigua o calculada sin paso intermedio)."
+        },
+        {
+          "hypothesisAId": "H-ACC-01",
+          "hypothesisBId": "H-ACC-03",
+          "discriminatingMicrotests": [
+            "acc-inicial-01"
+          ],
+          "insufficientWhen": "Cuando el error no puede atribuirse al valor inicial o a la operación acumulativa."
+        },
+        {
+          "hypothesisAId": "H-ACC-02",
+          "hypothesisBId": "H-ACC-03",
+          "discriminatingMicrotests": [
+            "acc-inicial-01",
+            "acc-inicial-cero-02"
+          ],
+          "insufficientWhen": "La secuencia 2, 5, 9 contradice la sustitución, pero también es compatible con la hipótesis normativa: no basta para apoyar específicamente que se ignore la inicialización. Si la respuesta no separa el efecto de la inicialización de la sustitución, la evidencia es insuficiente."
+        }
+      ]
+    },
+    {
+      "patternId": "CONDICIONALES",
+      "pairs": [
+        {
+          "hypothesisAId": "H-COND-01",
+          "hypothesisBId": "H-COND-02",
+          "discriminatingMicrotests": [
+            "cond-and-01",
+            "cond-and-02",
+            "cond-or-01",
+            "cond-or-02"
+          ],
+          "insufficientWhen": "Cuando la respuesta no distingue una conjunción de una disyunción (por ejemplo, describe la condición sin fijar la rama)."
+        },
+        {
+          "hypothesisAId": "H-COND-01",
+          "hypothesisBId": "H-COND-03",
+          "discriminatingMicrotests": [
+            "cond-not-01"
+          ],
+          "insufficientWhen": "Cuando la respuesta es compatible tanto con una conjunción/disyunción bien leída como con una negación mal leída."
+        },
+        {
+          "hypothesisAId": "H-COND-02",
+          "hypothesisBId": "H-COND-03",
+          "discriminatingMicrotests": [
+            "cond-not-02"
+          ],
+          "insufficientWhen": "Cuando la respuesta no permite separar una disyunción mal leída de una negación mal leída."
+        }
+      ]
+    },
+    {
+      "patternId": "FUNCIONES",
+      "pairs": [
+        {
+          "hypothesisAId": "H-FUNC-01",
+          "hypothesisBId": "H-FUNC-02",
+          "discriminatingMicrotests": [
+            "func-print-01",
+            "func-param-01",
+            "func-return-02"
+          ],
+          "insufficientWhen": "Cuando la respuesta no permite saber si el estudiante confunde el valor devuelto con lo impreso o el nombre del parámetro con el argumento."
+        },
+        {
+          "hypothesisAId": "H-FUNC-01",
+          "hypothesisBId": "H-FUNC-03",
+          "discriminatingMicrotests": [
+            "func-local-print-01"
+          ],
+          "insufficientWhen": "Cuando la respuesta no separa el valor devuelto de la supervivencia de una variable local."
+        },
+        {
+          "hypothesisAId": "H-FUNC-02",
+          "hypothesisBId": "H-FUNC-03",
+          "discriminatingMicrotests": [
+            "func-local-param-01",
+            "func-scope-02"
+          ],
+          "insufficientWhen": "Cuando la respuesta no distingue el uso del nombre del parámetro de la creencia de que el ámbito local persiste."
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "El instrumento no constituye validación psicométrica ni prueba de efectividad educativa.",
+    "Las reglas diagnósticas no convierten respuestas en certezas absolutas.",
+    "El Worker no es un sandbox de seguridad."
+  ]
+}

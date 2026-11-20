@@ -116,12 +116,12 @@ export function evaluateDiagnostic(
 ): DiagnosticResult {
   const observations = [
     `Predicción registrada: salida «${normalizeOutput(prediction.expectedOutput)}» y ${prediction.expectedIterations.length} iteraciones.`,
-    `Valores previstos por vuelta: ${Object.entries(prediction.expectedVariableValues)
+    `Valores previstos por vuelta: ${Object.entries(prediction.expectedVariableValues ?? {})
       .map(([name, values]) => `${name} = ${values.join(", ")}`)
       .join("; ") || "sin variables especificadas"}.`,
     `Ejecución observada: salida «${normalizeOutput(result.output)}».`,
   ];
-  const expectedExerciseOutput = normalizeOutput(EXERCISES[test.exerciseId].expectedOutput);
+  const expectedExerciseOutput = normalizeOutput(EXERCISES[test.exerciseId]?.expectedOutput ?? "");
   if (!result.success || normalizeOutput(result.output) !== expectedExerciseOutput) {
     return {
       microtestId: test.id,
@@ -233,7 +233,7 @@ function predictionMatches(
     return false;
   }
   return Object.entries(response.variableValues).every(([name, expected]) => {
-    const actual = prediction.expectedVariableValues[name];
+    const actual = prediction.expectedVariableValues?.[name];
     return actual !== undefined && arraysMatch(expected, actual);
   });
 }

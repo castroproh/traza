@@ -395,11 +395,24 @@ class Tracer:
         return self.local_trace
 
 
+def _error_line(exc):
+    """Última línea del código del estudiante en la traza del error."""
+    tb = exc.__traceback__
+    line = None
+    while tb is not None:
+        if tb.tb_frame.f_code.co_filename == FILENAME:
+            line = tb.tb_lineno
+        tb = tb.tb_next
+    return line
+
+
 def run_traced(source):
     """Ejecuta `source` con seguimiento y devuelve un JSON (str)."""
     snapshots = []
     output = ""
     error = None
+    error_kind = None
+    error_line = None
     started = time.perf_counter()
     tracer = None
     try:
@@ -426,17 +439,25 @@ def run_traced(source):
             output = buffer.getvalue()
     except SyntaxError as exc:
         error = "SyntaxError: %s (linea %s)" % (exc.msg, exc.lineno)
+        error_kind = "syntax"
+        error_line = exc.lineno
     except TraceLimitError as exc:
         error = "TraceLimitError: %s" % exc
+        error_kind = "resource"
     except Exception as exc:  # noqa: BLE001 - se informa al estudiante
         error = "%s: %s" % (type(exc).__name__, exc)
+        error_kind = "runtime"
+        error_line = _error_line(exc)
     if tracer is not None:
         snapshots = tracer.snapshots
-    return json.dumps(
-        {
-            "output": output,
-            "snapshots": snapshots,
-            "error": error,
-            "pythonMs": round((time.perf_counter() - started) * 1000, 3),
-        }
-    )
+    result = {
+        "output": output,
+        "snapshots": snapshots,
+        "error": error,
+        "pythonMs": round((time.perf_counter() - started) * 1000, 3),
+    }
+    if error is not None:
+        result["errorKind"] = error_kind
+        if error_line is not None:
+            result["errorLine"] = error_line
+    return json.dumps(result)

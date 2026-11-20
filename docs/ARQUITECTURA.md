@@ -1,4 +1,6 @@
-# Arquitectura de TRAZA (0.7.0)
+# Arquitectura de TRAZA (0.8.0)
+
+El instrumento incluye cuatro patrones (11 hipótesis, 26 micropruebas): RANGE (7), ACUMULADORES (7), CONDICIONALES (6) y FUNCIONES (6). Los ejercicios ejecutables siguen siendo una lista blanca; no se ejecuta código libre.
 
 ## Capas
 
@@ -56,7 +58,7 @@ Predicción (sin ejecutar)
   └─ salida esperada + variables + iteraciones + explicación + confianza
 Análisis (Pyodide real)
   └─ salida, iteraciones, estado de variables, tabla real y primera divergencia determinable
-Contraste (diagnóstico 0.6.0)
+Contraste (diagnóstico 0.8.0)
   └─ selection.selectMicrotest (determinista)
        └─ DiagnosticPanel (hipótesis en juego, microprueba, respuesta, ejecución real)
             └─ evidence.evaluateMicrotest (reglas puras)
@@ -93,7 +95,7 @@ Reglas de diseño:
 
 ## Persistencia
 
-- Clave: `traza:pact-session`. Esquema: `1`. Instrumento: `0.7.0`.
+- Clave: `traza:pact-session`. Esquema: `1`. Instrumento: `0.8.0`.
 - Se guarda la etapa, la predicción congelada, el análisis, las respuestas de contraste, las
   evaluaciones, los estados de hipótesis y la transferencia.
 - Al cargar se valida el esquema y la coherencia etapa/datos. Las evaluaciones de evidencia se
@@ -108,7 +110,19 @@ Reglas de diseño:
 - `__builtins__` del programa se reducen a `print` y `range`: los `import` fallan.
 - Máximo 2000 eventos de traza (`TraceLimitError`), tiempo límite de 15 s en el cliente (termina el Worker).
 - La salida se captura con `redirect_stdout`.
+- Los patrones de condicionales y funciones se ejecutan en ejercicios de lista blanca; no habilitan ejecución arbitraria.
 - La numeración de iteraciones es por bucle; los bucles anidados no están diseñados.
+
+## Alcance del instrumento
+
+| Patrón | Hipótesis | Micropruebas | Enfoque |
+|---|---:|---:|---|
+| RANGE | 2 | 7 | Límite exclusivo, inicio y rango de un argumento |
+| ACUMULADORES | 3 | 7 | Estado, valor inicial, actualización y sustitución |
+| CONDICIONALES | 3 | 6 | `and`, `or`, `not` y selección de ramas |
+| FUNCIONES | 3 | 6 | Parámetros, ámbito local, `print` y `return` |
+
+El prototipo Bayesiano está únicamente en `analysis/simulator/bayesian.py`, fuera del motor de producción. Su prior uniforme y verosimilitudes (0.90/0.50/0.05) son supuestos experimentales; el posterior es una plausibilidad matemática condicionada a esos supuestos, no la probabilidad real de que una persona tenga una concepción. Las respuestas ambiguas no actualizan el posterior. Véase `analysis/simulator/README.md`.
 
 ## Riesgos antes de permitir código de estudiantes
 
@@ -117,7 +131,7 @@ Reglas de diseño:
 3. Consumo de memoria sin tope (listas enormes, cadenas).
 4. `sys.settrace` penaliza el rendimiento; programas largos serán lentos.
 5. Posible interferencia del código del estudiante con `sys.settrace`/`sys.gettrace`.
-6. Trazado de funciones propias, recursión, generadores, `while` complejos y bucles anidados: sin diseñar ni probar.
+6. Las funciones usadas por los ejercicios de la lista blanca sí están cubiertas por integración y E2E; ejecución de código arbitrario, recursión, generadores, `while` complejos y bucles anidados siguen fuera de alcance.
 7. Aislamiento recomendado antes de código libre: iframe con `sandbox` y CSP estricta, y/o Worker aislado por ejecución, además de límites de memoria.
 8. Privacidad: esta versión no recopila datos de estudiantes ni personales.
 

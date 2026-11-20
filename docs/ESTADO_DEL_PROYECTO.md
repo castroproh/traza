@@ -1,4 +1,50 @@
-# Estado del proyecto — TRAZA 0.7.0 (recorrido PACT completo)
+# Estado del proyecto — TRAZA 0.8.0
+
+## Estado actual (cierre 0.8.0)
+
+TRAZA 0.8.0 se consolidó desde `traza_1.zip`; `package.json` declara `0.8.0`. La versión incluye cuatro patrones (RANGE, ACUMULADORES, CONDICIONALES y FUNCIONES), 11 hipótesis, 26 micropruebas y ocho ejercicios PACT controlados. La exportación del banco TypeScript a `analysis/simulator/bank.json` se regenera con `npm run export:bank`; la prueba de portabilidad comprueba su paridad.
+
+### Auditoría y simulación reproducible
+
+- Suite canónica: 740 sesiones sintéticas, semilla 2026 y 20 repeticiones por perfil. Resultados: resolución 91.62%, abstención 4.32%, falsos positivos 0%, 3.185 micropruebas/sesión.
+- Antes de corregir el denominador, la ejecución con la configuración del ZIP reprodujo byte por byte sus métricas y CSV canónicos.
+- Resolución por patrón: RANGE 100%, ACUMULADORES 85%, CONDICIONALES 90.5%, FUNCIONES 92%.
+- La exactitud RANGE histórica de 66.7% (40/60) incluía 20 perfiles `solo-conocidas` sin hipótesis estable. El denominador corregido mide los 40 perfiles con hipótesis estable: 100% (40/40). Es una corrección de definición métrica; no se cambiaron respuestas, parámetros ni preguntas.
+- Estos son resultados de **simulación artificial**, no de estudiantes. La generación y evaluación comparten las firmas del banco, lo que limita la independencia de la estimación.
+- Ablación A–F y detalles: `analysis/simulator/outputs/ABLATION.md`; resultados canónicos: `analysis/simulator/outputs/RESULTS.md`.
+
+### Prototipo Bayesiano
+
+Experimental y fuera del motor de producción. Usa prior uniforme y verosimilitudes asumidas (0.90/0.50/0.05), no calibradas empíricamente; las respuestas ambiguas no actualizan el posterior. El umbral 0.70 es configurable. El posterior representa plausibilidad matemática condicionada a esos supuestos, no probabilidad real de una concepción. Ver `analysis/simulator/README.md`.
+
+### Estado de cierre
+
+| Área | Estado |
+|---|---|
+| Código y banco 0.8.0 | Verificado en el archivo base y en la prueba de paridad TypeScript/JSON |
+| E2E con Pyodide real | Verificado: 17/17 en Chromium; recorridos PACT de los cuatro patrones y persistencia/transferencia/errores |
+| Resultados simulados y ablación | Generados de forma determinista; artificiales |
+| Revisión docente externa / efectividad educativa | Pendiente; no hay resultados reales |
+| Matriz DGETI | Parcial; faltan ocho títulos oficiales y la rúbrica completa |
+| Informe gráfico DGETI editable | Bloqueado; no se encontró fuente editable en el ZIP |
+
+### Verificación de cierre
+
+| Comando | Resultado verificado |
+|---|---|
+| `npm ci` | Correcto; 74 paquetes instalados, 0 vulnerabilidades. npm advierte que no están aprobados los scripts de instalación de esbuild/fsevents; typecheck/build/tests sí se ejecutaron correctamente. |
+| `npm run typecheck` | Correcto |
+| `npm test` | 20 archivos, 198 pruebas aprobadas |
+| `npm run build` | Correcto; Vite externalizó imports `node:*` de Pyodide para compatibilidad con navegador, sin fallar el bundle |
+| `npm audit` | 0 vulnerabilidades |
+| `npm run test:e2e` | 17 pruebas aprobadas en Chromium con Pyodide real |
+| `python3 -m unittest discover -s analysis/simulator -v` | 43 pruebas aprobadas |
+
+---
+
+## Registro histórico de 0.7.0
+
+El contenido siguiente documenta la entrega anterior y no describe el estado actual de 0.8.0.
 
 Registro de lo que existe y de **cómo se verificó**. Última actualización: 2026-11-18.
 

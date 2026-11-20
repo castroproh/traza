@@ -70,5 +70,5 @@ export function useTraceEngine() {
   });
   onBeforeUnmount(() => client.terminate());
 
-  return { status, result, errorMessage, run, initialize, restart };
+  return { status, result, errorMessage, run, initialize, restart, clearProgramError };
 }

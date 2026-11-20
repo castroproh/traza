@@ -87,9 +87,22 @@ function statusFor(id: string): EvidenceStatus {
   return props.contrast.statuses[id] ?? "insufficient";
 }
 
+function canonicalObservation(value: string, format: "numbers" | "text"): string {
+  if (format === "numbers") return canonicalizeAnswer(value, "numbers");
+  // Las líneas de excepción incluyen un mensaje variable; para comparar la
+  // predicción con el resultado solo importa el tipo de error.
+  return canonicalizeAnswer(value, "text")
+    .split("\n")
+    .map((line) => {
+      const match = line.match(/^([A-Za-z_][\w.]*(?:Error|Exception|Interrupt|Exit))\b/);
+      return match?.[1] ?? line;
+    })
+    .join("\n");
+}
+
 function observationMatches(answer: { response: string; observedOutput: string }): boolean {
   const format = props.microtest?.answerFormat ?? "numbers";
-  return canonicalizeAnswer(answer.response, format) === canonicalizeAnswer(answer.observedOutput, format);
+  return canonicalObservation(answer.response, format) === canonicalObservation(answer.observedOutput, format);
 }
 
 function check(): void {

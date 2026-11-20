@@ -1,5 +1,5 @@
 /**
- * Matrices de discriminación de hipótesis (misión 0.6.0).
+ * Matrices de discriminación de hipótesis para el instrumento TRAZA 0.8.0.
  *
  * Una matriz responde, para cada par de hipótesis rival:
  *  1. ¿Qué hipótesis estamos tratando de distinguir?
@@ -20,7 +20,7 @@ export const DISCRIMINATION_MATRICES: readonly DiscriminationMatrix[] = [
         patternId: "RANGE",
         hypothesisAId: "H-RANGE-01",
         hypothesisBId: "H-RANGE-02",
-        discriminatingMicrotests: ["range-iteracion-01", "range-cero-01", "range-valor-inicial-01", "range-pequeno-01", "range-tabla-01", "range-negativo-01"],
+        discriminatingMicrotests: ["range-iteracion-01", "range-cero-01", "range-valor-inicial-01", "range-pequeno-01", "range-tabla-01", "range-negativo-01", "range-un-argumento-01"],
         predictions: {
           "range-iteracion-01": {
             "H-RANGE-01": ["1, 2, 3, 4"],
@@ -46,9 +46,14 @@ export const DISCRIMINATION_MATRICES: readonly DiscriminationMatrix[] = [
             "H-RANGE-01": ["-3, -2, -1, 0, 1, 2"],
             "H-RANGE-02": ["-3, -2, -1, 0, 1"],
           },
+          "range-un-argumento-01": {
+            "H-RANGE-01": ["0, 1, 2, 3, 4, 5"],
+            "H-RANGE-02": ["0, 1, 2, 3, 4"],
+          },
         },
         ambiguousResponses: {
           "range-tabla-01": ["del 1 al 3"],
+          "range-un-argumento-01": ["del 0 al 4"],
         },
         insufficientWhen:
           "Cuando la respuesta del estudiante no fija el límite superior (p. ej. describir el rango como intervalo) o cuando la respuesta coincide con la predicción de ambas hipótesis.",
@@ -95,15 +100,17 @@ export const DISCRIMINATION_MATRICES: readonly DiscriminationMatrix[] = [
         patternId: "ACUMULADORES",
         hypothesisAId: "H-ACC-02",
         hypothesisBId: "H-ACC-03",
-        discriminatingMicrotests: ["acc-inicial-01"],
+        discriminatingMicrotests: ["acc-inicial-01", "acc-inicial-cero-02"],
         predictions: {
           "acc-inicial-01": { "H-ACC-02": ["3"], "H-ACC-03": ["6"] },
+          "acc-inicial-cero-02": { "H-ACC-02": ["2, 3, 4"], "H-ACC-03": ["2, 5, 9"] },
         },
         ambiguousResponses: {
           "acc-inicial-01": ["No estoy seguro"],
+          "acc-inicial-cero-02": ["2, 5, 9", "No estoy seguro", "No sé"],
         },
         insufficientWhen:
-          "Cuando la respuesta no separa el efecto de la inicialización del efecto de la sustitución.",
+          "La secuencia 2, 5, 9 contradice la sustitución, pero también es compatible con la hipótesis normativa: no basta para apoyar específicamente que se ignore la inicialización. Si la respuesta no separa el efecto de la inicialización de la sustitución, la evidencia es insuficiente.",
       },
     ],
   },

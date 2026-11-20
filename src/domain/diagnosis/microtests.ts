@@ -269,6 +269,29 @@ export const MICROTESTS: readonly DiagnosticMicrotest[] = [
       "Los valores negativos no cambian la regla: el límite final (2) se excluye.",
     difficulty: "beginner",
   }),
+  microtest({
+    id: "range-un-argumento-01",
+    patternId: "RANGE",
+    targetHypotheses: ["H-RANGE-01", "H-RANGE-02"],
+    objective: "Comprobar si el estudiante generaliza la exclusión del límite superior a range() llamado con un solo argumento.",
+    code: [
+      "for numero in range(5):",
+      "    print(numero)",
+    ].join("\n"),
+    predictionQuestion: "¿Qué números genera range(5)?",
+    responses: {
+      "H-RANGE-01": ["0, 1, 2, 3, 4, 5"],
+      "H-RANGE-02": ["0, 1, 2, 3, 4"],
+    },
+    expectedOutcome: "0, 1, 2, 3, 4",
+    interpretationRule:
+      "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
+    explanation:
+      "Con un solo argumento, range(5) empieza en cero y se detiene antes del límite (5): 0, 1, 2, 3, 4. Una interpretación inclusive añadiría el 5.",
+    difficulty: "beginner",
+    ambiguityCases: ["del 0 al 4"],
+    prerequisites: ["Conocer range() con un solo argumento."],
+  }),
 
   // --------------------------------------------------------- ACUMULADORES ---
   microtest({
@@ -378,6 +401,31 @@ export const MICROTESTS: readonly DiagnosticMicrotest[] = [
       "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si coincide con el resultado correcto y la hipótesis predice otra cosa, la hipótesis queda en 'contradice'.",
     explanation: "Predecir un parcial (102, 105, 109) exige mantener el acumulado entre iteraciones.",
     difficulty: "intermediate",
+  }),
+  microtest({
+    id: "acc-inicial-cero-02",
+    patternId: "ACUMULADORES",
+    targetHypotheses: ["H-ACC-02", "H-ACC-03"],
+    objective: "Separar la sustitución del acumulador de la inicialización ignorada cuando el acumulador arranca en cero.",
+    code: [
+      "total = 0",
+      "for numero in range(2, 5):",
+      "    total = total + numero",
+      "    print(total)",
+    ].join("\n"),
+    predictionQuestion: "El acumulador empieza en 0 y suma 2, 3 y 4 imprimiendo tras cada suma. ¿Qué secuencia se imprime?",
+    responses: {
+      "H-ACC-02": ["2, 3, 4"],
+      "H-ACC-03": ["2, 5, 9"],
+    },
+    expectedOutcome: "2, 5, 9",
+    interpretationRule:
+      "Si la respuesta coincide con la predicción de una hipótesis, esa hipótesis queda en 'apoya'. Si la respuesta es el resultado correcto y la hipótesis predicía otra cosa, queda en 'contradice'. Si la hipótesis predicía el resultado correcto, la respuesta correcta no la apoya por sí sola (es compatible con una acumulación correcta).",
+    explanation:
+      "Con inicio en cero, ignorar el inicial y acumular correctamente dan la misma secuencia (2, 5, 9); solo la sustitución produce 2, 3, 4. Por eso esta prueba no distingue comprensión correcta de inicialización ignorada con inicio cero; se necesita un inicio distinto de cero (acc-inicial-01) para separarlas.",
+    difficulty: "beginner",
+    ambiguityCases: ["No estoy seguro", "No sé"],
+    prerequisites: ["Distinguir sustitución de acumulación."],
   }),
 
   // ------------------------------------------------------- CONDICIONALES ---

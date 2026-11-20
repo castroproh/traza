@@ -4,7 +4,7 @@ import { getExercise, EXERCISES, PACT_EXERCISE_IDS, microtestExerciseId } from "
 import { canonicalizeAnswer } from "../../src/domain/pact/analysis";
 import { PACT_EXERCISES, mainExerciseFor, transferExerciseFor } from "../../src/domain/pact/exercises";
 
-describe("contrato de ejercicios PACT y micropruebas (misión 0.7.0)", () => {
+describe("contrato de ejercicios PACT y micropruebas (misión 0.8.0)", () => {
   it("mantiene principal y transferencia para los cuatro patrones, con valores distintos", () => {
     for (const patternId of ["RANGE", "ACUMULADORES", "CONDICIONALES", "FUNCIONES"] as const) {
       const main = mainExerciseFor(patternId);
@@ -36,7 +36,7 @@ describe("contrato de ejercicios PACT y micropruebas (misión 0.7.0)", () => {
   });
 
   it("cada microprueba tiene un ejercicio ejecutable con el mismo código y salida", () => {
-    expect(MICROTESTS).toHaveLength(24);
+    expect(MICROTESTS).toHaveLength(26);
     for (const microtest of MICROTESTS) {
       const executable = getExercise(microtestExerciseId(microtest.id));
       expect(executable).toBeDefined();

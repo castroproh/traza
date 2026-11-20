@@ -49,9 +49,26 @@ describe("selección adaptativa de micropruebas (misión 0.6.0)", () => {
         { microtestId: "acc-general-01", response: "No estoy seguro" },
         { microtestId: "acc-parcial-01", response: "No estoy seguro" },
         { microtestId: "acc-inicial-01", response: "No estoy seguro" },
+        { microtestId: "acc-inicial-cero-02", response: "No estoy seguro" },
       ],
     });
     expect(unresolved.action).toBe("insufficient");
+  });
+
+  it("resuelve la ambigüedad entre sustitución e inicialización con la nueva acc-inicial-cero-02", () => {
+    const first = selectMicrotest({
+      patternId: "ACUMULADORES",
+      answers: [
+        { microtestId: "acc-final-01", response: "No estoy seguro" },
+        { microtestId: "acc-secuencia-01", response: "No estoy seguro" },
+        { microtestId: "acc-imprime-01", response: "No estoy seguro" },
+        { microtestId: "acc-general-01", response: "No estoy seguro" },
+        { microtestId: "acc-parcial-01", response: "No estoy seguro" },
+        { microtestId: "acc-inicial-01", response: "No estoy seguro" },
+      ],
+    });
+    expect(first.action).toBe("selected");
+    expect(first.microtestId).toBe("acc-inicial-cero-02");
   });
 
   it("limita la cantidad de micropruebas por sesión", () => {

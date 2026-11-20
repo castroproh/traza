@@ -1,4 +1,4 @@
-# Revisión docente — TRAZA 0.7.0
+# Revisión docente — TRAZA 0.8.0
 
 **Estado: pendiente de revisión externa.** Este documento prepara el material para que docentes o
 especialistas en educación en tecnología revisen el instrumento. **No constituye una aprobación
@@ -18,42 +18,54 @@ realizado revisiones reales ni se atribuyen resultados que no existan.
 
 ## 2. Instrumento revisado
 
-- Versión del instrumento: `0.7.0`; esquema de sesión: `1`.
-- Patrones: `RANGE` (límite superior exclusivo de `range()`) y `ACUMULADORES` (conservación del estado).
-- Hipótesis: `H-RANGE-01`, `H-RANGE-02`, `H-ACC-01`, `H-ACC-02`, `H-ACC-03`.
-- Micropruebas: 12 (6 por patrón).
-- Matrices de discriminación: 1 par para `RANGE`; 3 pares para `ACUMULADORES`.
+- Versión del instrumento: `0.8.0`; esquema de sesión: `1`.
+- Patrones: `RANGE`, `ACUMULADORES`, `CONDICIONALES` y `FUNCIONES`.
+- Hipótesis: 11 (2 RANGE, 3 ACUMULADORES, 3 CONDICIONALES, 3 FUNCIONES).
+- Micropruebas: 26 (7, 7, 6 y 6 respectivamente).
+- Ejercicios: cuatro principales y cuatro de transferencia, ejecutados desde una lista blanca.
+- Las matrices de discriminación están en `src/domain/diagnosis/discrimination.ts`.
 
-### Ejercicios principales
+### Ejercicios principales y transferencia
 
-| Patrón | Ejercicio | Qué se pide | Salida real |
+| Patrón | Principal | Transferencia | Foco |
 |---|---|---|---|
-| RANGE | `range-principal` | Predecir `range(2, 6)`, la variable `numero` y las iteraciones. | `2, 3, 4, 5` |
-| ACUMULADORES | `suma-1-3` | Predecir el total y las variables `total`/`numero`. | `6` |
+| RANGE | `range-principal` | `range-transferencia` | Límite exclusivo y generalización a otro rango/contexto |
+| ACUMULADORES | `suma-1-3` | `acumuladores-transferencia` | Estado acumulado e inicio distinto |
+| CONDICIONALES | `condicionales-principal` | `condicionales-transferencia` | Evaluación de condiciones y ramas |
+| FUNCIONES | `funciones-principal` | `funciones-transferencia` | Parámetros, ámbito y retorno |
 
-### Transferencia
+### Las 26 micropruebas
 
-| Patrón | Ejercicio | Contexto | Salida real |
-|---|---|---|---|
-| RANGE | `range-transferencia` | Numerar páginas con `range(5, 9)`. | `5, 6, 7, 8` |
-| ACUMULADORES | `acumuladores-transferencia` | Ahorro inicial 50 con sumas 10/20/30/40. | `60, 80, 110, 150` |
+| Patrón | ID | Foco revisable |
+|---|---|---|
+| RANGE | `range-iteracion-01` | Secuencia y posiciones de `range(1, 4)` |
+| RANGE | `range-cero-01` | Inicio en cero |
+| RANGE | `range-valor-inicial-01` | Inicio y límite no usados en otros ejemplos |
+| RANGE | `range-pequeno-01` | Rango corto |
+| RANGE | `range-tabla-01` | Secuencia en tabla de iteraciones |
+| RANGE | `range-negativo-01` | Límite con valores negativos |
+| RANGE | `range-un-argumento-01` | Forma `range(n)` y límite exclusivo |
+| ACUMULADORES | `acc-final-01` | Resultado acumulado frente a reemplazo |
+| ACUMULADORES | `acc-secuencia-01` | Parciales observados |
+| ACUMULADORES | `acc-inicial-01` | Efecto del valor inicial no nulo |
+| ACUMULADORES | `acc-imprime-01` | Estado acumulado entre iteraciones |
+| ACUMULADORES | `acc-general-01` | Generalización a más iteraciones |
+| ACUMULADORES | `acc-parcial-01` | Parciales con inicio 100 |
+| ACUMULADORES | `acc-inicial-cero-02` | Sustitución frente a acumulación desde cero |
+| CONDICIONALES | `cond-and-01` | `and` cuando una comparación es falsa |
+| CONDICIONALES | `cond-and-02` | `and` con condición booleana falsa |
+| CONDICIONALES | `cond-or-01` | `or` con una sola parte verdadera |
+| CONDICIONALES | `cond-or-02` | `or` con la primera parte verdadera |
+| CONDICIONALES | `cond-not-01` | Negación booleana simple |
+| CONDICIONALES | `cond-not-02` | Negación de una comparación |
+| FUNCIONES | `func-print-01` | Diferencia entre imprimir y devolver |
+| FUNCIONES | `func-param-01` | Asignación posicional de argumentos |
+| FUNCIONES | `func-local-print-01` | Variable local fuera de su función |
+| FUNCIONES | `func-local-param-01` | Reasignación local de un parámetro |
+| FUNCIONES | `func-return-02` | Uso del valor retornado sin mutar el argumento |
+| FUNCIONES | `func-scope-02` | Variable local/global con el mismo nombre |
 
-### Micropruebas
-
-| Patrón | ID | Objetivo | Dificultad prevista |
-|---|---|---|---|
-| RANGE | `range-iteracion-01` | Predecir `range(1, 4)` y la posición de cada valor. | inicial |
-| RANGE | `range-cero-01` | Predecir una secuencia que comienza en cero. | inicial |
-| RANGE | `range-valor-inicial-01` | Predecir con inicio y límite distintos de los ejemplos. | inicial |
-| RANGE | `range-pequeno-01` | Predecir un rango de longitud pequeña. | inicial |
-| RANGE | `range-tabla-01` | Interpretar una tabla de iteraciones. | intermedia |
-| RANGE | `range-negativo-01` | Predecir un rango con valores negativos. | inicial |
-| ACUMULADORES | `acc-final-01` | Predecir el valor final del acumulador. | inicial |
-| ACUMULADORES | `acc-secuencia-01` | Predecir la secuencia de valores intermedios. | inicial |
-| ACUMULADORES | `acc-inicial-01` | Identificar el papel del valor inicial. | inicial |
-| ACUMULADORES | `acc-imprime-01` | Interpretar cambios de estado observados. | intermedia |
-| ACUMULADORES | `acc-general-01` | Generalizar a más iteraciones. | intermedia |
-| ACUMULADORES | `acc-parcial-01` | Predecir valores en iteraciones concretas. | intermedia |
+**Límite discriminativo que debe revisarse:** en `acc-inicial-cero-02`, responder `2, 5, 9` contradice sustitución, pero esa respuesta también es compatible con el comportamiento normativo. No apoya por sí sola la hipótesis de que se ignora la inicialización; para separarla se requiere un inicio no nulo, como en `acc-inicial-01`. La matriz registra esta insuficiencia explícitamente.
 
 ## 3. Matriz de revisión (a completar por revisores reales)
 
@@ -65,7 +77,7 @@ una revisión real y firmada.** Las columnas de resultado se dejan vacías a pro
 | 1 | Claridad de instrucciones | Pantallas de Predicción y Transferencia | Pendiente | — | — | — |
 | 2 | Pertinencia de hipótesis | `hypotheses.ts`, matrices | Pendiente | — | — | — |
 | 3 | Calidad de ejercicios principales | `exercises.ts`, `pact/exercises.ts` | Pendiente | — | — | — |
-| 4 | Calidad de transferencia | Dos ejercicios de transferencia | Pendiente | — | — | — |
+| 4 | Calidad de transferencia | Cuatro ejercicios de transferencia | Pendiente | — | — | — |
 | 5 | Discriminación entre hipótesis | `discrimination.ts`, micropruebas | Pendiente | — | — | — |
 | 6 | Ausencia de pistas involuntarias | Textos y opciones de respuesta | Pendiente | — | — | — |
 | 7 | Lenguaje respetuoso | Toda la interfaz y el resumen | Pendiente | — | — | — |
@@ -77,7 +89,7 @@ una revisión real y firmada.** Las columnas de resultado se dejan vacías a pro
 
 ## 4. Cómo realizar la revisión
 
-1. Abrir la aplicación con `npm run dev` y recorrer los dos patrones completos.
+1. Abrir la aplicación con `npm run dev` y recorrer los cuatro patrones completos.
 2. Anotar cualquier instrucción ambigua, pista o lenguaje que pueda interpretarse como juicio
    sobre la capacidad del estudiante.
 3. Revisar cada microprueba y su matriz de discriminación.
@@ -98,8 +110,8 @@ una revisión real y firmada.** Las columnas de resultado se dejan vacías a pro
 ## 6. Próximas mejoras recomendadas (sujetas a revisión)
 
 - Validar el banco con docentes antes de ampliar patrones.
-- Diseñar condicionales y funciones (0.8.0) solo después de esta revisión.
+- Revisar los patrones ya implementados de condicionales y funciones antes de usarlos en un estudio educativo.
 - Estudiar formatos de respuesta más naturales sin perder determinismo.
 - Medir usabilidad y duración en un piloto controlado, con consentimiento y sin datos personales.
 
-**No marcar este documento como revisado hasta que existan revisiones reales.**
+**No marcar este documento como revisado hasta que existan revisiones reales.** Los porcentajes del simulador sintético no son datos de aprendizaje ni validación del instrumento.

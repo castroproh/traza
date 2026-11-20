@@ -32,6 +32,7 @@ export interface BankExport {
     contradictingEvidence: string[];
     alternatives: string[];
     limitations: string[];
+    normative: boolean;
     version: number;
   }>;
   microtests: Array<{
@@ -79,6 +80,7 @@ export function buildBankExport(): BankExport {
       contradictingEvidence: [...h.contradictingEvidence],
       alternatives: [...h.alternatives],
       limitations: [...h.limitations],
+      normative: h.normative === true,
       version: 1,
     })),
     microtests: MICROTESTS.map((m) => ({

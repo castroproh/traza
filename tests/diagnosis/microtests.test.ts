@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { MICROTESTS, getMicrotest, microtestsByPattern } from "../../src/domain/diagnosis/microtests";
 import { MICROTEST_IDS } from "../../src/domain/diagnosis/microtests";
+import { matrixForPattern } from "../../src/domain/diagnosis/discrimination";
 import { validateBank, validateMicrotest } from "../../src/domain/diagnosis/validation";
 import type { DiagnosticMicrotest } from "../../src/domain/diagnosis/microtests";
 
 describe("banco de micropruebas (misión 0.6.0)", () => {
-  it("tiene 6 micropruebas por patrón (24 en total)", () => {
-    expect(microtestsByPattern("RANGE")).toHaveLength(6);
-    expect(microtestsByPattern("ACUMULADORES")).toHaveLength(6);
+  it("tiene 6 micropruebas base por patrón más 2 de discriminación añadidas (26 en total)", () => {
+    expect(microtestsByPattern("RANGE")).toHaveLength(7);
+    expect(microtestsByPattern("ACUMULADORES")).toHaveLength(7);
     expect(microtestsByPattern("CONDICIONALES")).toHaveLength(6);
     expect(microtestsByPattern("FUNCIONES")).toHaveLength(6);
-    expect(MICROTESTS).toHaveLength(24);
+    expect(MICROTESTS).toHaveLength(26);
   });
 
   it("usa prefijos estables cond- y func- en las nuevas micropruebas", () => {
@@ -20,6 +21,32 @@ describe("banco de micropruebas (misión 0.6.0)", () => {
 
   it("tiene identificadores únicos", () => {
     expect(new Set(MICROTEST_IDS).size).toBe(MICROTEST_IDS.length);
+  });
+
+  it("las dos micropruebas añadidas aparecen con sus firmas en la matriz de discriminación", () => {
+    const range = getMicrotest("range-un-argumento-01");
+    const rangePair = matrixForPattern("RANGE")?.pairs.find(
+      (pair) => pair.hypothesisAId === "H-RANGE-01" && pair.hypothesisBId === "H-RANGE-02",
+    );
+    expect(range).toBeDefined();
+    expect(rangePair?.discriminatingMicrotests).toContain("range-un-argumento-01");
+    expect(rangePair?.predictions["range-un-argumento-01"]).toEqual({
+      "H-RANGE-01": range?.responseSignatures["H-RANGE-01"],
+      "H-RANGE-02": range?.responseSignatures["H-RANGE-02"],
+    });
+
+    const accumulator = getMicrotest("acc-inicial-cero-02");
+    const accumulatorPair = matrixForPattern("ACUMULADORES")?.pairs.find(
+      (pair) => pair.hypothesisAId === "H-ACC-02" && pair.hypothesisBId === "H-ACC-03",
+    );
+    expect(accumulator).toBeDefined();
+    expect(accumulatorPair?.discriminatingMicrotests).toContain("acc-inicial-cero-02");
+    expect(accumulatorPair?.predictions["acc-inicial-cero-02"]).toEqual({
+      "H-ACC-02": accumulator?.responseSignatures["H-ACC-02"],
+      "H-ACC-03": accumulator?.responseSignatures["H-ACC-03"],
+    });
+    expect(accumulatorPair?.ambiguousResponses["acc-inicial-cero-02"]).toContain("2, 5, 9");
+    expect(accumulatorPair?.insufficientWhen).toContain("compatible con la hipótesis normativa");
   });
 
   it("cada microprueba tiene contrato estructural completo", () => {
